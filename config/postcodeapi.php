@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'PostcodeNL'    => [
+        'url'       =>  'https://api.postcode.nl/rest/addresses/',
+        'key'       =>  '',
+        'secret'    =>  '',
+        'code'      =>  'nl_NL'
+    ],
     'PostcodeApiNu' => [
         'url'       =>  'https://api.postcodeapi.nu/',
         'key'       =>  '',
@@ -23,6 +29,11 @@ return [
         'code'      =>  'nl_BE',
     ],
 
+    'IdealPostcodes'=>  [
+        'url'       =>  'https://api.ideal-postcodes.co.uk/v1/postcodes/',
+        'key'       =>  '',
+        'code'      =>  'en_GB'
+    ],
     'PostcodesIO'   => [
         'url'       =>  'https://api.postcodes.io/',
         'key'       =>  '',

@@ -55,10 +55,12 @@ var_dump($postCode3);
 ```
 
 ### Providers
+* [PostcodeNL](http://www.postcode.nl)
 * [PostcodeApiNu](http://www.postcodeapi.nu/)
 * [PostcodeData](http://www.postcodedata.nl/)
 * [Pro6PP_NL](https://www.pro6pp.nl)
 * [Pro6PP_BE](https://www.pro6pp.nl)
+* [IdealPostcodes](https://ideal-postcodes.co.uk/)
 * [PostcodesIO](https://api.postcodes.io/)
 * [UkPostcodes](http://uk-postcodes.com/postcode/)
 * [GeoPostcodeOrgUk](http://www.geopostcode.org.uk/)

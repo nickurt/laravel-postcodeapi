@@ -26,6 +26,11 @@ class ProviderFactory {
             $class->setApiKey($configInformation['key']);
             $class->setRequestUrl($configInformation['url']);
 
+            if( isset($configInformation['secret']) )
+            {
+                $class->setApiSecret($configInformation['secret']);
+            }
+
             return $class;
         }
 

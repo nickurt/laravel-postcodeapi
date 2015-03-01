@@ -44,6 +44,14 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
+     * @param $apiSecret
+     */
+    public function setApiSecret($apiSecret)
+    {
+        $this->apiSecret = $apiSecret;
+    }
+
+    /**
      * @param $url
      * @throws MalformedURLException
      */
@@ -62,6 +70,14 @@ abstract class Provider implements ProviderInterface
     public function getApiKey()
     {
         return $this->apiKey;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApiSecret()
+    {
+        return $this->apiSecret;
     }
 
     /**
