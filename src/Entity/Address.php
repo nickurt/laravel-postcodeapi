@@ -137,4 +137,20 @@ class Address
     {
         return $this->longitude;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'street' => $this->getStreet(),
+            'house_no' => $this->getHouseNo(),
+            'town' => $this->getTown(),
+            'municipality' => $this->getMunicipality(),
+            'province' => $this->getProvince(),
+            'latitude' => $this->getLatitude(),
+            'longitude' => $this->getLongitude()
+        ];
+    }
 }

@@ -25,6 +25,7 @@ php artisan vendor:publish
 ```
 
 ### Examples
+#### Default
 ```php
 $postCode1 = PostcodeApi::create('PostcodeData')->findByPostcodeAndHouseNumber('1118CP', '202');
 $postCode2 = PostcodeApi::create('PostcodeApiNu')->find('1118CP');
@@ -32,8 +33,15 @@ $postCode2 = PostcodeApi::create('PostcodeApiNu')->find('1118CP');
 var_dump($postCode1);
 var_dump($postCode2);
 ```
-
-### Custom Configuration
+#### Route
+```php
+Route::get('/{postCode}', function($postCode) {
+    $postCode1 = PostcodeApi::create('PostcodeApiNu')->find($postCode);
+    
+    return Response::json($postCode1->toArray(), 200, [], JSON_PRETTY_PRINT);
+});
+```
+#### Custom Configuration
 ```php
 $postCode3 = PostcodeApi::create('PostcodeApiNu');
 
