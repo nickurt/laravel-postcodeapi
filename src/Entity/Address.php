@@ -4,8 +4,8 @@ namespace nickurt\PostcodeApi\Entity;
 
 class Address
 {
-	protected $street;
-	protected $houseNo;
+    protected $street;
+    protected $houseNo;
     protected $town;
     protected $municipality;
     protected $province;
@@ -34,11 +34,11 @@ class Address
      * @param $street
      * @return $this
      */
-	public function setStreet($street)
-	{
-		$this->street = $street;
-		return $this;
-	}
+    public function setStreet($street)
+    {
+        $this->street = $street;
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -52,89 +52,89 @@ class Address
      * @param $municipality
      * @return $this
      */
-	public function setMunicipality($municipality)
-	{
-		$this->municipality = $municipality;
-		return $this;
-	}
+    public function setMunicipality($municipality)
+    {
+        $this->municipality = $municipality;
+        return $this;
+    }
 
     /**
      * @return mixed
      */
-	public function getMunicipality()
-	{
-		return $this->municipality;
-	}
+    public function getMunicipality()
+    {
+        return $this->municipality;
+    }
 
     /**
      * @param $town
      * @return $this
      */
-	public function setTown($town)
-	{
-		$this->town = $town;
-		return $this;
-	}
+    public function setTown($town)
+    {
+        $this->town = $town;
+        return $this;
+    }
 
     /**
      * @return mixed
      */
-	public function getTown()
-	{
-		return $this->town;
-	}
+    public function getTown()
+    {
+        return $this->town;
+    }
 
     /**
      * @param $province
      * @return $this
      */
-	public function setProvince($province)
-	{
-		$this->province = $province;
-		return $this;
-	}
+    public function setProvince($province)
+    {
+        $this->province = $province;
+        return $this;
+    }
 
     /**
      * @return mixed
      */
-	public function getProvince()
-	{
-		return $this->province;
-	}
+    public function getProvince()
+    {
+        return $this->province;
+    }
 
     /**
      * @param $latitude
      * @return $this
      */
-	public function setLatitude($latitude)
-	{
-		$this->latitude = $latitude;
-		return $this;
-	}
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+        return $this;
+    }
 
     /**
      * @return mixed
      */
-	public function getLatitude()
-	{
-		return $this->latitude;
+    public function getLatitude()
+    {
+        return $this->latitude;
 	}
 
     /**
      * @param $longitude
      * @return $this
      */
-	public function setLongitude($longitude)
-	{
-		$this->longitude = $longitude;
-		return $this;
-	}
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+        return $this;
+    }
 
     /**
      * @return mixed
      */
-	public function getLongitude()
-	{
-		return $this->longitude;
-	}
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
 }

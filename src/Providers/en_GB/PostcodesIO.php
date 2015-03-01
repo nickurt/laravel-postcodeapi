@@ -7,39 +7,39 @@ use \nickurt\PostcodeApi\Entity\Address;
 
 class PostcodesIO extends Provider {
 	
-	protected $apiKey;
-	protected $requestUrl;
+    protected $apiKey;
+    protected $requestUrl;
 
     /**
      * @return mixed
      */
-	protected function request()
-	{
-		$client = $this->getHttpClient();
-		$response = $client->get($this->getRequestUrl())->json();
+    protected function request()
+    {
+        $client = $this->getHttpClient();
+        $response = $client->get($this->getRequestUrl())->json();
 
-		return $response;
-	}
+        return $response;
+    }
 
     /**
      * @param $postCode
      * @return Address
      * @throws \nickurt\PostcodeApi\Exception\MalformedURLException
      */
-	public function find($postCode)
-	{
-		$this->setRequestUrl($this->getRequestUrl().'/postcodes?q='.$postCode);
-		$response = $this->request();
+    public function find($postCode)
+    {
+        $this->setRequestUrl($this->getRequestUrl().'/postcodes?q='.$postCode);
+        $response = $this->request();
 
-		$address = new Address();
-		$address
-			->setTown($response['result'][0]['admin_county'])
-			->setLatitude($response['result'][0]['latitude'])
-			->setLongitude($response['result'][0]['longitude']);
+        $address = new Address();
+        $address
+            ->setTown($response['result'][0]['admin_county'])
+            ->setLatitude($response['result'][0]['latitude'])
+            ->setLongitude($response['result'][0]['longitude']);
 
-		return $address;
-	}
+        return $address;
+    }
 
-	public function findByPostcode($postCode) {}
-	public function findByPostcodeAndHouseNumber($postCode, $houseNumber) {}
+    public function findByPostcode($postCode) {}
+    public function findByPostcodeAndHouseNumber($postCode, $houseNumber) {}
 }
