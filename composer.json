@@ -1,0 +1,16 @@
+{
+    "name": "nickurt/laravel-postcodeapi",
+    "description": "Universal PostcodeApi for Laravel 5",
+    "keywords": ["postcodeapi", "postcode", "api", "universal", "laravel"],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "nickurt\\postcodeapi\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
