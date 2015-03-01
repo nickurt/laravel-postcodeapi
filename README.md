@@ -3,7 +3,7 @@
 ### Installation
 Install this package with composer:
 ```
-php composer.phar require nickurt/laravel-postcodeapi
+php composer.phar require nickurt/laravel-postcodeapi:dev-master
 ```
 
 Add the provider to config/app.php file
