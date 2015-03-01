@@ -22,6 +22,11 @@ return [
         'key'       =>  '',
         'code'      =>  'nl_NL',
     ],
+    'Pstcd'         => [
+        'url'       =>  'http://api.pstcd.nl/',
+        'key'       =>  '',
+        'code'      =>  'nl_NL'
+    ],
 
     'Pro6PP_BE'     =>  [
         'url'       =>  'https://api.pro6pp.nl/v1/autocomplete',
