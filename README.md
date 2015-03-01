@@ -60,6 +60,7 @@ var_dump($postCode3);
 * [PostcodeData](http://www.postcodedata.nl/)
 * [Pro6PP_NL](https://www.pro6pp.nl)
 * [Pro6PP_BE](https://www.pro6pp.nl)
+* [Geocodio](http://geocod.io/)
 * [IdealPostcodes](https://ideal-postcodes.co.uk/)
 * [PostcodesIO](https://api.postcodes.io/)
 * [UkPostcodes](http://uk-postcodes.com/postcode/)

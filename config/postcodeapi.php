@@ -29,6 +29,12 @@ return [
         'code'      =>  'nl_BE',
     ],
 
+    'Geocodio'      =>  [
+        'url'       =>  'https://api.geocod.io/v1/geocode',
+        'key'       =>  '',
+        'code'      =>  'en_US',
+    ],
+
     'IdealPostcodes'=>  [
         'url'       =>  'https://api.ideal-postcodes.co.uk/v1/postcodes/',
         'key'       =>  '',
