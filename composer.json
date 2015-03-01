@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "nickurt\\postcodeapi\\": "src/"
+            "nickurt\\PostcodeApi\\": "src/"
         }
     },
     "minimum-stability": "dev"
