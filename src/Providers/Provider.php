@@ -47,8 +47,8 @@ abstract class Provider implements ProviderInterface
      * @param $url
      * @throws MalformedURLException
      */
-	public function setRequestUrl($url)
-	{
+    public function setRequestUrl($url)
+    {
         if( filter_var($url, FILTER_VALIDATE_URL) === false ) {
             throw new MalformedURLException();
         }

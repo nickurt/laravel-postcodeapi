@@ -28,7 +28,6 @@ class PostcodeData extends Provider {
      * @param $postCode
      * @param $houseNumber
      * @return Address
-     * @throws \nickurt\PostcodeApi\Exception\MalformedURLException
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {

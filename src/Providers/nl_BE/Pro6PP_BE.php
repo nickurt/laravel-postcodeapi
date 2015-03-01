@@ -24,7 +24,6 @@ class Pro6PP_BE extends Provider {
     /**
      * @param $postCode
      * @return Address
-     * @throws \nickurt\PostcodeApi\Exception\MalformedURLException
      */
     public function find($postCode)
     {

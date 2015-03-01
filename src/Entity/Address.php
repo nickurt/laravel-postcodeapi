@@ -43,10 +43,10 @@ class Address
     /**
      * @return mixed
      */
-	public function getStreet()
-	{
-		return $this->street;
-	}
+    public function getStreet()
+    {
+        return $this->street;
+    }
 
     /**
      * @param $municipality
@@ -118,7 +118,7 @@ class Address
     public function getLatitude()
     {
         return $this->latitude;
-	}
+    }
 
     /**
      * @param $longitude

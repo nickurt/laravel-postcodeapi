@@ -24,7 +24,6 @@ class UkPostcodes extends Provider {
     /**
      * @param $postCode
      * @return Address
-     * @throws \nickurt\PostcodeApi\Exception\MalformedURLException
      */
     public function find($postCode)
     {
