@@ -10,6 +10,9 @@ class PostcodeData extends Provider {
 	protected $apiKey;
 	protected $requestUrl;
 
+    /**
+     * @return mixed
+     */
 	protected function request()
 	{
 		$client = $this->getHttpClient();
@@ -21,6 +24,12 @@ class PostcodeData extends Provider {
 	public function find($postCode) {}
 	public function findByPostcode($postCode){}
 
+    /**
+     * @param $postCode
+     * @param $houseNumber
+     * @return Address
+     * @throws \nickurt\PostcodeApi\Exception\MalformedURLException
+     */
 	public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
 	{
 		$this->setRequestUrl($this->getRequestUrl().'?postcode='.$postCode.'&streetnumber='.$houseNumber.'&ref=domeinnaam.nl');

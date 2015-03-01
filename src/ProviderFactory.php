@@ -4,6 +4,10 @@ namespace nickurt\PostcodeApi;
 
 class ProviderFactory {
 
+    /**
+     * @param $provider
+     * @return mixed
+     */
 	public static function create($provider)
 	{
 		$configInformation = \Config::get('postcodeapi')[$provider];

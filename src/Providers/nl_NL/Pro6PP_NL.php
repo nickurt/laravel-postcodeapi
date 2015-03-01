@@ -10,6 +10,9 @@ class Pro6PP_NL extends Provider {
 	protected $apiKey;
 	protected $requestUrl;
 
+    /**
+     * @return mixed
+     */
 	protected function request()
 	{
 		$client = $this->getHttpClient();
@@ -18,6 +21,11 @@ class Pro6PP_NL extends Provider {
 		return $response;
 	}
 
+    /**
+     * @param $postCode
+     * @return Address
+     * @throws \nickurt\PostcodeApi\Exception\MalformedURLException
+     */
 	public function find($postCode)
 	{
 		$this->setRequestUrl($this->getRequestUrl().'?auth_key='.$this->getApiKey().'&nl_sixpp='.$postCode);

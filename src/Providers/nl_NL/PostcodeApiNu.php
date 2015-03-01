@@ -10,6 +10,9 @@ class PostcodeApiNu extends Provider {
 	protected $apiKey;
 	protected $requestUrl;
 
+    /**
+     * @return mixed
+     */
 	protected function request()
 	{
 		$client = $this->getHttpClient();
@@ -19,6 +22,11 @@ class PostcodeApiNu extends Provider {
 		return $response;
 	}
 
+    /**
+     * @param $postCode
+     * @return Address
+     * @throws \nickurt\PostcodeApi\Exception\MalformedURLException
+     */
 	public function find($postCode)
 	{
 		$this->setRequestUrl($this->getRequestUrl().'/'.$postCode);
