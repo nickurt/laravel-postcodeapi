@@ -59,5 +59,11 @@ return [
         'url'       =>  'http://www.geopostcode.org.uk/api/',
         'key'       =>  '',
         'code'      =>  'en_GB',
+    ],
+
+    'PostcodeApiComAu' => [
+        'url'       =>  'http://v0.postcodeapi.com.au/suburbs/',
+        'key'       =>  '',
+        'code'      =>  'en_AU'
     ]
 ];

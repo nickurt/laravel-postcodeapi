@@ -66,5 +66,6 @@ var_dump($postCode3);
 * [PostcodesIO](https://api.postcodes.io/)
 * [UkPostcodes](http://uk-postcodes.com/postcode/)
 * [GeoPostcodeOrgUk](http://www.geopostcode.org.uk/)
+* [PostcodeApiComAu](http://postcodeapi.com.au/)
 
 - - - 
