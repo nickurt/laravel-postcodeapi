@@ -31,7 +31,7 @@ class PostcodeData extends Provider {
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl($this->getRequestUrl().'?postcode='.$postCode.'&streetnumber='.$houseNumber.'&ref=domeinnaam.nl');
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber, \Request::getHttpHost()));
         $response = $this->request();
 
         $address = new Address();

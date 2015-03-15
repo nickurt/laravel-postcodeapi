@@ -27,7 +27,7 @@ class Pro6PP_NL extends Provider {
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl().'?auth_key='.$this->getApiKey().'&nl_sixpp='.$postCode);
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode));
         $response = $this->request();
 
         $address = new Address();

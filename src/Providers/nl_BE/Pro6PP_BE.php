@@ -27,7 +27,7 @@ class Pro6PP_BE extends Provider {
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl().'?auth_key='.$this->getApiKey().'&be_fourpp='.$postCode);
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode));
         $response = $this->request();
 
         $address = new Address();

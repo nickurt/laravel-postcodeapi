@@ -27,7 +27,7 @@ class GeoPostcodeOrgUk extends Provider {
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl().'/'.$postCode.'.json');
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode));
         $response = $this->request();
 
         $address = new Address();

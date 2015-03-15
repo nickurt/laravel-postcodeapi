@@ -27,7 +27,7 @@ class Pstcd extends Provider {
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl().'/city/?auth_key='.$this->getApiKey().'&sixpp='.$postCode);
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), 'city', $this->getApiKey(), $postCode, ''));
         $response = $this->request();
 
         $address = new Address();
@@ -50,7 +50,7 @@ class Pstcd extends Provider {
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl($this->getRequestUrl().'/address/?auth_key='.$this->getApiKey().'&streetnumber='.$houseNumber.'&sixpp='.$postCode);
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), 'address', $this->getApiKey(), $postCode, $houseNumber));
         $response = $this->request();
 
         $address = new Address();

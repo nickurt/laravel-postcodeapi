@@ -27,7 +27,7 @@ class Geocodio extends Provider {
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl().'/?q='.$postCode.'&api_key='.$this->getApiKey());
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()));
         $response = $this->request();
 
         $address = new Address();

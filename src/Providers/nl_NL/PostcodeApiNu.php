@@ -28,7 +28,7 @@ class PostcodeApiNu extends Provider {
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl().'/'.$postCode);
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, ''));
         $response = $this->request();
 
         $address = new Address();
@@ -44,5 +44,27 @@ class PostcodeApiNu extends Provider {
     }
 
     public function findByPostcode($postCode) {}
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber) {}
+
+    /**
+     * @param $postCode
+     * @param $houseNumber
+     * @return Address
+     */
+    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    {
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
+        $response = $this->request();
+
+        $address = new Address();
+        $address
+            ->setHouseNo($response['resource']['house_number'])
+            ->setStreet($response['resource']['street'])
+            ->setTown($response['resource']['town'])
+            ->setMunicipality($response['resource']['municipality'])
+            ->setProvince($response['resource']['province'])
+            ->setLatitude($response['resource']['latitude'])
+            ->setLongitude($response['resource']['longitude']);
+
+        return $address;
+    }
 }

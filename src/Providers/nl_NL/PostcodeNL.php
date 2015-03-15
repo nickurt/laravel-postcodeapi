@@ -36,7 +36,7 @@ class PostcodeNL extends Provider {
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl($this->getRequestUrl().''.$postCode.'/'.$houseNumber);
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
         $response = $this->request();
 
         $address = new Address();
