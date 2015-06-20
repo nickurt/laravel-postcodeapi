@@ -63,9 +63,15 @@ var_dump($postCode3);
 * [Pro6PP_BE](https://www.pro6pp.nl)
 * [Geocodio](http://geocod.io/)
 * [IdealPostcodes](https://ideal-postcodes.co.uk/)
+* [GetAddresIO](https://getaddress.io/)
 * [PostcodesIO](https://api.postcodes.io/)
 * [UkPostcodes](http://uk-postcodes.com/postcode/)
 * [GeoPostcodeOrgUk](http://www.geopostcode.org.uk/)
 * [PostcodeApiComAu](http://postcodeapi.com.au/)
+
+### Tests
+```sh
+bin/phpunit nickurt/laravel-postcodeapi/tests
+```
 
 - - - 

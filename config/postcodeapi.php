@@ -45,6 +45,11 @@ return [
         'key'       =>  '',
         'code'      =>  'en_GB'
     ],
+    'GetAddressIO' >    [
+        'url'       =>  'https://api.getaddress.io/v2/uk/%s?api-key=%s',
+        'key'       =>  '',
+        'code'      =>  'en_GB'
+    ],
     'PostcodesIO'   => [
         'url'       =>  'https://api.postcodes.io/postcodes?q=%s',
         'key'       =>  '',
