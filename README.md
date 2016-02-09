@@ -57,6 +57,7 @@ var_dump($postCode3);
 ### Providers
 * [PostcodeNL](http://www.postcode.nl)
 * [PostcodeApiNu](http://www.postcodeapi.nu/)
+* [PostcodeApiNu2](http://www.postcodeapi.nu/) API version 2.0
 * [PostcodeData](http://www.postcodedata.nl/)
 * [Pro6PP_NL](https://www.pro6pp.nl)
 * [Pstcd](http://www.pstcd.nl/)

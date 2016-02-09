@@ -12,6 +12,11 @@ return [
         'key'       =>  '',
         'code'      =>  'nl_NL',
     ],
+    'PostcodeApiNu2'=> [
+        'url'       =>  'https://postcode-api.apiwise.nl/v2/addresses/?postcode=%s&number=%s',
+        'key'       =>  '',
+        'code'      =>  'nl_NL',
+    ],
     'PostcodeData'  => [
         'url'       =>  'http://api.postcodedata.nl/v1/postcode/?postcode=%s&streetnumber=%s&ref=%s',
         'key'       =>  '',
@@ -45,7 +50,7 @@ return [
         'key'       =>  '',
         'code'      =>  'en_GB'
     ],
-    'GetAddressIO' >    [
+    'GetAddressIO' =>    [
         'url'       =>  'https://api.getaddress.io/v2/uk/%s?api-key=%s',
         'key'       =>  '',
         'code'      =>  'en_GB'
