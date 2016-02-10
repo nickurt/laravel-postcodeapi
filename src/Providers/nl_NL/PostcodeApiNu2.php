@@ -28,6 +28,8 @@ class PostcodeApiNu2 extends Provider {
      */
     public function find($postCode)
     {
+        $postCode = strtoupper(preg_replace('/\s+/', '', $postCode)); // P6 format (1234AB)
+
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, ''));
         $response = $this->request();
 
@@ -52,6 +54,9 @@ class PostcodeApiNu2 extends Provider {
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
+        $postCode = strtoupper(preg_replace('/\s+/', '', $postCode)); // P6 format (1234AB)
+        $houseNumber = preg_replace('/[^0-9.]/', '', $houseNumber); // Should be an integer
+
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
         $response = $this->request();
 
