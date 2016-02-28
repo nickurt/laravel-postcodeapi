@@ -20,7 +20,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-        $this->app->bindShared('PostcodeApi', function($app)
+        $this->app->singleton('PostcodeApi', function($app)
         {
             return new ProviderFactory();
         });
