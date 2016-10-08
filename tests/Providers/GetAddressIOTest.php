@@ -3,7 +3,7 @@
 namespace nickurt\PostcodeApi\tests\Providers;
 
 use nickurt\PostcodeApi\Entity\Address;
-use \GuzzleHttp\Message\Response;
+use \GuzzleHttp\Psr7\Response;
 use \GuzzleHttp\Stream\Stream;
 
 class GetAddressIOTest extends \PHPUnit_Framework_TestCase
@@ -12,7 +12,7 @@ class GetAddressIOTest extends \PHPUnit_Framework_TestCase
     {
         $json 		= 	file_get_contents(__DIR__.'\GetAddressIO.json');
         $response 	= 	new Response(200, [], Stream::factory($json));
-        $json 		= 	$response->json();
+        $json 		= 	json_decode($response->getBody(), true);
 
         $this->assertEquals($json['Latitude'], '51.503038');
         $this->assertEquals($json['Longitude'], '-0.128371');
@@ -23,7 +23,7 @@ class GetAddressIOTest extends \PHPUnit_Framework_TestCase
     {
         $json 		= 	file_get_contents(__DIR__.'\GetAddressIO.json');
         $response 	= 	new Response(200, [], Stream::factory($json));
-        $json 		= 	$response->json();
+        $json 		= 	json_decode($response->getBody(), true);
 
         $address = new Address();
         $address

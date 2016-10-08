@@ -16,9 +16,9 @@ class Pro6PP_NL extends Provider {
     protected function request()
     {
         $client = $this->getHttpClient();
-        $response = $client->get($this->getRequestUrl())->json();
+        $response = $client->request('GET', $this->getRequestUrl());
 
-        return $response;
+        return json_decode($response->getBody(), true);
     }
 
     /**

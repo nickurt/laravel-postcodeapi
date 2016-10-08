@@ -16,14 +16,14 @@ class PostcodeNL extends Provider {
     protected function request()
     {
         $client = $this->getHttpClient();
-        $response = $client->get($this->getRequestUrl(), [
+        $response = $client->request('GET', $this->getRequestUrl(), [
             'auth' => [
-                $this->getApiKey(),
-                $this->getApiSecret(),
+                'username' => $this->getApiKey(),
+                'password' => $this->getApiSecret()
             ]
-        ])->json();
+        ]);
 
-        return $response;
+        return json_decode($response->getBody(), true);
     }
 
     public function find($postCode) {}

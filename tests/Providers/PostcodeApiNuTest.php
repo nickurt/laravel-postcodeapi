@@ -3,7 +3,7 @@
 namespace nickurt\PostcodeApi\tests\Providers;
 
 use nickurt\PostcodeApi\Entity\Address;
-use \GuzzleHttp\Message\Response;
+use \GuzzleHttp\Psr7\Response;
 use \GuzzleHttp\Stream\Stream;
 
 class PostcodeApiNuTest extends \PHPUnit_Framework_TestCase
@@ -12,7 +12,7 @@ class PostcodeApiNuTest extends \PHPUnit_Framework_TestCase
     {
         $json 		= 	file_get_contents(__DIR__.'\PostcodeApiNu.json');
         $response 	= 	new Response(200, [], Stream::factory($json));
-        $json 		= 	$response->json();
+        $json 		= 	json_decode($response->getBody(), true);
 
         $this->assertEquals($json['resource']['street'], 'Evert van de Beekstraat');
         $this->assertEquals($json['resource']['town'], 'Schiphol');
@@ -26,7 +26,7 @@ class PostcodeApiNuTest extends \PHPUnit_Framework_TestCase
     {
         $json 		= 	file_get_contents(__DIR__.'\PostcodeApiNu.json');
         $response 	= 	new Response(200, [], Stream::factory($json));
-        $json 		= 	$response->json();
+        $json 		= 	json_decode($response->getBody(), true);
 
         $address = new Address();
         $address

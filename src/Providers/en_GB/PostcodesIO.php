@@ -16,9 +16,9 @@ class PostcodesIO extends Provider {
     protected function request()
     {
         $client = $this->getHttpClient();
-        $response = $client->get($this->getRequestUrl())->json();
+        $response = $client->request('GET', $this->getRequestUrl());
 
-        return $response;
+        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -32,7 +32,7 @@ class PostcodesIO extends Provider {
 
         $address = new Address();
         $address
-            ->setTown($response['result'][0]['admin_county'])
+            ->setTown($response['result'][0]['region'])
             ->setLatitude($response['result'][0]['latitude'])
             ->setLongitude($response['result'][0]['longitude']);
 
