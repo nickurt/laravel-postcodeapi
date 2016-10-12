@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "results": [
+    {
+      "nl_sixpp": "1118CP",
+      "street": "Evert van de Beekstraat",
+      "city": "Schiphol",
+      "municipality": "Haarlemmermeer",
+      "province": "Noord-Holland",
+      "streetnumbers": "178;202;300-306",
+      "lat": 52.30389,
+      "lng": 4.7479,
+      "areacode": "020"
+    }
+  ]
+}

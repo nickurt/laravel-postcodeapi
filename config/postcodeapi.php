@@ -7,7 +7,7 @@ return [
         'secret'    =>  '',
         'code'      =>  'nl_NL'
     ],
-    'PostcodeApiNu2'=> [
+    'PostcodeApiNu' => [
         'url'       =>  'https://postcode-api.apiwise.nl/v2/addresses/?postcode=%s&number=%s',
         'key'       =>  '',
         'code'      =>  'nl_NL',

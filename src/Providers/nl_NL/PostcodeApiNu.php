@@ -5,7 +5,7 @@ namespace nickurt\postcodeapi\Providers\nl_NL;
 use \nickurt\PostcodeApi\Providers\Provider;
 use \nickurt\PostcodeApi\Entity\Address;
 
-class PostcodeApiNu2 extends Provider {
+class PostcodeApiNu extends Provider {
     
     protected $apiKey;
     protected $requestUrl;
@@ -42,8 +42,8 @@ class PostcodeApiNu2 extends Provider {
             ->setTown($response['_embedded']['addresses'][0]['city']['label'])
             ->setMunicipality($response['_embedded']['addresses'][0]['municipality']['label'])
             ->setProvince($response['_embedded']['addresses'][0]['province']['label'])
-            ->setLatitude($response['_embedded']['addresses'][0]['geo']['center']['wgs84']['coordinates'][0])
-            ->setLongitude($response['_embedded']['addresses'][0]['geo']['center']['wgs84']['coordinates'][1]);
+            ->setLatitude($response['_embedded']['addresses'][0]['geo']['center']['wgs84']['coordinates'][1])
+            ->setLongitude($response['_embedded']['addresses'][0]['geo']['center']['wgs84']['coordinates'][0]);
 
         return $address;
     }
@@ -70,8 +70,8 @@ class PostcodeApiNu2 extends Provider {
             ->setTown($response['_embedded']['addresses'][0]['city']['label'])
             ->setMunicipality($response['_embedded']['addresses'][0]['municipality']['label'])
             ->setProvince($response['_embedded']['addresses'][0]['province']['label'])
-            ->setLatitude($response['_embedded']['addresses'][0]['geo']['center']['wgs84']['coordinates'][0])
-            ->setLongitude($response['_embedded']['addresses'][0]['geo']['center']['wgs84']['coordinates'][1]);
+            ->setLatitude($response['_embedded']['addresses'][0]['geo']['center']['wgs84']['coordinates'][1])
+            ->setLongitude($response['_embedded']['addresses'][0]['geo']['center']['wgs84']['coordinates'][0]);
 
         return $address;
     }

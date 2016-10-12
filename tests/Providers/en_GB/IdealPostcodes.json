@@ -1,0 +1,42 @@
+{
+  "result": [
+    {
+      "postcode": "SW1A 1AA",
+      "postcode_inward": "1AA",
+      "postcode_outward": "SW1A",
+      "post_town": "LONDON",
+      "dependant_locality": "",
+      "double_dependant_locality": "",
+      "thoroughfare": "",
+      "dependant_thoroughfare": "",
+      "building_number": "",
+      "building_name": "",
+      "sub_building_name": "",
+      "po_box": "",
+      "department_name": "",
+      "organisation_name": "Buckingham Palace",
+      "udprn": 23747212,
+      "umprn": "",
+      "postcode_type": "L",
+      "su_organisation_indicator": "",
+      "delivery_point_suffix": "1A",
+      "line_1": "Buckingham Palace",
+      "line_2": "",
+      "line_3": "",
+      "premise": "",
+      "longitude": -0.14158759787698,
+      "latitude": 51.50100915646,
+      "eastings": 529090,
+      "northings": 179645,
+      "country": "England",
+      "traditional_county": "Greater London",
+      "administrative_county": "",
+      "postal_county": "London",
+      "county": "London",
+      "district": "Westminster",
+      "ward": "St James's"
+    }
+  ],
+  "code": 2000,
+  "message": "Success"
+}

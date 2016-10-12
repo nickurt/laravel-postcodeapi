@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\PostcodeApi\tests\Providers;
+namespace nickurt\PostcodeApi\tests\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
 use \GuzzleHttp\Psr7\Response;
@@ -10,9 +10,9 @@ class PostcodeDataTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanReadFindResponse()
     {
-        $json 		= 	file_get_contents(__DIR__.'\PostcodeData.json');
-        $response 	= 	new Response(200, [], Stream::factory($json));
-        $json 		= 	json_decode($response->getBody(), true);
+        $json = file_get_contents(__DIR__.'\PostcodeData.json');
+        $response = new Response(200, [], Stream::factory($json));
+        $json = json_decode($response->getBody(), true);
 
         $this->assertEquals($json['details'][0]['street'], 'Evert van de Beekstraat');
         $this->assertEquals($json['details'][0]['city'], 'Schiphol');
@@ -24,9 +24,9 @@ class PostcodeDataTest extends \PHPUnit_Framework_TestCase
 
     public function testCanReadFindAddressResponse()
     {
-        $json 		= 	file_get_contents(__DIR__.'\PostcodeData.json');
-        $response 	= 	new Response(200, [], Stream::factory($json));
-        $json 		= 	json_decode($response->getBody(), true);
+        $json = file_get_contents(__DIR__.'\PostcodeData.json');
+        $response = new Response(200, [], Stream::factory($json));
+        $json = json_decode($response->getBody(), true);
 
         $address = new Address();
         $address

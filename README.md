@@ -47,8 +47,8 @@ $postCode17 = PostcodeApi::create('Pro6PP_BE')->find('1000');
 ```
 #### Default - nl_NL
 ```php
-$postCode18 = PostcodeApi::create('PostcodeApiNu2')->find('1118CP');
-$postCode19 = PostcodeApi::create('PostcodeApiNu2')->findByPostcodeAndHouseNumber('1118CP', '202');
+$postCode18 = PostcodeApi::create('PostcodeApiNu')->find('1118CP');
+$postCode19 = PostcodeApi::create('PostcodeApiNu')->findByPostcodeAndHouseNumber('1118CP', '202');
 $postCode20 = PostcodeApi::create('PostcodeData')->findByPostcodeAndHouseNumber('1118CP', '202');
 $postCode21 = PostcodeApi::create('PostcodeNL')->findByPostcodeAndHouseNumber('1118CP', '202');
 $postCode22 = PostcodeApi::create('Pro6PP_NL')->find('1118CP');
@@ -58,14 +58,14 @@ $postCode24 = PostcodeApi::create('Pstcd')->findByPostcodeAndHouseNumber('1118CP
 #### Route
 ```php
 Route::get('/{postCode}', function($postCode) {
-    $postCode25 = PostcodeApi::create('PostcodeApiNu2')->find($postCode);
+    $postCode25 = PostcodeApi::create('PostcodeApiNu')->find($postCode);
     
-    return Response::json($postCode25->toArray(), 200, [], JSON_PRETTY_PRINT);
+    return Response::json($postCode1->toArray(), 200, [], JSON_PRETTY_PRINT);
 });
 ```
 #### Custom Configuration
 ```php
-$postCode26 = PostcodeApi::create('PostcodeApiNu2');
+$postCode26 = PostcodeApi::create('PostcodeApiNu');
 
 var_dump($postCode26->getApiKey());
 var_dump($postCode26->getRequestUrl());
@@ -77,19 +77,7 @@ var_dump($postCode26);
 ```
 
 ### Providers
-* [PostcodeNL](http://www.postcode.nl)
-* [PostcodeApiNu2](http://www.postcodeapi.nu/) (v2/2016)
-* [PostcodeData](http://www.postcodedata.nl/)
-* [Pro6PP_NL](https://www.pro6pp.nl)
-* [Pstcd](http://www.pstcd.nl/)
-* [Pro6PP_BE](https://www.pro6pp.nl)
-* [Geocodio](http://geocod.io/)
-* [IdealPostcodes](https://ideal-postcodes.co.uk/)
-* [GetAddresIO](https://getaddress.io/)
-* [PostcodesIO](https://api.postcodes.io/)
-* [UkPostcodes](http://uk-postcodes.com/postcode/)
-* [GeoPostcodeOrgUk](http://www.geopostcode.org.uk/)
-* [PostcodeApiComAu](http://postcodeapi.com.au/)
+[Geocodio](http://geocod.io/), [GeoPostcodeOrgUk](http://www.geopostcode.org.uk/), [GetAddresIO](https://getaddress.io/), [IdealPostcodes](https://ideal-postcodes.co.uk/), [PostcodeApiComAu](http://postcodeapi.com.au/), [PostcodeApiNu](http://www.postcodeapi.nu/), [PostcodeData](http://www.postcodedata.nl/), [PostcodeNL](http://www.postcode.nl), [PostcodesIO](https://api.postcodes.io/), [Pro6PP_BE](https://www.pro6pp.nl), [Pro6PP_NL](https://www.pro6pp.nl), [Pstcd](http://www.pstcd.nl/), [UkPostcodes](http://uk-postcodes.com/postcode/)
 
 ### Tests
 ```sh

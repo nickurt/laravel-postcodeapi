@@ -1,0 +1,73 @@
+{
+  "_embedded": {
+    "addresses": [
+      {
+        "letter": null,
+        "city": {
+          "id": "1618",
+          "label": "Schiphol"
+        },
+        "id": "0394200001001951",
+        "postcode": "1118CP",
+        "purpose": "kantoorfunctie",
+        "municipality": {
+          "id": "0394",
+          "label": "Haarlemmermeer"
+        },
+        "nen5825": {
+          "street": "EVERT VAN DE BEEKSTRAAT",
+          "postcode": "1118 CP"
+        },
+        "year": 2007,
+        "street": "Evert van de Beekstraat",
+        "number": 202,
+        "addition": null,
+        "province": {
+          "id": "27",
+          "label": "Noord-Holland"
+        },
+        "geo": {
+          "center": {
+            "wgs84": {
+              "crs": {
+                "properties": {
+                  "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+                },
+                "type": "name"
+              },
+              "type": "Point",
+              "coordinates": [
+                4.7479077,
+                52.3038972
+              ]
+            },
+            "rd": {
+              "crs": {
+                "properties": {
+                  "name": "urn:ogc:def:crs:EPSG::28992"
+                },
+                "type": "name"
+              },
+              "type": "Point",
+              "coordinates": [
+                111396.536,
+                479739.602
+              ]
+            }
+          }
+        },
+        "type": "Verblijfsobject",
+        "_links": {
+          "self": {
+            "href": "https:\/\/postcode-api.apiwise.nl\/v2\/addresses\/0394200001001951\/"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https:\/\/postcode-api.apiwise.nl\/v2\/addresses\/?postcode=1118CP&number=202"
+    }
+  }
+}
