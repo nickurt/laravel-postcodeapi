@@ -60,7 +60,7 @@ $postCode24 = PostcodeApi::create('Pstcd')->findByPostcodeAndHouseNumber('1118CP
 Route::get('/{postCode}', function($postCode) {
     $postCode25 = PostcodeApi::create('PostcodeApiNu')->find($postCode);
     
-    return Response::json($postCode1->toArray(), 200, [], JSON_PRETTY_PRINT);
+    return Response::json($postCode25->toArray(), 200, [], JSON_PRETTY_PRINT);
 });
 ```
 #### Custom Configuration

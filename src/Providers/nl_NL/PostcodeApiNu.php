@@ -36,6 +36,14 @@ class PostcodeApiNu extends Provider {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, ''));
         $response = $this->request();
 
+        if(!isset($response['_embedded']['addresses'][0]))
+        {
+            /**
+             * Postcode / housenumber combination not found
+             */
+            return new Address();
+        }
+
         $address = new Address();
         $address
             ->setStreet($response['_embedded']['addresses'][0]['street'])
@@ -62,6 +70,14 @@ class PostcodeApiNu extends Provider {
 
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
         $response = $this->request();
+
+        if(!isset($response['_embedded']['addresses'][0]))
+        {
+            /**
+             * Postcode / housenumber combination not found
+             */
+            return new Address();
+        }
 
         $address = new Address();
         $address
