@@ -10,7 +10,7 @@ class Pro6PP_BETest extends \PHPUnit_Framework_TestCase
 {
     public function testCanReadFindResponse()
     {
-        $json = file_get_contents(__DIR__ . '\Pro6PP_NL.json');
+        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Pro6PP_NL.json');
         $response = new Response(200, [], Stream::factory($json));
         $json = json_decode($response->getBody(), true);
 
@@ -23,7 +23,7 @@ class Pro6PP_BETest extends \PHPUnit_Framework_TestCase
 
     public function testCanReadFindAddressResponse()
     {
-        $json = file_get_contents(__DIR__ . '\Pro6PP_NL.json');
+        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Pro6PP_NL.json');
         $response = new Response(200, [], Stream::factory($json));
         $json = json_decode($response->getBody(), true);
 

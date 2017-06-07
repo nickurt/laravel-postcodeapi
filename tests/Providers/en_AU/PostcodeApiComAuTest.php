@@ -10,7 +10,7 @@ class PostcodeApiComAuTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanReadFindResponse()
     {
-        $json = file_get_contents(__DIR__ . '\PostcodeApiComAu.json');
+        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'PostcodeApiComAu.json');
         $response = new Response(200, [], Stream::factory($json));
         $json = json_decode($response->getBody(), true);
 
@@ -22,7 +22,7 @@ class PostcodeApiComAuTest extends \PHPUnit_Framework_TestCase
 
     public function testCanReadFindAddressResponse()
     {
-        $json = file_get_contents(__DIR__ . '\PostcodeApiComAu.json');
+        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'PostcodeApiComAu.json');
         $response = new Response(200, [], Stream::factory($json));
         $json = json_decode($response->getBody(), true);
 

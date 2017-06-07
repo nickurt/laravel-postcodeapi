@@ -12,8 +12,7 @@ class ProviderFactory {
      */
     public static function create($provider)
     {
-        if( !isset(Config::get('postcodeapi')[$provider]) )
-        {
+        if( !isset(Config::get('postcodeapi')[$provider]) ) {
             throw new \InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
         }
 
@@ -26,8 +25,7 @@ class ProviderFactory {
             $class->setApiKey($configInformation['key']);
             $class->setRequestUrl($configInformation['url']);
 
-            if( isset($configInformation['secret']) )
-            {
+            if( isset($configInformation['secret']) ) {
                 $class->setApiSecret($configInformation['secret']);
             }
 

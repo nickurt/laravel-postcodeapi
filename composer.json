@@ -4,7 +4,7 @@
     "keywords": ["postcodeapi", "postcode", "api", "universal", "laravel"],
     "license": "MIT",
     "require": {
-        "php": ">=5.6.0",
+        "php": "^7.0",
         "guzzlehttp/guzzle": "6.*"
     },
     "autoload": {
@@ -12,5 +12,8 @@
             "nickurt\\PostcodeApi\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "suggest": {
+        "guzzlehttp/streams": "Required to use for the nickurt/laravel-postcodeapi tests (3.*)."
+    }
 }

@@ -10,7 +10,7 @@ class PostcodesIOTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanReadFindResponse()
     {
-        $json = file_get_contents(__DIR__ . '\PostcodesIO.json');
+        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'PostcodesIO.json');
         $response = new Response(200, [], Stream::factory($json));
         $json = json_decode($response->getBody(), true);
 
@@ -21,7 +21,7 @@ class PostcodesIOTest extends \PHPUnit_Framework_TestCase
 
     public function testCanReadFindAddressResponse()
     {
-        $json = file_get_contents(__DIR__ . '\PostcodesIO.json');
+        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'PostcodesIO.json');
         $response = new Response(200, [], Stream::factory($json));
         $json = json_decode($response->getBody(), true);
 

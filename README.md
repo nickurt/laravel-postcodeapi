@@ -81,7 +81,7 @@ var_dump($postCode26);
 
 ### Tests
 ```sh
-bin/phpunit nickurt/laravel-postcodeapi/tests
+vendor/bin/phpunit vendor/nickurt/laravel-postcodeapi/tests
 ```
 
 - - - 

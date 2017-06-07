@@ -4,12 +4,39 @@ namespace nickurt\PostcodeApi\Entity;
 
 class Address
 {
+    /**
+     * @var
+     */
     protected $street;
+
+    /**
+     * @var
+     */
     protected $houseNo;
+
+    /**
+     * @var
+     */
     protected $town;
+
+    /**
+     * @var
+     */
     protected $municipality;
+
+    /**
+     * @var
+     */
     protected $province;
+
+    /**
+     * @var
+     */
     protected $latitude;
+
+    /**
+     * @var
+     */
     protected $longitude;
 
     /**
