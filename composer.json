@@ -15,5 +15,15 @@
     "minimum-stability": "dev",
     "suggest": {
         "guzzlehttp/streams": "Required to use for the nickurt/laravel-postcodeapi tests (3.*)."
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "nickurt\\PostcodeApi\\ServiceProvider"
+            ],
+            "aliases": {
+                "PostcodeApi": "nickurt\\PostcodeApi\\Facade"
+            }
+        }
     }
 }
