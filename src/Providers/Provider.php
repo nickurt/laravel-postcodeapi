@@ -57,7 +57,7 @@ abstract class Provider implements ProviderInterface
      */
     public function setRequestUrl($url)
     {
-        if( filter_var($url, FILTER_VALIDATE_URL) === false ) {
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new MalformedURLException();
         }
 
@@ -91,24 +91,24 @@ abstract class Provider implements ProviderInterface
     /**
      * @return mixed
      */
-    protected abstract function request();
+    abstract protected function request();
 
     /**
      * @param $postCode
      * @return mixed
      */
-    protected abstract function find($postCode);
+    abstract protected function find($postCode);
 
     /**
      * @param $postCode
      * @return mixed
      */
-    protected abstract function findByPostcode($postCode);
+    abstract protected function findByPostcode($postCode);
 
     /**
      * @param $postCode
      * @param $houseNumber
      * @return mixed
      */
-    protected abstract function findByPostcodeAndHouseNumber($postCode, $houseNumber);
+    abstract protected function findByPostcodeAndHouseNumber($postCode, $houseNumber);
 }

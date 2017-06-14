@@ -5,8 +5,8 @@ namespace nickurt\postcodeapi\Providers\nl_NL;
 use \nickurt\PostcodeApi\Providers\Provider;
 use \nickurt\PostcodeApi\Entity\Address;
 
-class PostcodeApiNu extends Provider {
-    
+class PostcodeApiNu extends Provider
+{
     protected $apiKey;
     protected $requestUrl;
 
@@ -36,8 +36,7 @@ class PostcodeApiNu extends Provider {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, ''));
         $response = $this->request();
 
-        if(!isset($response['_embedded']['addresses'][0]))
-        {
+        if (!isset($response['_embedded']['addresses'][0])) {
             /**
              * Postcode / housenumber combination not found
              */
@@ -56,7 +55,9 @@ class PostcodeApiNu extends Provider {
         return $address;
     }
 
-    public function findByPostcode($postCode) {}
+    public function findByPostcode($postCode)
+    {
+    }
 
     /**
      * @param $postCode
@@ -71,8 +72,7 @@ class PostcodeApiNu extends Provider {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
         $response = $this->request();
 
-        if(!isset($response['_embedded']['addresses'][0]))
-        {
+        if (!isset($response['_embedded']['addresses'][0])) {
             /**
              * Postcode / housenumber combination not found
              */

@@ -16,7 +16,7 @@ return [
         'url'       =>  'http://api.postcodedata.nl/v1/postcode/?postcode=%s&streetnumber=%s&ref=%s',
         'key'       =>  '',
         'code'      =>  'nl_NL',
-    ], 
+    ],
     'Pro6PP_NL'     =>  [
         'url'       =>  'https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s',
         'key'       =>  '',

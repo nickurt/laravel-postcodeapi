@@ -45,8 +45,8 @@ class Address
      */
     public function setHouseNo($houseNo)
     {
-    	$this->houseNo = $houseNo;
-    	return $this;
+        $this->houseNo = $houseNo;
+        return $this;
     }
 
     /**
@@ -54,7 +54,7 @@ class Address
      */
     public function getHouseNo()
     {
-    	return $this->houseNo;
+        return $this->houseNo;
     }
 
     /**

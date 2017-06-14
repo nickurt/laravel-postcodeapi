@@ -20,7 +20,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('PostcodeApi', function($app) {
+        $this->app->singleton('PostcodeApi', function ($app) {
             return new ProviderFactory();
         });
     }
@@ -35,7 +35,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->publishes([
             __DIR__.'/../config/postcodeapi.php' => config_path('postcodeapi.php'),
         ], 'config');
-        
     }
 
     /**

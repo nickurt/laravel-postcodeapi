@@ -5,8 +5,8 @@ namespace nickurt\postcodeapi\Providers\en_US;
 use \nickurt\PostcodeApi\Providers\Provider;
 use \nickurt\PostcodeApi\Entity\Address;
 
-class Geocodio extends Provider {
-
+class Geocodio extends Provider
+{
     protected $apiKey;
     protected $requestUrl;
 
@@ -41,6 +41,10 @@ class Geocodio extends Provider {
         return $address;
     }
 
-    public function findByPostcode($postCode) {}
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber) {}
+    public function findByPostcode($postCode)
+    {
+    }
+    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    {
+    }
 }

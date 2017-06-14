@@ -5,8 +5,8 @@ namespace nickurt\postcodeapi\Providers\nl_NL;
 use \nickurt\PostcodeApi\Providers\Provider;
 use \nickurt\PostcodeApi\Entity\Address;
 
-class PostcodeNL extends Provider {
-
+class PostcodeNL extends Provider
+{
     protected $apiKey;
     protected $requestUrl;
 
@@ -26,8 +26,12 @@ class PostcodeNL extends Provider {
         return json_decode($response->getBody(), true);
     }
 
-    public function find($postCode) {}
-    public function findByPostcode($postCode){}
+    public function find($postCode)
+    {
+    }
+    public function findByPostcode($postCode)
+    {
+    }
 
     /**
      * @param $postCode

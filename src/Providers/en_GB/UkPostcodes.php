@@ -5,8 +5,8 @@ namespace nickurt\postcodeapi\Providers\en_GB;
 use \nickurt\PostcodeApi\Providers\Provider;
 use \nickurt\PostcodeApi\Entity\Address;
 
-class UkPostcodes extends Provider {
-	
+class UkPostcodes extends Provider
+{
     protected $apiKey;
     protected $requestUrl;
 
@@ -38,6 +38,10 @@ class UkPostcodes extends Provider {
         return $address;
     }
 
-    public function findByPostcode($postCode) {}
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber) {}
+    public function findByPostcode($postCode)
+    {
+    }
+    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    {
+    }
 }
