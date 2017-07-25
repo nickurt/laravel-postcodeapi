@@ -1,10 +1,10 @@
 <?php
 
-namespace nickurt\PostcodeApi\PostcodeApi;
+use nickurt\PostcodeApi\ProviderFactory;
 
 if (! function_exists('postcodeapi')) {
     function postcodeapi(string $provider)
     {
-        return app(PostcodeApi::class)->create($provider);
+        return app(ProviderFactory::class)->create($provider);
     }
 }
