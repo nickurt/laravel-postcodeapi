@@ -10,7 +10,10 @@
     "autoload": {
         "psr-4": {
             "nickurt\\PostcodeApi\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "minimum-stability": "dev",
     "suggest": {
