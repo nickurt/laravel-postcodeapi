@@ -70,5 +70,11 @@ return [
         'url'       =>  'http://v0.postcodeapi.com.au/suburbs/%s.json',
         'key'       =>  '',
         'code'      =>  'en_AU'
+    ],
+
+    'AddresseDataGouv' => [
+        'url'       =>  'https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1',
+        'key'       =>  '',
+        'code'      =>  'fr_FR'
     ]
 ];
