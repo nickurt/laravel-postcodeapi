@@ -6,7 +6,7 @@ use nickurt\PostcodeApi\Entity\Address;
 use \GuzzleHttp\Psr7\Response;
 use \GuzzleHttp\Stream\Stream;
 
-class PostcodeApiNuTest extends \PHPUnit_Framework_TestCase
+class PostcodeApiNuTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanReadFindResponse()
     {

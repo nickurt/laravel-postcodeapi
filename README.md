@@ -74,7 +74,7 @@ Route::get('/{postCode}', function($postCode) {
 
 ### Tests
 ```sh
-vendor/bin/phpunit vendor/nickurt/laravel-postcodeapi/tests
+phpunit
 ```
 
 - - - 
