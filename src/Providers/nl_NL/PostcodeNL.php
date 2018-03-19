@@ -18,8 +18,7 @@ class PostcodeNL extends Provider
         $client = $this->getHttpClient();
         $response = $client->request('GET', $this->getRequestUrl(), [
             'auth' => [
-                'username' => $this->getApiKey(),
-                'password' => $this->getApiSecret()
+                $this->getApiKey(), $this->getApiSecret()
             ]
         ]);
 
