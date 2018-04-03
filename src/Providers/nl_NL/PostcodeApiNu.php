@@ -31,7 +31,7 @@ class PostcodeApiNu extends Provider
      */
     public function find($postCode)
     {
-        $postCode = strtoupper(preg_replace('/\s+/', '', $postCode)); // P6 format (1234AB)
+        $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, ''));
         $response = $this->request();
@@ -66,8 +66,7 @@ class PostcodeApiNu extends Provider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $postCode = strtoupper(preg_replace('/\s+/', '', $postCode)); // P6 format (1234AB)
-        $houseNumber = preg_replace('/[^0-9.]/', '', $houseNumber); // Should be an integer
+        $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
         $response = $this->request();
@@ -81,7 +80,7 @@ class PostcodeApiNu extends Provider
 
         $address = new Address();
         $address
-            ->setHouseNo($response['_embedded']['addresses'][0]['number'])
+            ->setHouseNo($response['_embedded']['addresses'][0]['number'].$response['_embedded']['addresses'][0]['addition'])
             ->setStreet($response['_embedded']['addresses'][0]['street'])
             ->setTown($response['_embedded']['addresses'][0]['city']['label'])
             ->setMunicipality($response['_embedded']['addresses'][0]['municipality']['label'])
