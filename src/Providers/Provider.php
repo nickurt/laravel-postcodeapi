@@ -7,14 +7,59 @@ use \nickurt\PostcodeApi\Exception\MalformedURLException;
 
 abstract class Provider implements ProviderInterface
 {
+    /**
+     * @var
+     */
     protected $apiKey;
+
+    /**
+     * @var
+     */
     protected $requestUrl;
 
+    /**
+     * @var
+     */
     protected $httpClient;
 
+    /**
+     * Provider constructor.
+     */
     public function __construct()
     {
         $this->setHttpClient(new Client());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApiSecret()
+    {
+        return $this->apiSecret;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHttpClient()
+    {
+        return $this->httpClient;
     }
 
     /**
@@ -30,25 +75,9 @@ abstract class Provider implements ProviderInterface
     /**
      * @return mixed
      */
-    public function getHttpClient()
+    public function getRequestUrl()
     {
-        return $this->httpClient;
-    }
-
-    /**
-     * @param $apiKey
-     */
-    public function setApiKey($apiKey)
-    {
-        $this->apiKey = $apiKey;
-    }
-
-    /**
-     * @param $apiSecret
-     */
-    public function setApiSecret($apiSecret)
-    {
-        $this->apiSecret = $apiSecret;
+        return $this->requestUrl;
     }
 
     /**
@@ -65,27 +94,11 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @return mixed
+     * @param $apiSecret
      */
-    public function getApiKey()
+    public function setApiSecret($apiSecret)
     {
-        return $this->apiKey;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getApiSecret()
-    {
-        return $this->apiSecret;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRequestUrl()
-    {
-        return $this->requestUrl;
+        $this->apiSecret = $apiSecret;
     }
 
     /**

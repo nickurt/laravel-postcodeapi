@@ -6,7 +6,6 @@ use \Config;
 
 class ProviderFactory
 {
-
     /**
      * @param $provider
      * @return mixed
@@ -19,7 +18,7 @@ class ProviderFactory
 
         $configInformation = \Config::get('postcodeapi')[$provider];
 
-        $providerClass = 'nickurt\\PostcodeApi\\Providers\\'.$configInformation['code'].'\\'.$provider;
+        $providerClass = 'nickurt\\PostcodeApi\\Providers\\' . $configInformation['code'] . '\\' . $provider;
 
         if (class_exists($providerClass)) {
             $class = new $providerClass;
