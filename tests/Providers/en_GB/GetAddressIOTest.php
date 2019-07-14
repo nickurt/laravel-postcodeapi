@@ -2,37 +2,40 @@
 
 namespace nickurt\PostcodeApi\tests\Providers\en_GB;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
-use \GuzzleHttp\Psr7\Response;
-use \GuzzleHttp\Stream\Stream;
+use nickurt\PostcodeApi\tests\TestCase;
+use PostcodeApi;
 
-class GetAddressIOTest extends \PHPUnit\Framework\TestCase
+class GetAddressIOTest extends TestCase
 {
-    public function testCanReadFindResponse()
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'GetAddressIO.json');
-        $response = new Response(200, [], Stream::factory($json));
-        $json = json_decode($response->getBody(), true);
+        $postcodeApi = PostcodeApi::create('GetAddressIO')->setHttpClient(new Client([
+            'handler' => new MockHandler([
+                new Response(200, [], '{"latitude":51.503038,"longitude":-0.128371,"addresses":["Prime Minister & First Lord of the Treasury, 10 Downing Street, , , , London, "]}')
+            ]),
+        ]))->find('SW1A2AA');
 
-        $this->assertEquals($json['Latitude'], '51.500571');
-        $this->assertEquals($json['Longitude'], '-0.142881');
-        $this->assertEquals($json['Addresses'][0], 'Buckingham Palace, , , , , London, Greater London');
+        $this->assertInstanceOf(Address::class, $postcodeApi);
+
+        $this->assertSame([
+            'street' => 'Prime Minister & First Lord of the Treasury, 10 Downing Street, , , , London, ',
+            'house_no' => null,
+            'town' => null,
+            'municipality' => null,
+            'province' => null,
+            'latitude' => 51.503038,
+            'longitude' => -0.128371
+        ], $postcodeApi->toArray());
     }
 
-    public function testCanReadFindAddressResponse()
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
-        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'GetAddressIO.json');
-        $response = new Response(200, [], Stream::factory($json));
-        $json = json_decode($response->getBody(), true);
-
-        $address = new Address();
-        $address
-            ->setLatitude($json['Latitude'])
-            ->setLongitude($json['Longitude'])
-            ->setStreet($json['Addresses'][0]);
-
-        $this->assertEquals($address->getLatitude(), '51.500571');
-        $this->assertEquals($address->getLongitude(), '-0.142881');
-        $this->assertEquals($address->getStreet(), 'Buckingham Palace, , , , , London, Greater London');
+        $this->markTestSkipped('Todo');
     }
 }

@@ -5,22 +5,8 @@ namespace nickurt\postcodeapi\Providers\fr_FR;
 use \nickurt\PostcodeApi\Providers\Provider;
 use \nickurt\PostcodeApi\Entity\Address;
 
-class AdresseDataGouv extends Provider
+class AddresseDataGouv extends Provider
 {
-    protected $apiKey;
-    protected $requestUrl;
-
-    /**
-     * @return mixed
-     */
-    protected function request()
-    {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
     /**
      * @param $postCode
      * @return Address
@@ -39,8 +25,19 @@ class AdresseDataGouv extends Provider
         return $address;
     }
 
+    /**
+     * @return mixed
+     */
+    protected function request()
+    {
+        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+
+        return json_decode($response->getBody(), true);
+    }
+
     public function findByPostcode($postCode)
     {
+
     }
 
     /**

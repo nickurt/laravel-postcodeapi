@@ -1,35 +1,51 @@
 {
-    "name": "nickurt/laravel-postcodeapi",
-    "description": "Universal PostcodeApi for Laravel 5.8",
-    "keywords": ["postcodeapi", "postcode", "api", "universal", "laravel"],
-    "license": "MIT",
-    "require": {
-        "php": "^7.1.3",
-        "laravel/framework": "5.8.*",
-        "guzzlehttp/guzzle": "6.*"
+  "name": "nickurt/laravel-postcodeapi",
+  "description": "Universal PostcodeApi for Laravel 5.8",
+  "keywords": [
+    "postcodeapi",
+    "postcode",
+    "api",
+    "universal",
+    "laravel"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^7.1.3",
+    "laravel/framework": "5.8.*",
+    "guzzlehttp/guzzle": "6.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5",
+    "guzzlehttp/streams": "3.*",
+    "orchestra/testbench": "^3.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "nickurt\\PostcodeApi\\": "src/"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^7.5",
-        "guzzlehttp/streams": "3.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "nickurt\\PostcodeApi\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "extra": {
-        "laravel": {
-            "providers": [
-                "nickurt\\PostcodeApi\\ServiceProvider"
-            ],
-            "aliases": {
-                "PostcodeApi": "nickurt\\PostcodeApi\\Facade"
-            }
-        }
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "nickurt\\PostcodeApi\\tests\\": "tests"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "nickurt\\PostcodeApi\\ServiceProvider"
+      ],
+      "aliases": {
+        "PostcodeApi": "nickurt\\PostcodeApi\\Facade"
+      }
+    }
+  }
 }

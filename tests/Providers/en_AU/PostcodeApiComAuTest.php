@@ -2,40 +2,40 @@
 
 namespace nickurt\PostcodeApi\tests\Providers\en_AU;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
-use \GuzzleHttp\Psr7\Response;
-use \GuzzleHttp\Stream\Stream;
+use nickurt\PostcodeApi\tests\TestCase;
+use PostcodeApi;
 
-class PostcodeApiComAuTest extends \PHPUnit\Framework\TestCase
+class PostcodeApiComAuTest extends TestCase
 {
-    public function testCanReadFindResponse()
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'PostcodeApiComAu.json');
-        $response = new Response(200, [], Stream::factory($json));
-        $json = json_decode($response->getBody(), true);
+        $postcodeApi = PostcodeApi::create('PostcodeApiComAu')->setHttpClient(new Client([
+            'handler' => new MockHandler([
+                new Response(200, [], '[{"name": "Collingwood", "postcode": 3066, "state": {"name": "Victoria", "abbreviation": "VIC"}, "locality": "HAWTHORN", "latitude": -37.799999999999997, "longitude": 144.98330000000001}]')
+            ]),
+        ]))->find('3306');
 
-        $this->assertEquals($json['name'], 'Collingwood');
-        $this->assertEquals($json['state']['name'], 'Victoria');
-        $this->assertEquals($json['latitude'], '-37.8');
-        $this->assertEquals($json['longitude'], '144.9833');
+        $this->assertInstanceOf(Address::class, $postcodeApi);
+
+        $this->assertSame([
+            'street' => null,
+            'house_no' => null,
+            'town' => 'Collingwood',
+            'municipality' => 'Victoria',
+            'province' => null,
+            'latitude' => -37.8,
+            'longitude' => 144.9833
+        ], $postcodeApi->toArray());
     }
 
-    public function testCanReadFindAddressResponse()
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
-        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'PostcodeApiComAu.json');
-        $response = new Response(200, [], Stream::factory($json));
-        $json = json_decode($response->getBody(), true);
-
-        $address = new Address();
-        $address
-            ->setTown($json['name'])
-            ->setMunicipality($json['state']['name'])
-            ->setLatitude($json['latitude'])
-            ->setLongitude($json['longitude']);
-
-        $this->assertEquals($address->getTown(), 'Collingwood');
-        $this->assertEquals($address->getMunicipality(), 'Victoria');
-        $this->assertEquals($address->getLatitude(), '-37.8');
-        $this->assertEquals($address->getLongitude(), '144.9833');
+        $this->markTestSkipped('Todo');
     }
 }

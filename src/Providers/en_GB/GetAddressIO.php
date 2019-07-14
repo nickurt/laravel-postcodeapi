@@ -7,20 +7,6 @@ use \nickurt\PostcodeApi\Entity\Address;
 
 class GetAddressIO extends Provider
 {
-    protected $apiKey;
-    protected $requestUrl;
-
-    /**
-     * @return mixed
-     */
-    protected function request()
-    {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
     /**
      * @param $postCode
      * @return Address
@@ -32,17 +18,30 @@ class GetAddressIO extends Provider
 
         $address = new Address();
         $address
-            ->setLatitude($response['Latitude'])
-            ->setLongitude($response['Longitude'])
-            ->setStreet($response['Addresses'][0]);
+            ->setLatitude($response['latitude'])
+            ->setLongitude($response['longitude'])
+            ->setStreet($response['addresses'][0]);
 
         return $address;
     }
 
+    /**
+     * @return mixed
+     */
+    protected function request()
+    {
+        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+
+        return json_decode($response->getBody(), true);
+    }
+
     public function findByPostcode($postCode)
     {
+
     }
+
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
+
     }
 }

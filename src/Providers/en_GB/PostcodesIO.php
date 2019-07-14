@@ -42,6 +42,7 @@ class PostcodesIO extends Provider
     public function findByPostcode($postCode)
     {
     }
+
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
     }

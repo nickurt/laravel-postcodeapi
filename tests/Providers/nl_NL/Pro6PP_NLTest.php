@@ -2,43 +2,40 @@
 
 namespace nickurt\PostcodeApi\tests\Providers\nl_NL;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
-use \GuzzleHttp\Psr7\Response;
-use \GuzzleHttp\Stream\Stream;
+use nickurt\PostcodeApi\tests\TestCase;
+use PostcodeApi;
 
-class Pro6PP_BETest extends \PHPUnit\Framework\TestCase
+class Pro6PP_NLTest extends TestCase
 {
-    public function testCanReadFindResponse()
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Pro6PP_NL.json');
-        $response = new Response(200, [], Stream::factory($json));
-        $json = json_decode($response->getBody(), true);
+        $postcodeApi = PostcodeApi::create('Pro6PP_NL')->setHttpClient(new Client([
+            'handler' => new MockHandler([
+                new Response(200, [], '{"status":"ok","results":[{"nl_sixpp":"1118CP","street":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","streetnumbers":"178;202;300-306","lat":52.30389,"lng":4.7479,"areacode":"020"}]}')
+            ]),
+        ]))->find('1000');
 
-        $this->assertEquals($json['results'][0]['city'], 'Schiphol');
-        $this->assertEquals($json['results'][0]['municipality'], 'Haarlemmermeer');
-        $this->assertEquals($json['results'][0]['province'], 'Noord-Holland');
-        $this->assertEquals($json['results'][0]['lat'], '52.30389');
-        $this->assertEquals($json['results'][0]['lng'], '4.7479');
+        $this->assertInstanceOf(Address::class, $postcodeApi);
+
+        $this->assertSame([
+            'street' => 'Evert van de Beekstraat',
+            'house_no' => null,
+            'town' => 'Schiphol',
+            'municipality' => 'Haarlemmermeer',
+            'province' => 'Noord-Holland',
+            'latitude' => 52.30389,
+            'longitude' => 4.7479
+        ], $postcodeApi->toArray());
     }
 
-    public function testCanReadFindAddressResponse()
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
-        $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Pro6PP_NL.json');
-        $response = new Response(200, [], Stream::factory($json));
-        $json = json_decode($response->getBody(), true);
-
-        $address = new Address();
-        $address
-            ->setTown($json['results'][0]['city'])
-            ->setMunicipality($json['results'][0]['municipality'])
-            ->setProvince($json['results'][0]['province'])
-            ->setLatitude($json['results'][0]['lat'])
-            ->setLongitude($json['results'][0]['lng']);
-
-        $this->assertEquals($address->getTown(), 'Schiphol');
-        $this->assertEquals($address->getMunicipality(), 'Haarlemmermeer');
-        $this->assertEquals($address->getProvince(), 'Noord-Holland');
-        $this->assertEquals($address->getLatitude(), '52.30389');
-        $this->assertEquals($address->getLongitude(), '4.7479');
+        $this->markTestSkipped('Todo');
     }
 }

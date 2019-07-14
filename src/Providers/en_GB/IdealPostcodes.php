@@ -7,16 +7,12 @@ use \nickurt\PostcodeApi\Entity\Address;
 
 class IdealPostcodes extends Provider
 {
-    protected $apiKey;
-    protected $requestUrl;
-
     /**
      * @return mixed
      */
     protected function request()
     {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl());
+        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
 
         return json_decode($response->getBody(), true);
     }
@@ -42,8 +38,11 @@ class IdealPostcodes extends Provider
 
     public function findByPostcode($postCode)
     {
+
     }
+
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
+
     }
 }

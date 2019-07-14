@@ -7,31 +7,17 @@ use \nickurt\PostcodeApi\Exception\MalformedURLException;
 
 abstract class Provider implements ProviderInterface
 {
-    /**
-     * @var
-     */
+    /** @var string */
     protected $apiKey;
 
-    /**
-     * @var
-     */
+    /** @var string */
     protected $requestUrl;
 
-    /**
-     * @var
-     */
+    /** @var \GuzzleHttp\Client */
     protected $httpClient;
 
     /**
-     * Provider constructor.
-     */
-    public function __construct()
-    {
-        $this->setHttpClient(new Client());
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getApiKey()
     {
@@ -39,7 +25,7 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @param $apiKey
+     * @param string $apiKey
      */
     public function setApiKey($apiKey)
     {
@@ -55,10 +41,16 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @return mixed
+     * @return Client
      */
     public function getHttpClient()
     {
+        if (!isset($this->httpClient)) {
+            $this->httpClient = new \GuzzleHttp\Client();
+
+            return $this->httpClient;
+        }
+
         return $this->httpClient;
     }
 
@@ -69,11 +61,12 @@ abstract class Provider implements ProviderInterface
     public function setHttpClient(Client $client)
     {
         $this->httpClient = $client;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getRequestUrl()
     {
@@ -81,7 +74,7 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @throws MalformedURLException
      */
     public function setRequestUrl($url)
@@ -94,7 +87,7 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @param $apiSecret
+     * @param string $apiSecret
      */
     public function setApiSecret($apiSecret)
     {

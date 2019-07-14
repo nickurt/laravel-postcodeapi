@@ -7,25 +7,14 @@ use \nickurt\PostcodeApi\Entity\Address;
 
 class PostcodeData extends Provider
 {
-    protected $apiKey;
-    protected $requestUrl;
-
-    /**
-     * @return mixed
-     */
-    protected function request()
-    {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
     public function find($postCode)
     {
+
     }
+
     public function findByPostcode($postCode)
     {
+
     }
 
     /**
@@ -49,5 +38,15 @@ class PostcodeData extends Provider
             ->setLongitude($response['details'][0]['lon']);
 
         return $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function request()
+    {
+        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+
+        return json_decode($response->getBody(), true);
     }
 }

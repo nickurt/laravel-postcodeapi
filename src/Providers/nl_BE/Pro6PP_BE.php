@@ -7,20 +7,6 @@ use \nickurt\PostcodeApi\Entity\Address;
 
 class Pro6PP_BE extends Provider
 {
-    protected $apiKey;
-    protected $requestUrl;
-
-    /**
-     * @return mixed
-     */
-    protected function request()
-    {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
     /**
      * @param $postCode
      * @return Address
@@ -41,10 +27,23 @@ class Pro6PP_BE extends Provider
         return $address;
     }
 
+    /**
+     * @return mixed
+     */
+    protected function request()
+    {
+        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+
+        return json_decode($response->getBody(), true);
+    }
+
     public function findByPostcode($postCode)
     {
+
     }
+
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
+
     }
 }

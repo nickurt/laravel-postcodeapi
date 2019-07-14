@@ -28,6 +28,7 @@ class PostcodeNL extends Provider
     public function find($postCode)
     {
     }
+
     public function findByPostcode($postCode)
     {
     }

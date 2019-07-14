@@ -7,24 +7,6 @@ use \nickurt\PostcodeApi\Entity\Address;
 
 class PostcodeApiNu extends Provider
 {
-    protected $apiKey;
-    protected $requestUrl;
-
-    /**
-     * @return mixed
-     */
-    protected function request()
-    {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl(), [
-            'headers' => [
-                'X-Api-Key' => $this->getApiKey()
-            ]
-        ]);
-
-        return json_decode($response->getBody(), true);
-    }
-    
     /**
      * @param $postCode
      * @return Address
@@ -55,8 +37,23 @@ class PostcodeApiNu extends Provider
         return $address;
     }
 
+    /**
+     * @return mixed
+     */
+    protected function request()
+    {
+        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
+            'headers' => [
+                'X-Api-Key' => $this->getApiKey()
+            ]
+        ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
     public function findByPostcode($postCode)
     {
+
     }
 
     /**
@@ -80,7 +77,7 @@ class PostcodeApiNu extends Provider
 
         $address = new Address();
         $address
-            ->setHouseNo($response['_embedded']['addresses'][0]['number'].$response['_embedded']['addresses'][0]['addition'])
+            ->setHouseNo($response['_embedded']['addresses'][0]['number'] . $response['_embedded']['addresses'][0]['addition'])
             ->setStreet($response['_embedded']['addresses'][0]['street'])
             ->setTown($response['_embedded']['addresses'][0]['city']['label'])
             ->setMunicipality($response['_embedded']['addresses'][0]['municipality']['label'])
