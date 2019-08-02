@@ -32,6 +32,11 @@ return [
         'key' => '',
         'code' => 'nl_NL',
     ],
+    'PostcodesNL' => [
+        'url' => 'http://api.postcodes.nl/1.0/address',
+        'key' => '',
+        'code' => 'nl_NL',
+    ],
     'Pro6PP_NL' => [
         'url' => 'https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s',
         'key' => '',
