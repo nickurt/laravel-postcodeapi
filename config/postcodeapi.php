@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'ApiPostcode' => [
+        'url' => 'http://json.api-postcode.nl?postcode=%s&number=%s',
+        'key' => '',
+        'code' => 'nl_NL'
+    ],
     'NationaalGeoRegister' => [
         'url' => 'http://geodata.nationaalgeoregister.nl/locatieserver/v3/free',
         'key' => '',
