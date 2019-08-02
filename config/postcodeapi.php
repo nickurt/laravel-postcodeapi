@@ -11,6 +11,11 @@ return [
         'key' => '',
         'code' => 'nl_NL'
     ],
+    'PostcoDe' => [
+        'url' => 'https://api.postco.de/v1/postcode/%s/%s',
+        'key' => '',
+        'code' => 'nl_NL'
+    ],
     'PostcodeNL' => [
         'url' => 'https://api.postcode.nl/rest/addresses/%s/%s',
         'key' => '',

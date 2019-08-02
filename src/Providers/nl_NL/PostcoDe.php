@@ -5,7 +5,7 @@ namespace nickurt\postcodeapi\Providers\nl_NL;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
-class ApiPostcode extends Provider
+class PostcoDe extends Provider
 {
     /**
      * @param $postCode
@@ -13,7 +13,17 @@ class ApiPostcode extends Provider
      */
     public function find($postCode)
     {
+        //
+    }
 
+    /**
+     * @return mixed
+     */
+    protected function request()
+    {
+        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+
+        return json_decode($response->getBody(), true);
     }
 
     public function findByPostcode($postCode)
@@ -36,27 +46,14 @@ class ApiPostcode extends Provider
 
         $address = new Address();
         $address
-            ->setHouseNo($response['house_number'])
+            ->setHouseNo($houseNumber)
             ->setStreet($response['street'])
             ->setTown($response['city'])
+            ->setMunicipality($response['municipality'])
             ->setProvince($response['province'])
-            ->setLatitude((float)$response['latitude'])
-            ->setLongitude((float)$response['longitude']);
+            ->setLatitude((float)$response['lat'])
+            ->setLongitude((float)$response['lon']);
 
         return $address;
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
-            'headers' => [
-                'Token' => $this->getApiKey()
-            ]
-        ]);
-
-        return json_decode($response->getBody(), true);
     }
 }
