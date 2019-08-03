@@ -13,12 +13,34 @@ class ApiPostcode extends Provider
      */
     public function find($postCode)
     {
+        $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
+        $this->setRequestUrl($this->getRequestUrl() . '?postcode=' . $postCode);
+
+        $response = $this->request();
+
+        if (isset($response['error'])) {
+            return new Address();
+        }
+
+        $address = new Address();
+        $address
+            ->setStreet($response['street'])
+            ->setTown($response['city'])
+            ->setProvince($response['province'])
+            ->setLatitude((float)$response['latitude'])
+            ->setLongitude((float)$response['longitude']);
+
+        return $address;
     }
 
+    /**
+     * @param string $postCode
+     * @return Address
+     */
     public function findByPostcode($postCode)
     {
-
+        return $this->find($postCode);
     }
 
     /**
@@ -30,9 +52,13 @@ class ApiPostcode extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
+        $this->setRequestUrl($this->getRequestUrl() . '?postcode=' . $postCode . '&number=' . $houseNumber);
 
         $response = $this->request();
+
+        if (isset($response['error'])) {
+            return new Address();
+        }
 
         $address = new Address();
         $address
@@ -46,9 +72,6 @@ class ApiPostcode extends Provider
         return $address;
     }
 
-    /**
-     * @return mixed
-     */
     protected function request()
     {
         $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [

@@ -8,7 +8,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 class NationaalGeoRegister extends Provider
 {
     /**
-     * @param $postCode
+     * @param string $postCode
      * @return Address
      */
     public function find($postCode)
@@ -37,9 +37,6 @@ class NationaalGeoRegister extends Provider
         return $address;
     }
 
-    /**
-     * @return mixed
-     */
     protected function request()
     {
         $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
@@ -47,14 +44,18 @@ class NationaalGeoRegister extends Provider
         return json_decode($response->getBody(), true);
     }
 
+    /**
+     * @param string $postCode
+     * @return Address
+     */
     public function findByPostcode($postCode)
     {
-
+        return $this->find($postCode);
     }
 
     /**
-     * @param $postCode
-     * @param $houseNumber
+     * @param string $postCode
+     * @param string $houseNumber
      * @return Address
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)

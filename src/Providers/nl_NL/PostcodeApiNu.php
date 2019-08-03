@@ -2,13 +2,13 @@
 
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
-use \nickurt\PostcodeApi\Providers\Provider;
-use \nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Providers\Provider;
 
 class PostcodeApiNu extends Provider
 {
     /**
-     * @param $postCode
+     * @param string $postCode
      * @return Address
      */
     public function find($postCode)
@@ -16,6 +16,7 @@ class PostcodeApiNu extends Provider
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, ''));
+
         $response = $this->request();
 
         if (!isset($response['_embedded']['addresses'][0])) {
@@ -37,9 +38,6 @@ class PostcodeApiNu extends Provider
         return $address;
     }
 
-    /**
-     * @return mixed
-     */
     protected function request()
     {
         $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
@@ -51,14 +49,18 @@ class PostcodeApiNu extends Provider
         return json_decode($response->getBody(), true);
     }
 
+    /**
+     * @param string $postCode
+     * @return Address
+     */
     public function findByPostcode($postCode)
     {
-
+        return $this->find($postCode);
     }
 
     /**
-     * @param $postCode
-     * @param $houseNumber
+     * @param string $postCode
+     * @param string $houseNumber
      * @return Address
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
@@ -66,6 +68,7 @@ class PostcodeApiNu extends Provider
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
+
         $response = $this->request();
 
         if (!isset($response['_embedded']['addresses'][0])) {

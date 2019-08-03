@@ -6,12 +6,13 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
+use nickurt\PostcodeApi\Providers\nl_NL\PostcodesNL;
 use nickurt\PostcodeApi\tests\TestCase;
-use PostcodeApi;
 
 class PostcodesNLTest extends TestCase
 {
-    /** @var \nickurt\postcodeapi\Providers\nl_NL\PostcodesNL */
+    /** @var PostcodesNL */
     protected $postcodesNL;
 
     /**
@@ -25,6 +26,13 @@ class PostcodesNLTest extends TestCase
 
         $this->postcodesNL = PostcodeApi::create('PostcodesNL');
         $this->postcodesNL->setApiKey('qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas');
+    }
+
+    /** @test */
+    public function it_can_get_the_default_config_values_for_this_provider()
+    {
+        $this->assertSame('qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas', $this->postcodesNL->getApiKey());
+        $this->assertSame('http://api.postcodes.nl/1.0/address', $this->postcodesNL->getRequestUrl());
     }
 
     /** @test */

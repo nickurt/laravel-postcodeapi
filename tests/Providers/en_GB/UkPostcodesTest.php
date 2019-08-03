@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Exception\NotSupportedException;
 use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\en_GB\UkPostcodes;
 use nickurt\PostcodeApi\tests\TestCase;
@@ -57,5 +58,13 @@ class UkPostcodesTest extends TestCase
     public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
         $this->markTestSkipped('Todo');
+    }
+
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
+    {
+        $this->expectException(NotSupportedException::class);
+
+        $this->ukPostcodes->findByPostcodeAndHouseNumber('SW1A2AA', '10 ');
     }
 }

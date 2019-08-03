@@ -6,21 +6,43 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
+use nickurt\PostcodeApi\Providers\nl_NL\Pro6PP_NL;
 use nickurt\PostcodeApi\tests\TestCase;
-use PostcodeApi;
 
 class Pro6PP_NLTest extends TestCase
 {
+    /** @var Pro6PP_NL */
+    protected $pro6PP_NL;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->pro6PP_NL = PostcodeApi::create('Pro6PP_NL');
+        $this->pro6PP_NL->setApiKey('qwertyuiop');
+    }
+
+    /** @test */
+    public function it_can_get_the_default_config_values_for_this_provider()
+    {
+        $this->assertSame('qwertyuiop', $this->pro6PP_NL->getApiKey());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s', $this->pro6PP_NL->getRequestUrl());
+    }
+
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $postcodeApi = PostcodeApi::create('Pro6PP_NL')->setHttpClient(new Client([
+        $address = $this->pro6PP_NL->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"status":"ok","results":[{"nl_sixpp":"1118CP","street":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","streetnumbers":"178;202;300-306","lat":52.30389,"lng":4.7479,"areacode":"020"}]}')
+                new Response(200, [], '{"status":"ok","results":[{"nl_sixpp":"1118CP","street":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","streetnumbers":"202;300-306","lat":52.30295,"lng":4.746278,"areacode":"020"}]}')
             ]),
-        ]))->find('1000');
+        ]))->find('1118CP');
 
-        $this->assertInstanceOf(Address::class, $postcodeApi);
+        $this->assertSame('qwertyuiop', $this->pro6PP_NL->getApiKey());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP', $this->pro6PP_NL->getRequestUrl());
+
+        $this->assertInstanceOf(Address::class, $address);
 
         $this->assertSame([
             'street' => 'Evert van de Beekstraat',
@@ -28,14 +50,77 @@ class Pro6PP_NLTest extends TestCase
             'town' => 'Schiphol',
             'municipality' => 'Haarlemmermeer',
             'province' => 'Noord-Holland',
-            'latitude' => 52.30389,
-            'longitude' => 4.7479
-        ], $postcodeApi->toArray());
+            'latitude' => 52.30295,
+            'longitude' => 4.746278
+        ], $address->toArray());
     }
 
     /** @test */
     public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
-        $this->markTestSkipped('Todo');
+        $address = $this->pro6PP_NL->setHttpClient(new Client([
+            'handler' => new MockHandler([
+                new Response(200, [], '{"status":"error","error":{"message":"Invalid nl_sixpp format"},"results":[]}')
+            ]),
+        ]))->find('XXXXAB');
+
+        $this->assertInstanceOf(Address::class, $address);
+
+        $this->assertSame([
+            'street' => null,
+            'house_no' => null,
+            'town' => null,
+            'municipality' => null,
+            'province' => null,
+            'latitude' => null,
+            'longitude' => null
+        ], $address->toArray());
+    }
+
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
+    {
+        $address = $this->pro6PP_NL->setHttpClient(new Client([
+            'handler' => new MockHandler([
+                new Response(200, [], '{"status":"ok","results":[{"nl_sixpp":"1118CP","street":"Evert van de Beekstraat","street_nen5825":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","streetnumbers":"202;300-306","lat":52.3038977,"lng":4.7479069,"areacode":"020","surface":16800,"functions":["kantoorfunctie"],"construction_year":2007}]}')
+            ]),
+        ]))->findByPostcodeAndHouseNumber('1118CP', '202');
+
+        $this->assertSame('qwertyuiop', $this->pro6PP_NL->getApiKey());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP&streetnumber=202', $this->pro6PP_NL->getRequestUrl());
+
+        $this->assertInstanceOf(Address::class, $address);
+
+        $this->assertSame([
+            'street' => 'Evert van de Beekstraat',
+            'house_no' => '202',
+            'town' => 'Schiphol',
+            'municipality' => 'Haarlemmermeer',
+            'province' => 'Noord-Holland',
+            'latitude' => 52.3038977,
+            'longitude' => 4.7479069
+        ], $address->toArray());
+    }
+
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code()
+    {
+        $address = $this->pro6PP_NL->setHttpClient(new Client([
+            'handler' => new MockHandler([
+                new Response(200, [], '{"status":"error","error":{"message":"Streetnumber not found"},"results":[]}')
+            ]),
+        ]))->findByPostcodeAndHouseNumber('1118CP', '1');
+
+        $this->assertInstanceOf(Address::class, $address);
+
+        $this->assertSame([
+            'street' => null,
+            'house_no' => null,
+            'town' => null,
+            'municipality' => null,
+            'province' => null,
+            'latitude' => null,
+            'longitude' => null
+        ], $address->toArray());
     }
 }

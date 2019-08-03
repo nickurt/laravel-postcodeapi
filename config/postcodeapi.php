@@ -2,7 +2,7 @@
 
 return [
     'ApiPostcode' => [
-        'url' => 'http://json.api-postcode.nl?postcode=%s&number=%s',
+        'url' => 'http://json.api-postcode.nl',
         'key' => '',
         'code' => 'nl_NL'
     ],
@@ -55,7 +55,7 @@ return [
     ],
 
     'Geocodio' => [
-        'url' => 'https://api.geocod.io/v1/geocode/?q=%s&api_key=%s',
+        'url' => 'https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s',
         'key' => '',
         'code' => 'en_US',
     ],
