@@ -59,6 +59,11 @@ return [
         'key' => '',
         'code' => 'en_US',
     ],
+    'Google' => [
+        'url' => 'https://maps.googleapis.com/maps/api/geocode/json',
+        'key' => '',
+        'code' => 'en_US',
+    ],
 
     'IdealPostcodes' => [
         'url' => 'https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s',
