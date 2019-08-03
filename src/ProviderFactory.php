@@ -2,8 +2,6 @@
 
 namespace nickurt\PostcodeApi;
 
-use \Config;
-
 class ProviderFactory
 {
     /**
@@ -12,21 +10,19 @@ class ProviderFactory
      */
     public static function create($provider)
     {
-        if (!isset(Config::get('postcodeapi')[$provider])) {
+        if (!$config = config()->get('postcodeapi.' . $provider)) {
             throw new \InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
         }
 
-        $configInformation = \Config::get('postcodeapi')[$provider];
-
-        $providerClass = 'nickurt\\PostcodeApi\\Providers\\' . $configInformation['code'] . '\\' . $provider;
+        $providerClass = 'nickurt\\PostcodeApi\\Providers\\' . $config['code'] . '\\' . $provider;
 
         if (class_exists($providerClass)) {
-            $class = new $providerClass;
-            $class->setApiKey($configInformation['key']);
-            $class->setRequestUrl($configInformation['url']);
+            $class = (new $providerClass);
+            $class->setApiKey($config['key']);
+            $class->setRequestUrl($config['url']);
 
-            if (isset($configInformation['secret'])) {
-                $class->setApiSecret($configInformation['secret']);
+            if (isset($config['secret'])) {
+                $class->setApiSecret($config['secret']);
             }
 
             return $class;

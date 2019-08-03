@@ -2,14 +2,11 @@
 
 namespace nickurt\postcodeapi\Providers\en_GB;
 
-use \nickurt\PostcodeApi\Providers\Provider;
-use \nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Providers\Provider;
 
 class IdealPostcodes extends Provider
 {
-    /**
-     * @return mixed
-     */
     protected function request()
     {
         $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
@@ -18,13 +15,18 @@ class IdealPostcodes extends Provider
     }
 
     /**
-     * @param $postCode
+     * @param string $postCode
      * @return Address
      */
     public function find($postCode)
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()));
+
         $response = $this->request();
+
+        if (isset($response['message']) && $response['message'] != "Success") {
+            return new Address();
+        }
 
         $address = new Address();
         $address
@@ -36,13 +38,21 @@ class IdealPostcodes extends Provider
         return $address;
     }
 
+    /**
+     * @param string $postCode
+     * @return Address
+     */
     public function findByPostcode($postCode)
     {
-
+        return $this->find($postCode);
     }
 
+    /**
+     * @param string $postCode
+     * @param string $houseNumber
+     */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-
+        throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }
 }

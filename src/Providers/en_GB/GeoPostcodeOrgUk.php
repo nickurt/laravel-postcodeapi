@@ -2,19 +2,23 @@
 
 namespace nickurt\postcodeapi\Providers\en_GB;
 
-use \nickurt\PostcodeApi\Providers\Provider;
-use \nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Exception\NotSupportedException;
+use nickurt\PostcodeApi\Providers\Provider;
 
 class GeoPostcodeOrgUk extends Provider
 {
     /**
-     * @param $postCode
+     * @param string $postCode
      * @return Address
      */
     public function find($postCode)
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode));
-        $response = $this->request();
+
+        if (!$response = $this->request()) {
+            return new Address();
+        }
 
         $address = new Address();
         $address
@@ -24,9 +28,6 @@ class GeoPostcodeOrgUk extends Provider
         return $address;
     }
 
-    /**
-     * @return mixed
-     */
     protected function request()
     {
         $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
@@ -34,13 +35,21 @@ class GeoPostcodeOrgUk extends Provider
         return json_decode($response->getBody(), true);
     }
 
+    /**
+     * @param string $postCode
+     * @return Address
+     */
     public function findByPostcode($postCode)
     {
-
+        return $this->find($postCode);
     }
 
+    /**
+     * @param string $postCode
+     * @param string $houseNumber
+     */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-
+        throw new NotSupportedException();
     }
 }

@@ -2,8 +2,8 @@
 
 namespace nickurt\postcodeapi\Providers\en_GB;
 
-use \nickurt\PostcodeApi\Providers\Provider;
-use \nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Providers\Provider;
 
 class GetAddressIO extends Provider
 {
@@ -13,35 +13,68 @@ class GetAddressIO extends Provider
      */
     public function find($postCode)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()));
+        $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '?expand=true');
+
         $response = $this->request();
+
+        if (isset($response['Message'])) {
+            return new Address();
+        }
 
         $address = new Address();
         $address
             ->setLatitude($response['latitude'])
             ->setLongitude($response['longitude'])
-            ->setStreet($response['addresses'][0]);
+            ->setTown($response['addresses'][0]['town_or_city'])
+            ->setHouseNo($response['addresses'][0]['building_number'])
+            ->setStreet($response['addresses'][0]['thoroughfare']);
 
         return $address;
     }
 
-    /**
-     * @return mixed
-     */
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
+            'headers' => [
+                'api-key' => $this->getApiKey()
+            ]
+        ]);
 
         return json_decode($response->getBody(), true);
     }
 
+    /**
+     * @param string $postCode
+     * @return Address
+     */
     public function findByPostcode($postCode)
     {
-
+        return $this->find($postCode);
     }
 
+    /**
+     * @param string $postCode
+     * @param string $houseNumber
+     * @return Address
+     */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
+        $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber . '?expand=true');
 
+        $response = $this->request();
+
+        if (isset($response['Message'])) {
+            return new Address();
+        }
+
+        $address = new Address();
+        $address
+            ->setLatitude($response['latitude'])
+            ->setLongitude($response['longitude'])
+            ->setTown($response['addresses'][0]['town_or_city'])
+            ->setHouseNo($response['addresses'][0]['building_number'])
+            ->setStreet($response['addresses'][0]['thoroughfare']);
+
+        return $address;
     }
 }

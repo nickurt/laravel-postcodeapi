@@ -2,8 +2,8 @@
 
 namespace nickurt\PostcodeApi\Providers;
 
-use \GuzzleHttp\Client as Client;
-use \nickurt\PostcodeApi\Exception\MalformedURLException;
+use GuzzleHttp\Client as Client;
+use nickurt\PostcodeApi\Exception\MalformedURLException;
 
 abstract class Provider implements ProviderInterface
 {

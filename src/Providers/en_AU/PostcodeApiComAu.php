@@ -2,19 +2,25 @@
 
 namespace nickurt\postcodeapi\Providers\en_AU;
 
-use \nickurt\PostcodeApi\Providers\Provider;
-use \nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Exception\NotSupportedException;
+use nickurt\PostcodeApi\Providers\Provider;
 
 class PostcodeApiComAu extends Provider
 {
     /**
-     * @param $postCode
+     * @param string $postCode
      * @return Address
      */
     public function find($postCode)
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode));
+
         $response = $this->request();
+
+        if (count($response) < 1) {
+            return new Address();
+        }
 
         $address = new Address();
         $address
@@ -33,13 +39,21 @@ class PostcodeApiComAu extends Provider
         return json_decode($response->getBody(), true);
     }
 
+    /**
+     * @param string $postCode
+     * @return mixed
+     */
     public function findByPostcode($postCode)
     {
-
+        return $this->find($postCode);
     }
 
+    /**
+     * @param string $postCode
+     * @param string $houseNumber
+     */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-
+        throw new NotSupportedException();
     }
 }

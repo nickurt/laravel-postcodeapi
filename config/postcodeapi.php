@@ -66,7 +66,7 @@ return [
         'code' => 'en_GB'
     ],
     'GetAddressIO' => [
-        'url' => 'https://api.getaddress.io/v2/uk/%s?api-key=%s',
+        'url' => 'https://api.getaddress.io/find',
         'key' => '',
         'code' => 'en_GB'
     ],
