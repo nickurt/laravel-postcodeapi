@@ -2,21 +2,23 @@
 
 namespace nickurt\PostcodeApi;
 
+use nickurt\PostcodeApi\Exception\InvalidArgumentException;
+
 class ProviderFactory
 {
     /**
-     * @param $provider
-     * @return mixed
+     * @param string $provider
+     * @return \nickurt\PostcodeApi\Providers\Provider $class
+     * @throws \nickurt\PostcodeApi\Exception\InvalidArgumentException
      */
     public static function create($provider)
     {
         if (!$config = config()->get('postcodeapi.' . $provider)) {
-            throw new \InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
+            throw new InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
         }
 
-        $providerClass = 'nickurt\\PostcodeApi\\Providers\\' . $config['code'] . '\\' . $provider;
-
-        if (class_exists($providerClass)) {
+        /** @var \nickurt\PostcodeApi\Providers\Provider $class */
+        if (class_exists($providerClass = 'nickurt\\PostcodeApi\\Providers\\' . $config['code'] . '\\' . $provider)) {
             $class = (new $providerClass);
             $class->setApiKey($config['key']);
             $class->setRequestUrl($config['url']);
@@ -28,6 +30,6 @@ class ProviderFactory
             return $class;
         }
 
-        throw new \InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
+        throw new InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
     }
 }
