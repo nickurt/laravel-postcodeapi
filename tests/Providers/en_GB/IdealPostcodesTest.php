@@ -63,7 +63,7 @@ class IdealPostcodesTest extends TestCase
         // {"code":4040,"message":"Postcode Not Found"}
 
         $address = $this->idealPostcodes->setHttpClient(new Client([
-            'handler' => new MockHandler([
+            'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"code":4040,"message":"Postcode Not Found"}')
             ]),
         ]))->find('QW1A2AA');

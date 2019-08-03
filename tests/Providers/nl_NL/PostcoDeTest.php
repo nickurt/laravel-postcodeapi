@@ -74,7 +74,7 @@ class PostcoDeTest extends TestCase
         // {"error":"No results"}
 
         $address = $this->postcoDe->setHttpClient(new Client([
-            'handler' => new MockHandler([
+            'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"error":"No results"}')
             ]),
         ]))->findByPostcodeAndHouseNumber('XXXXAB', '1');

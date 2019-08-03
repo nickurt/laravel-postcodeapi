@@ -27,8 +27,8 @@ class PostcodesNL extends Provider
             ->setTown($response['results'][0]['city'])
             ->setMunicipality($response['results'][0]['municipality'])
             ->setProvince($response['results'][0]['province'])
-            ->setLatitude((float)$response['results'][0]['latitude'])
-            ->setLongitude((float)$response['results'][0]['longitude']);
+            ->setLatitude($response['results'][0]['latitude'])
+            ->setLongitude($response['results'][0]['longitude']);
 
         return $address;
     }
@@ -69,8 +69,8 @@ class PostcodesNL extends Provider
             ->setHouseNo($houseNumber)
             ->setMunicipality($response['results'][0]['municipality'])
             ->setProvince($response['results'][0]['province'])
-            ->setLatitude((float)$response['results'][0]['latitude'])
-            ->setLongitude((float)$response['results'][0]['longitude']);
+            ->setLatitude($response['results'][0]['latitude'])
+            ->setLongitude($response['results'][0]['longitude']);
 
         return $address;
     }

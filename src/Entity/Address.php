@@ -4,53 +4,40 @@ namespace nickurt\PostcodeApi\Entity;
 
 class Address
 {
-    /**
-     * @var
-     */
+    /** @var null|string */
     protected $street;
 
-    /**
-     * @var
-     */
+    /** @var null|string */
     protected $houseNo;
 
-    /**
-     * @var
-     */
+    /** @var null|string */
     protected $town;
 
-    /**
-     * @var
-     */
+    /** @var null|string */
     protected $municipality;
 
-    /**
-     * @var
-     */
+    /** @var null|string */
     protected $province;
 
-    /**
-     * @var
-     */
+    /** @var null|float */
     protected $latitude;
 
-    /**
-     * @var
-     */
+    /** @var null|float */
     protected $longitude;
 
     /**
-     * @param $houseNo
+     * @param string $houseNo
      * @return $this
      */
     public function setHouseNo($houseNo)
     {
         $this->houseNo = $houseNo;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getHouseNo()
     {
@@ -58,17 +45,18 @@ class Address
     }
 
     /**
-     * @param $street
+     * @param string $street
      * @return $this
      */
     public function setStreet($street)
     {
         $this->street = $street;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getStreet()
     {
@@ -76,17 +64,18 @@ class Address
     }
 
     /**
-     * @param $municipality
+     * @param string $municipality
      * @return $this
      */
     public function setMunicipality($municipality)
     {
         $this->municipality = $municipality;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getMunicipality()
     {
@@ -94,17 +83,18 @@ class Address
     }
 
     /**
-     * @param $town
+     * @param string $town
      * @return $this
      */
     public function setTown($town)
     {
         $this->town = $town;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getTown()
     {
@@ -112,17 +102,18 @@ class Address
     }
 
     /**
-     * @param $province
+     * @param string $province
      * @return $this
      */
     public function setProvince($province)
     {
         $this->province = $province;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getProvince()
     {
@@ -130,17 +121,18 @@ class Address
     }
 
     /**
-     * @param $latitude
+     * @param float $latitude
      * @return $this
      */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude)
     {
         $this->latitude = $latitude;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
     public function getLatitude()
     {
@@ -148,17 +140,18 @@ class Address
     }
 
     /**
-     * @param $longitude
+     * @param float $longitude
      * @return $this
      */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude)
     {
         $this->longitude = $longitude;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
     public function getLongitude()
     {

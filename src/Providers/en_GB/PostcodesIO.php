@@ -25,6 +25,10 @@ class PostcodesIO extends Provider
 
         $response = $this->request();
 
+        if (!is_array($response['result'])) {
+            return new Address();
+        }
+
         $address = new Address();
         $address
             ->setTown($response['result'][0]['region'])

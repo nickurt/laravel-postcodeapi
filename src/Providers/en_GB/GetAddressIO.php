@@ -34,11 +34,15 @@ class GetAddressIO extends Provider
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
-            'headers' => [
-                'api-key' => $this->getApiKey()
-            ]
-        ]);
+        try {
+            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
+                'headers' => [
+                    'api-key' => $this->getApiKey()
+                ]
+            ]);
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            return json_decode($e->getResponse()->getBody(), true);
+        }
 
         return json_decode($response->getBody(), true);
     }

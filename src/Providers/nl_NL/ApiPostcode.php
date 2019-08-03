@@ -28,8 +28,8 @@ class ApiPostcode extends Provider
             ->setStreet($response['street'])
             ->setTown($response['city'])
             ->setProvince($response['province'])
-            ->setLatitude((float)$response['latitude'])
-            ->setLongitude((float)$response['longitude']);
+            ->setLatitude($response['latitude'])
+            ->setLongitude($response['longitude']);
 
         return $address;
     }
@@ -66,19 +66,23 @@ class ApiPostcode extends Provider
             ->setStreet($response['street'])
             ->setTown($response['city'])
             ->setProvince($response['province'])
-            ->setLatitude((float)$response['latitude'])
-            ->setLongitude((float)$response['longitude']);
+            ->setLatitude($response['latitude'])
+            ->setLongitude($response['longitude']);
 
         return $address;
     }
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
-            'headers' => [
-                'Token' => $this->getApiKey()
-            ]
-        ]);
+        try {
+            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
+                'headers' => [
+                    'Token' => $this->getApiKey()
+                ]
+            ]);
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            return json_decode($e->getResponse()->getBody(), true);
+        }
 
         return json_decode($response->getBody(), true);
     }

@@ -67,7 +67,7 @@ class ApiPostcodeTest extends TestCase
         // {"error":"Cannot resolve address for postcode: 1118CP"}
 
         $address = $this->apiPostcode->setHttpClient(new Client([
-            'handler' => new MockHandler([
+            'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"error":"Cannot resolve address for postcode: 1118CP"}')
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '1');
@@ -117,7 +117,7 @@ class ApiPostcodeTest extends TestCase
         // {"error":"Given postcode incorrect"}
 
         $address = $this->apiPostcode->setHttpClient(new Client([
-            'handler' => new MockHandler([
+            'handler' => MockHandler::createWithMiddleware([
                 new Response(400, [], '{"error":"Given postcode incorrect"}')
             ]),
         ]))->find('XXXXAB');

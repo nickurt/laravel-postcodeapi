@@ -62,8 +62,8 @@ class PostcodeDataTest extends TestCase
             'town' => 'Schiphol',
             'municipality' => 'Haarlemmermeer',
             'province' => 'Noord-Holland',
-            'latitude' => '52.3035437835548',
-            'longitude' => '4.7474064734608'
+            'latitude' => 52.3035437835548,
+            'longitude' => 4.7474064734608
         ], $address->toArray());
     }
 

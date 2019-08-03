@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers;
 
 use GuzzleHttp\Client as Client;
+use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\MalformedURLException;
 
 abstract class Provider implements ProviderInterface
@@ -11,9 +12,12 @@ abstract class Provider implements ProviderInterface
     protected $apiKey;
 
     /** @var string */
+    protected $apiSecret;
+
+    /** @var string */
     protected $requestUrl;
 
-    /** @var \GuzzleHttp\Client */
+    /** @var Client */
     protected $httpClient;
 
     /**
@@ -25,15 +29,18 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @param string $apiKey
+     * @param $apiKey
+     * @return $this
      */
     public function setApiKey($apiKey)
     {
         $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getApiSecret()
     {
@@ -46,7 +53,7 @@ abstract class Provider implements ProviderInterface
     public function getHttpClient()
     {
         if (!isset($this->httpClient)) {
-            $this->httpClient = new \GuzzleHttp\Client();
+            $this->httpClient = new Client();
 
             return $this->httpClient;
         }
@@ -75,6 +82,7 @@ abstract class Provider implements ProviderInterface
 
     /**
      * @param string $url
+     * @return $this
      * @throws MalformedURLException
      */
     public function setRequestUrl($url)
@@ -84,14 +92,19 @@ abstract class Provider implements ProviderInterface
         }
 
         $this->requestUrl = $url;
+
+        return $this;
     }
 
     /**
      * @param string $apiSecret
+     * @return $this
      */
     public function setApiSecret($apiSecret)
     {
         $this->apiSecret = $apiSecret;
+
+        return $this;
     }
 
     /**
@@ -100,21 +113,21 @@ abstract class Provider implements ProviderInterface
     abstract protected function request();
 
     /**
-     * @param $postCode
-     * @return mixed
+     * @param string $postCode
+     * @return Address
      */
     abstract protected function find($postCode);
 
     /**
-     * @param $postCode
-     * @return mixed
+     * @param string $postCode
+     * @return Address
      */
     abstract protected function findByPostcode($postCode);
 
     /**
-     * @param $postCode
-     * @param $houseNumber
-     * @return mixed
+     * @param string $postCode
+     * @param string $houseNumber
+     * @return Address
      */
     abstract protected function findByPostcodeAndHouseNumber($postCode, $houseNumber);
 }

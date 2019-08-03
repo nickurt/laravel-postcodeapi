@@ -30,7 +30,11 @@ class GeoPostcodeOrgUk extends Provider
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+        try {
+            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            return json_decode($e->getResponse()->getBody(), true);
+        }
 
         return json_decode($response->getBody(), true);
     }

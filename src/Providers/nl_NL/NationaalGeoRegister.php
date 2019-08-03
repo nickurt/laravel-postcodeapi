@@ -31,8 +31,8 @@ class NationaalGeoRegister extends Provider
             ->setTown($response['response']['docs'][0]['woonplaatsnaam'])
             ->setMunicipality($response['response']['docs'][0]['gemeentenaam'])
             ->setProvince($response['response']['docs'][0]['provincienaam'])
-            ->setLatitude((float)$lat)
-            ->setLongitude((float)$lng);
+            ->setLatitude($lat)
+            ->setLongitude($lng);
 
         return $address;
     }
@@ -79,8 +79,8 @@ class NationaalGeoRegister extends Provider
             ->setTown($response['response']['docs'][0]['woonplaatsnaam'])
             ->setMunicipality($response['response']['docs'][0]['gemeentenaam'])
             ->setProvince($response['response']['docs'][0]['provincienaam'])
-            ->setLatitude((float)$lat)
-            ->setLongitude((float)$lng);
+            ->setLatitude($lat)
+            ->setLongitude($lng);
 
         return $address;
     }

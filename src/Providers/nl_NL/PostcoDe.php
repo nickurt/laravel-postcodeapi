@@ -18,7 +18,11 @@ class PostcoDe extends Provider
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+        try {
+            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            return json_decode($e->getResponse()->getBody(), true);
+        }
 
         return json_decode($response->getBody(), true);
     }
@@ -55,8 +59,8 @@ class PostcoDe extends Provider
             ->setTown($response['city'])
             ->setMunicipality($response['municipality'])
             ->setProvince($response['province'])
-            ->setLatitude((float)$response['lat'])
-            ->setLongitude((float)$response['lon']);
+            ->setLatitude($response['lat'])
+            ->setLongitude($response['lon']);
 
         return $address;
     }

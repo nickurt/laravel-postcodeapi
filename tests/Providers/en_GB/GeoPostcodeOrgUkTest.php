@@ -49,8 +49,8 @@ class GeoPostcodeOrkUkTest extends TestCase
             'town' => null,
             'municipality' => null,
             'province' => null,
-            'latitude' => '51.501009',
-            'longitude' => '-0.141588'
+            'latitude' => 51.501009,
+            'longitude' => -0.141588
         ], $address->toArray());
     }
 
@@ -59,12 +59,11 @@ class GeoPostcodeOrkUkTest extends TestCase
     {
         // GuzzleHttp\Exception\ClientException: Client error: `GET http://www.geopostcode.org.uk/api/XW2A2AA.json` resulted in a `404 Not found` response:
         // Postcode not found
-        //
 
         $address = $this->geoPostcodeOrgUk->setHttpClient(new Client([
-            'handler' => new MockHandler([
+            'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], 'Postcode not found' . PHP_EOL)
-            ]),
+            ])
         ]))->find('XW2A2AA');
 
         $this->assertSame([

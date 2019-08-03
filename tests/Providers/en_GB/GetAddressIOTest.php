@@ -61,9 +61,9 @@ class GetAddressIOTest extends TestCase
         // {"Message":"Not Found"}
 
         $address = $this->getAddressIO->setHttpClient(new Client([
-            'handler' => new MockHandler([
+            'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"Message":"Not Found"}')
-            ]),
+            ])
         ]))->find('XX404X');
 
         $this->assertInstanceOf(Address::class, $address);
@@ -110,7 +110,7 @@ class GetAddressIOTest extends TestCase
         // {"Message":"Not Found"}
 
         $address = $this->getAddressIO->setHttpClient(new Client([
-            'handler' => new MockHandler([
+            'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"Message":"Not Found"}')
             ]),
         ]))->findByPostcodeAndHouseNumber('XX404X', '10');
