@@ -36,23 +36,23 @@ class GeocodioTest extends TestCase
     {
         $address = $this->geocodio->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"input":{"address_components":{"number":"42370","street":"Bob Hope","suffix":"Dr","formatted_street":"Bob Hope Dr","city":"Rancho Mirage","state":"CA","country":"US"},"formatted_address":"42370 Bob Hope Dr, Rancho Mirage, CA"},"results":[{"address_components":{"number":"42370","street":"Bob Hope","suffix":"Dr","formatted_street":"Bob Hope Dr","city":"Rancho Mirage","county":"Riverside County","state":"CA","zip":"92270","country":"US"},"formatted_address":"42370 Bob Hope Dr, Rancho Mirage, CA 92270","location":{"lat":33.73865,"lng":-116.407153},"accuracy":1,"accuracy_type":"rooftop","source":"Riverside"}]}')
+                new Response(200, [], '{"input":{"address_components":{"zip":"92270","country":"US"},"formatted_address":"92270"},"results":[{"address_components":{"city":"Rancho Mirage","county":"Riverside County","state":"CA","zip":"92270","country":"US"},"formatted_address":"Rancho Mirage, CA 92270","location":{"lat":33.73974,"lng":-116.41279},"accuracy":1,"accuracy_type":"place","source":"TIGER\/Line\u00ae dataset from the US Census Bureau"}]}')
             ]),
-        ]))->find('42370+Bob+Hope+Drive,+Rancho+Mirage+CA');
+        ]))->find('92270');
 
         $this->assertSame('qwertyuiop', $this->geocodio->getApiKey());
-        $this->assertSame('https://api.geocod.io/v1.3/geocode/?q=42370+Bob+Hope+Drive,+Rancho+Mirage+CA&api_key=qwertyuiop', $this->geocodio->getRequestUrl());
+        $this->assertSame('https://api.geocod.io/v1.3/geocode/?q=92270&api_key=qwertyuiop', $this->geocodio->getRequestUrl());
 
         $this->assertInstanceOf(Address::class, $address);
 
         $this->assertSame([
-            'street' => 'Bob Hope Dr',
+            'street' => null,
             'house_no' => null,
             'town' => 'Rancho Mirage',
             'municipality' => 'CA',
             'province' => null,
-            'latitude' => 33.73865,
-            'longitude' => -116.407153
+            'latitude' => 33.73974,
+            'longitude' => -116.41279
         ], $address->toArray());
     }
 

@@ -36,23 +36,23 @@ class GoogleTest extends TestCase
     {
         $address = $this->google->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"results":[{"address_components":[{"long_name":"42370","short_name":"42370","types":["postal_code"]},{"long_name":"Rosine, Kentucky","short_name":"Rosine, Kentucky","types":["locality","political"]},{"long_name":"Ohio County","short_name":"Ohio County","types":["administrative_area_level_2","political"]},{"long_name":"Kentucky","short_name":"KY","types":["administrative_area_level_1","political"]},{"long_name":"Verenigde Staten","short_name":"US","types":["country","political"]}],"formatted_address":"Rosine, Kentucky, Kentucky 42370, Verenigde Staten","geometry":{"bounds":{"northeast":{"lat":37.450388,"lng":-86.734956},"southwest":{"lat":37.446886,"lng":-86.746012}},"location":{"lat":37.4492991,"lng":-86.73849419999999},"location_type":"APPROXIMATE","viewport":{"northeast":{"lat":37.450388,"lng":-86.734956},"southwest":{"lat":37.446886,"lng":-86.746012}}},"place_id":"ChIJoef5qdhvb4gR1p94ocmSb64","types":["postal_code"]}],"status":"OK"}')
+                new Response(200, [], '{"results":[{"address_components":[{"long_name":"92270","short_name":"92270","types":["postal_code"]},{"long_name":"Rancho Mirage","short_name":"Rancho Mirage","types":["locality","political"]},{"long_name":"Riverside County","short_name":"Riverside County","types":["administrative_area_level_2","political"]},{"long_name":"Californië","short_name":"CA","types":["administrative_area_level_1","political"]},{"long_name":"Verenigde Staten","short_name":"US","types":["country","political"]}],"formatted_address":"Rancho Mirage, Californië 92270, Verenigde Staten","geometry":{"bounds":{"northeast":{"lat":33.826022,"lng":-116.3881649},"southwest":{"lat":33.713622,"lng":-116.4779241}},"location":{"lat":33.7694489,"lng":-116.431192},"location_type":"APPROXIMATE","viewport":{"northeast":{"lat":33.826022,"lng":-116.3881649},"southwest":{"lat":33.713622,"lng":-116.4779241}}},"place_id":"ChIJOdHx3mD92oARzfjstDdtCYo","types":["postal_code"]}],"status":"OK"}')
             ]),
-        ]))->find('42370');
+        ]))->find('92270');
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=42370&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=92270&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
 
         $this->assertInstanceOf(Address::class, $address);
 
         $this->assertSame([
             'street' => null,
             'house_no' => null,
-            'town' => 'Rosine, Kentucky',
-            'municipality' => 'Ohio County',
-            'province' => 'Kentucky',
-            'latitude' => 37.4492991,
-            'longitude' => -86.73849419999999
+            'town' => 'Rancho Mirage',
+            'municipality' => 'Riverside County',
+            'province' => 'Californië',
+            'latitude' => 33.7694489,
+            'longitude' => -116.431192
         ], $address->toArray());
     }
 

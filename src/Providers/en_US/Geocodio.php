@@ -24,7 +24,7 @@ class Geocodio extends Provider
         $address = new Address();
         $address
             ->setMunicipality($response['results'][0]['address_components']['state'])
-            ->setStreet($response['results'][0]['address_components']['formatted_street'])
+            ->setStreet($response['results'][0]['address_components']['formatted_street'] ?? null)
             ->setTown($response['results'][0]['address_components']['city'])
             ->setLatitude($response['results'][0]['location']['lat'])
             ->setLongitude($response['results'][0]['location']['lng']);

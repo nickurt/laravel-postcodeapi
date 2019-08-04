@@ -17,6 +17,9 @@ abstract class Provider implements ProviderInterface
     /** @var string */
     protected $requestUrl;
 
+    /** @var array */
+    protected $options = [];
+
     /** @var Client */
     protected $httpClient;
 
@@ -26,6 +29,25 @@ abstract class Provider implements ProviderInterface
     public function getApiKey()
     {
         return $this->apiKey;
+    }
+
+    /**
+     * @param array $options
+     * @return $this
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 
     /**

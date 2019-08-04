@@ -54,6 +54,11 @@ return [
         'code' => 'nl_BE',
     ],
 
+    'Bing' => [
+        'url' => 'https://dev.virtualearth.net/REST/v1/Locations',
+        'key' => '',
+        'code' => 'en_US'
+    ],
     'Geocodio' => [
         'url' => 'https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s',
         'key' => '',

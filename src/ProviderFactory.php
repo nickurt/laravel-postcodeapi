@@ -28,6 +28,10 @@ class ProviderFactory
                 $class->setApiSecret($config['secret']);
             }
 
+            if (isset($config['options'])) {
+                $class->setOptions($config['options']);
+            }
+
             return $class;
         }
 
