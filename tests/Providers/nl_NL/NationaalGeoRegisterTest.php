@@ -6,31 +6,24 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\nl_NL\NationaalGeoRegister;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class NationaalGeoRegisterTest extends TestCase
+class NationaalGeoRegisterTest extends BaseProviderTest
 {
     /** @var NationaalGeoRegister */
     protected $nationaalGeoRegister;
 
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->nationaalGeoRegister = PostcodeApi::create('NationaalGeoRegister');
+        $this->nationaalGeoRegister = (new NationaalGeoRegister)
+            ->setRequestUrl('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free');
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('', $this->nationaalGeoRegister->getApiKey());
+        $this->assertSame(null, $this->nationaalGeoRegister->getApiKey());
         $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', $this->nationaalGeoRegister->getRequestUrl());
     }
 

@@ -6,26 +6,24 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\fr_FR\AddresseDataGouv;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class AdresseDataGouvTest extends TestCase
+class AdresseDataGouvTest extends BaseProviderTest
 {
     /** @var AddresseDataGouv */
     protected $adresseDataGouv;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->adresseDataGouv = PostcodeApi::create('AddresseDataGouv');
+        $this->adresseDataGouv = (new AddresseDataGouv)
+            ->setRequestUrl('https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1');
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('', $this->adresseDataGouv->getApiKey());
+        $this->assertSame(null, $this->adresseDataGouv->getApiKey());
         $this->assertSame('https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1', $this->adresseDataGouv->getRequestUrl());
     }
 

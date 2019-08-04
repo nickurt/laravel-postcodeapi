@@ -7,21 +7,19 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\en_US\Bing;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class BingTest extends TestCase
+class BingTest extends BaseProviderTest
 {
     /** @var Bing */
     protected $bing;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->bing = PostcodeApi::create('Bing');
-        $this->bing->setApiKey('KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N');
+        $this->bing = (new Bing)
+            ->setRequestUrl('https://dev.virtualearth.net/REST/v1/Locations')
+            ->setApiKey('KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N');
     }
 
     /** @test */

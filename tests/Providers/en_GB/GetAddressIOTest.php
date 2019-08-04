@@ -6,21 +6,19 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\en_GB\GetAddressIO;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class GetAddressIOTest extends TestCase
+class GetAddressIOTest extends BaseProviderTest
 {
     /** @var GetAddressIO */
     protected $getAddressIO;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->getAddressIO = PostcodeApi::create('GetAddressIO');
-        $this->getAddressIO->setApiKey('qwertyuiopasdfghjkl');
+        $this->getAddressIO = (new GetAddressIO)
+            ->setRequestUrl('https://api.getaddress.io/find')
+            ->setApiKey('qwertyuiopasdfghjkl');
     }
 
     /** @test */

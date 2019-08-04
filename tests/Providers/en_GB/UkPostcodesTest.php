@@ -7,11 +7,10 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\en_GB\UkPostcodes;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class UkPostcodesTest extends TestCase
+class UkPostcodesTest extends BaseProviderTest
 {
     /** @var UkPostcodes */
     protected $ukPostcodes;
@@ -20,13 +19,14 @@ class UkPostcodesTest extends TestCase
     {
         parent::setUp();
 
-        $this->ukPostcodes = PostcodeApi::create('UkPostcodes');
+        $this->ukPostcodes = (new UkPostcodes)
+            ->setRequestUrl('http://uk-postcodes.com/postcode/%s.json');
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('', $this->ukPostcodes->getApiKey());
+        $this->assertSame(null, $this->ukPostcodes->getApiKey());
         $this->assertSame('http://uk-postcodes.com/postcode/%s.json', $this->ukPostcodes->getRequestUrl());
     }
 

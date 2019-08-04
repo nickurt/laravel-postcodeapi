@@ -7,31 +7,24 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\nl_NL\PostcoDe;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class PostcoDeTest extends TestCase
+class PostcoDeTest extends BaseProviderTest
 {
     /** @var PostcoDe */
     protected $postcoDe;
 
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->postcoDe = PostcodeApi::create('PostcoDe');
+        $this->postcoDe = (new PostcoDe)
+            ->setRequestUrl('https://api.postco.de/v1/postcode/%s/%s');
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('', $this->postcoDe->getApiKey());
+        $this->assertSame(null, $this->postcoDe->getApiKey());
         $this->assertSame('https://api.postco.de/v1/postcode/%s/%s', $this->postcoDe->getRequestUrl());
     }
 

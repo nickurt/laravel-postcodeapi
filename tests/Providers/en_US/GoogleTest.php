@@ -7,21 +7,19 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
-use nickurt\postcodeapi\Providers\en_US\Google;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\Providers\en_US\Google;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class GoogleTest extends TestCase
+class GoogleTest extends BaseProviderTest
 {
     /** @var Google */
     protected $google;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->google = PostcodeApi::create('Google');
-        $this->google->setApiKey('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie');
+        $this->google = (new Google)
+            ->setRequestUrl('https://maps.googleapis.com/maps/api/geocode/json')
+            ->setApiKey('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie');
     }
 
     /** @test */

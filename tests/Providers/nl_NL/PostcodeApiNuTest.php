@@ -6,26 +6,19 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\nl_NL\PostcodeApiNu;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class PostcodeApiNuTest extends TestCase
+class PostcodeApiNuTest extends BaseProviderTest
 {
     /** @var PostcodeApiNu */
     protected $postcodeApiNu;
 
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->postcodeApiNu = PostcodeApi::create('PostcodeApiNu');
-        $this->postcodeApiNu->setApiKey('qwertyuiop');
+        $this->postcodeApiNu = (new PostcodeApiNu)
+            ->setRequestUrl('https://postcode-api.apiwise.nl/v2/addresses/?postcode=%s&number=%s')
+            ->setApiKey('qwertyuiop');
     }
 
     /** @test */

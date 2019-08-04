@@ -7,21 +7,19 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\nl_BE\Pro6PP_BE;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class Pro6PP_BETest extends TestCase
+class Pro6PP_BETest extends BaseProviderTest
 {
     /** @var Pro6PP_BE */
     protected $pro6PP_BE;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->pro6PP_BE = PostcodeApi::create('Pro6PP_BE');
-        $this->pro6PP_BE->setApiKey('qwertyuiop');
+        $this->pro6PP_BE = (new Pro6PP_BE)
+            ->setRequestUrl('https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&be_fourpp=%s')
+            ->setApiKey('qwertyuiop');
     }
 
     /** @test */

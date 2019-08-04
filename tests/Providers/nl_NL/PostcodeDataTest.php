@@ -7,31 +7,24 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\nl_NL\PostcodeData;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class PostcodeDataTest extends TestCase
+class PostcodeDataTest extends BaseProviderTest
 {
     /** @var PostcodeData */
     protected $postcodeData;
 
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->postcodeData = PostcodeApi::create('PostcodeData');
+        $this->postcodeData = (new PostcodeData)
+            ->setRequestUrl('http://api.postcodedata.nl/v1/postcode/?postcode=%s&streetnumber=%s&ref=%s');
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('', $this->postcodeData->getApiKey());
+        $this->assertSame(null, $this->postcodeData->getApiKey());
         $this->assertSame('http://api.postcodedata.nl/v1/postcode/?postcode=%s&streetnumber=%s&ref=%s', $this->postcodeData->getRequestUrl());
     }
 
@@ -46,6 +39,8 @@ class PostcodeDataTest extends TestCase
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
     {
+        $_SERVER['HTTP_HOST'] = 'localhost';
+
         $address = $this->postcodeData->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"ok","details":[{"street":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","postcode":"1118 CP","pnum":"1118","pchar":"CP","rd_x":"111361.82633333333333333333","rd_y":"479700.34883333333333333333","lat":"52.3035437835548","lon":"4.7474064734608"}]}')

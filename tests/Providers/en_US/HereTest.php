@@ -7,22 +7,20 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
-use nickurt\postcodeapi\Providers\en_US\Here;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\Providers\en_US\Here;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class HereTest extends TestCase
+class HereTest extends BaseProviderTest
 {
     /** @var Here */
     protected $here;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->here = PostcodeApi::create('Here');
-        $this->here->setApiKey('Q28yv1juyWQexhHdoJ1P');
-        $this->here->setApiSecret('pJKdj-mUwxw1thw8EjCX9v');
+        $this->here = (new Here)
+            ->setRequestUrl('https://geocoder.api.here.com/6.2/geocode.json')
+            ->setApiKey('Q28yv1juyWQexhHdoJ1P')
+            ->setApiSecret('pJKdj-mUwxw1thw8EjCX9v');
     }
 
     /** @test */

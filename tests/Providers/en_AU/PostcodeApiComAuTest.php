@@ -7,26 +7,24 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\en_AU\PostcodeApiComAu;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class PostcodeApiComAuTest extends TestCase
+class PostcodeApiComAuTest extends BaseProviderTest
 {
     /** @var PostcodeApiComAu */
     protected $postcodeApiComAu;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->postcodeApiComAu = PostcodeApi::create('PostcodeApiComAu');
+        $this->postcodeApiComAu = (new PostcodeApiComAu)
+            ->setRequestUrl('http://v0.postcodeapi.com.au/suburbs/%s.json');
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('', $this->postcodeApiComAu->getApiKey());
+        $this->assertSame(null, $this->postcodeApiComAu->getApiKey());
         $this->assertSame('http://v0.postcodeapi.com.au/suburbs/%s.json', $this->postcodeApiComAu->getRequestUrl());
     }
 

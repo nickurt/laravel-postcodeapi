@@ -7,21 +7,19 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
-use nickurt\postcodeapi\Providers\en_US\Geocodio;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\Providers\en_US\Geocodio;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class GeocodioTest extends TestCase
+class GeocodioTest extends BaseProviderTest
 {
     /** @var Geocodio */
     protected $geocodio;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->geocodio = PostcodeApi::create('Geocodio');
-        $this->geocodio->setApiKey('qwertyuiop');
+        $this->geocodio = (new Geocodio)
+            ->setRequestUrl('https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s')
+            ->setApiKey('qwertyuiop');
     }
 
     /** @test */

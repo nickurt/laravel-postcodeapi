@@ -7,26 +7,24 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\en_GB\GeoPostcodeOrgUk;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class GeoPostcodeOrkUkTest extends TestCase
+class GeoPostcodeOrkUkTest extends BaseProviderTest
 {
     /** @var GeoPostcodeOrgUk */
     protected $geoPostcodeOrgUk;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->geoPostcodeOrgUk = PostcodeApi::create('GeoPostcodeOrgUk');
+        $this->geoPostcodeOrgUk = (new GeoPostcodeOrgUk)
+            ->setRequestUrl('http://www.geopostcode.org.uk/api/%s.json');
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('', $this->geoPostcodeOrgUk->getApiKey());
+        $this->assertSame(null, $this->geoPostcodeOrgUk->getApiKey());
         $this->assertSame('http://www.geopostcode.org.uk/api/%s.json', $this->geoPostcodeOrgUk->getRequestUrl());
     }
 

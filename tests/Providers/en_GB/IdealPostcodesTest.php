@@ -7,21 +7,19 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 use nickurt\PostcodeApi\Providers\en_GB\IdealPostcodes;
-use nickurt\PostcodeApi\tests\TestCase;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
-class IdealPostcodesTest extends TestCase
+class IdealPostcodesTest extends BaseProviderTest
 {
     /** @var IdealPostcodes */
     protected $idealPostcodes;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->idealPostcodes = PostcodeApi::create('IdealPostcodes');
-        $this->idealPostcodes->setApiKey('iddqd');
+        $this->idealPostcodes = (new IdealPostcodes)
+            ->setRequestUrl('https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s')
+            ->setApiKey('iddqd');
     }
 
     /** @test */
