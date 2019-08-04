@@ -64,6 +64,12 @@ return [
         'key' => '',
         'code' => 'en_US',
     ],
+    'Here' => [
+        'url' => 'https://geocoder.api.here.com/6.2/geocode.json',
+        'key' => '',
+        'secret' => '',
+        'code' => 'en_US',
+    ],
 
     'IdealPostcodes' => [
         'url' => 'https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s',
