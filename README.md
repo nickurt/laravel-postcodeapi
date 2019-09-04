@@ -1,5 +1,4 @@
 ## Laravel PostcodeApi
-
 [![Latest Stable Version](https://poser.pugx.org/nickurt/laravel-postcodeapi/v/stable?format=flat-square)](https://packagist.org/packages/nickurt/laravel-postcodeapi)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/nickurt/laravel-postcodeapi/master.svg?style=flat-square)](https://travis-ci.org/nickurt/laravel-postcodeapi)
@@ -11,20 +10,7 @@ Install this package with composer:
 composer require nickurt/laravel-postcodeapi
 ```
 
-Add the provider to `config/app.php` file
-
-```php
-'nickurt\PostcodeApi\ServiceProvider',
-```
-
-and the facade in the file
-
-```php
-'PostcodeApi' => 'nickurt\PostcodeApi\Facade',
-```
-
 Copy the config files for the api
-
 ```
 php artisan vendor:publish --provider="nickurt\PostcodeApi\ServiceProvider" --tag="config"
 ```
