@@ -2,7 +2,9 @@
 
 namespace nickurt\PostcodeApi\Entity;
 
-class Address
+use Illuminate\Contracts\Support\Arrayable;
+
+class Address implements Arrayable
 {
     /** @var null|string */
     protected $street;
@@ -159,7 +161,7 @@ class Address
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function toArray()
     {
