@@ -41,7 +41,7 @@ class PostcoDeTest extends BaseProviderTest
     {
         $address = $this->postcoDe->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"street":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","postcode":"1118CP","pnum":"1118","pchar":"CP","rd_x":"111361.82633333333333333333","rd_y":"479700.34883333333333333333","lat":"52.3035437835548","lon":"4.7474064734608"}')
+                new Response(200, [], '{"street":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","postcode":"1118CP","pnum":"1118","pchar":"CP","rd_x":"111361.82633333333333333333","rd_y":"479700.34883333333333333333","lat":"52.3035437835548","lon":"4.7474064734608"}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '202');
 
@@ -56,7 +56,7 @@ class PostcoDeTest extends BaseProviderTest
             'municipality' => 'Haarlemmermeer',
             'province' => 'Noord-Holland',
             'latitude' => 52.3035437835548,
-            'longitude' => 4.7474064734608
+            'longitude' => 4.7474064734608,
         ], $address->toArray());
     }
 
@@ -68,7 +68,7 @@ class PostcoDeTest extends BaseProviderTest
 
         $address = $this->postcoDe->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
-                new Response(404, [], '{"error":"No results"}')
+                new Response(404, [], '{"error":"No results"}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('XXXXAB', '1');
 
@@ -81,7 +81,7 @@ class PostcoDeTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 }

@@ -13,7 +13,7 @@ class GetAddressIO extends Provider
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '?expand=true');
+        $this->setRequestUrl($this->getRequestUrl().'/'.$postCode.'?expand=true');
 
         $response = $this->request();
 
@@ -37,8 +37,8 @@ class GetAddressIO extends Provider
         try {
             $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
                 'headers' => [
-                    'api-key' => $this->getApiKey()
-                ]
+                    'api-key' => $this->getApiKey(),
+                ],
             ]);
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             return json_decode($e->getResponse()->getBody(), true);
@@ -63,7 +63,7 @@ class GetAddressIO extends Provider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber . '?expand=true');
+        $this->setRequestUrl($this->getRequestUrl().'/'.$postCode.'/'.$houseNumber.'?expand=true');
 
         $response = $this->request();
 

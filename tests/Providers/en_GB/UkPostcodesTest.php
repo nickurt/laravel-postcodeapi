@@ -35,7 +35,7 @@ class UkPostcodesTest extends BaseProviderTest
     {
         $address = $this->ukPostcodes->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"postcode":"SW1A 1AA","geo":{"lat":51.501009174414,"lng":-0.14157319687256,"easting":529090,"northing":179645,"geohash":"http://geohash.org/gcpuuz2zj5gq"},"administrative":{"council":{"title":"City of Westminster","uri":"http://statistics.data.gov.uk/id/statistical-geography/E09000033","code":"E09000033"},"ward":{"title":"St. James\'s","uri":"http://statistics.data.gov.uk/id/statistical-geography/E05000644","code":"E05000644"},"constituency":{"title":"Cities of London and Westminster","uri":"http://statistics.data.gov.uk/id/statistical-geography/E14000639","code":"E14000639"}}}')
+                new Response(200, [], '{"postcode":"SW1A 1AA","geo":{"lat":51.501009174414,"lng":-0.14157319687256,"easting":529090,"northing":179645,"geohash":"http://geohash.org/gcpuuz2zj5gq"},"administrative":{"council":{"title":"City of Westminster","uri":"http://statistics.data.gov.uk/id/statistical-geography/E09000033","code":"E09000033"},"ward":{"title":"St. James\'s","uri":"http://statistics.data.gov.uk/id/statistical-geography/E05000644","code":"E05000644"},"constituency":{"title":"Cities of London and Westminster","uri":"http://statistics.data.gov.uk/id/statistical-geography/E14000639","code":"E14000639"}}}'),
             ]),
         ]))->find('SW1A1AA');
 
@@ -50,7 +50,7 @@ class UkPostcodesTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => 51.501009174414,
-            'longitude' => -0.14157319687256
+            'longitude' => -0.14157319687256,
         ], $address->toArray());
     }
 

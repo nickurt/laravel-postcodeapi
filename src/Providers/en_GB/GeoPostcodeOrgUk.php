@@ -16,7 +16,7 @@ class GeoPostcodeOrgUk extends Provider
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode));
 
-        if (!$response = $this->request()) {
+        if (! $response = $this->request()) {
             return new Address();
         }
 

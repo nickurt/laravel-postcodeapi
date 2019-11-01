@@ -19,7 +19,7 @@ class TestCase extends Orchestra
             'NationaalGeoRegister' => [
                 'url' => 'http://geodata.nationaalgeoregister.nl/locatieserver/v3/free',
                 'key' => '',
-                'code' => 'nl_NL'
+                'code' => 'nl_NL',
             ],
         ]);
     }
@@ -31,7 +31,7 @@ class TestCase extends Orchestra
     protected function getPackageAliases($app)
     {
         return [
-            'PostcodeApi' => \nickurt\PostcodeApi\Facade::class
+            'PostcodeApi' => \nickurt\PostcodeApi\Facade::class,
         ];
     }
 
@@ -42,7 +42,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            \nickurt\PostcodeApi\ServiceProvider::class
+            \nickurt\PostcodeApi\ServiceProvider::class,
         ];
     }
 }

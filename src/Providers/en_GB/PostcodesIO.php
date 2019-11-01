@@ -25,7 +25,7 @@ class PostcodesIO extends Provider
 
         $response = $this->request();
 
-        if (!is_array($response['result'])) {
+        if (! is_array($response['result'])) {
             return new Address();
         }
 

@@ -14,12 +14,12 @@ class ProviderFactory
      */
     public static function create($provider)
     {
-        if (!$config = config()->get('postcodeapi.' . $provider)) {
+        if (! $config = config()->get('postcodeapi.'.$provider)) {
             throw new InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
         }
 
-        /** @var Provider $class */
-        if (class_exists($providerClass = 'nickurt\\PostcodeApi\\Providers\\' . $config['code'] . '\\' . $provider)) {
+        /* @var Provider $class */
+        if (class_exists($providerClass = 'nickurt\\PostcodeApi\\Providers\\'.$config['code'].'\\'.$provider)) {
             $class = (new $providerClass);
             $class->setApiKey($config['key']);
             $class->setRequestUrl($config['url']);

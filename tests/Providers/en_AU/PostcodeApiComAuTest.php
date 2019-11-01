@@ -33,7 +33,7 @@ class PostcodeApiComAuTest extends BaseProviderTest
     {
         $address = $this->postcodeApiComAu->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '[{"name": "Collingwood", "postcode": 3066, "state": {"name": "Victoria", "abbreviation": "VIC"}, "locality": "HAWTHORN", "latitude": -37.799999999999997, "longitude": 144.98330000000001}]')
+                new Response(200, [], '[{"name": "Collingwood", "postcode": 3066, "state": {"name": "Victoria", "abbreviation": "VIC"}, "locality": "HAWTHORN", "latitude": -37.799999999999997, "longitude": 144.98330000000001}]'),
             ]),
         ]))->find('3066');
 
@@ -48,7 +48,7 @@ class PostcodeApiComAuTest extends BaseProviderTest
             'municipality' => 'Victoria',
             'province' => null,
             'latitude' => -37.8,
-            'longitude' => 144.9833
+            'longitude' => 144.9833,
         ], $address->toArray());
     }
 
@@ -57,7 +57,7 @@ class PostcodeApiComAuTest extends BaseProviderTest
     {
         $address = $this->postcodeApiComAu->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '[]')
+                new Response(200, [], '[]'),
             ]),
         ]))->find('9065');
 
@@ -70,7 +70,7 @@ class PostcodeApiComAuTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 

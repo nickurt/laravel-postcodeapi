@@ -28,7 +28,7 @@ class IdealPostcodes extends Provider
 
         $response = $this->request();
 
-        if (isset($response['message']) && $response['message'] != "Success") {
+        if (isset($response['message']) && $response['message'] != 'Success') {
             return new Address();
         }
 

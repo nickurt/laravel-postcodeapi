@@ -32,7 +32,7 @@ class AdresseDataGouvTest extends BaseProviderTest
     {
         $address = $this->adresseDataGouv->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"type": "FeatureCollection", "version": "draft", "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.312078, 48.854665]}, "properties": {"label": "Paris 7e Arrondissement", "score": 0.8625920083335853, "id": "75107", "type": "municipality", "name": "Paris 7e Arrondissement", "postcode": "75007", "citycode": "75107", "x": 649523.35, "y": 6861845, "population": 52512, "city": "Paris 7e Arrondissement", "context": "75, Paris, \u00cele-de-France", "importance": 0.4885120916694383}}], "attribution": "BAN", "licence": "ODbL 1.0", "query": "75007", "limit": 1}')
+                new Response(200, [], '{"type": "FeatureCollection", "version": "draft", "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.312078, 48.854665]}, "properties": {"label": "Paris 7e Arrondissement", "score": 0.8625920083335853, "id": "75107", "type": "municipality", "name": "Paris 7e Arrondissement", "postcode": "75007", "citycode": "75107", "x": 649523.35, "y": 6861845, "population": 52512, "city": "Paris 7e Arrondissement", "context": "75, Paris, \u00cele-de-France", "importance": 0.4885120916694383}}], "attribution": "BAN", "licence": "ODbL 1.0", "query": "75007", "limit": 1}'),
             ]),
         ]))->find('75007');
 
@@ -47,7 +47,7 @@ class AdresseDataGouvTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => 48.854665,
-            'longitude' => 2.312078
+            'longitude' => 2.312078,
         ], $address->toArray());
     }
 
@@ -56,7 +56,7 @@ class AdresseDataGouvTest extends BaseProviderTest
     {
         $address = $this->adresseDataGouv->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"type": "FeatureCollection", "version": "draft", "features": [], "attribution": "BAN", "licence": "ODbL 1.0", "query": "175007", "limit": 1}')
+                new Response(200, [], '{"type": "FeatureCollection", "version": "draft", "features": [], "attribution": "BAN", "licence": "ODbL 1.0", "query": "175007", "limit": 1}'),
             ]),
         ]))->find('175007');
 
@@ -69,7 +69,7 @@ class AdresseDataGouvTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 
@@ -78,7 +78,7 @@ class AdresseDataGouvTest extends BaseProviderTest
     {
         $address = $this->adresseDataGouv->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"type": "FeatureCollection", "version": "draft", "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.294597, 48.858819]}, "properties": {"label": "5 Av Anatole France 75007 Paris", "score": 0.6572976343794834, "housenumber": "5", "id": "75107_0306_00005", "type": "housenumber", "name": "5 Av Anatole France", "postcode": "75007", "citycode": "75107", "x": 648244.83, "y": 6862318.23, "city": "Paris", "district": "Paris 7e Arrondissement", "context": "75, Paris, \u00cele-de-France", "importance": 0.578100065130841, "street": "Av Anatole France"}}], "attribution": "BAN", "licence": "ODbL 1.0", "query": "5 Avenue Anatole France", "filters": {"postcode": "75007"}, "limit": 1}')
+                new Response(200, [], '{"type": "FeatureCollection", "version": "draft", "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.294597, 48.858819]}, "properties": {"label": "5 Av Anatole France 75007 Paris", "score": 0.6572976343794834, "housenumber": "5", "id": "75107_0306_00005", "type": "housenumber", "name": "5 Av Anatole France", "postcode": "75007", "citycode": "75107", "x": 648244.83, "y": 6862318.23, "city": "Paris", "district": "Paris 7e Arrondissement", "context": "75, Paris, \u00cele-de-France", "importance": 0.578100065130841, "street": "Av Anatole France"}}], "attribution": "BAN", "licence": "ODbL 1.0", "query": "5 Avenue Anatole France", "filters": {"postcode": "75007"}, "limit": 1}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('75007', '5 Avenue Anatole France');
 
@@ -93,7 +93,7 @@ class AdresseDataGouvTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => 48.858819,
-            'longitude' => 2.294597
+            'longitude' => 2.294597,
         ], $address->toArray());
     }
 
@@ -102,7 +102,7 @@ class AdresseDataGouvTest extends BaseProviderTest
     {
         $address = $this->adresseDataGouv->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"type": "FeatureCollection", "version": "draft", "features": [], "attribution": "BAN", "licence": "ODbL 1.0", "query": "5 Avenue Anatole France", "filters": {"postcode": "175007"}, "limit": 1}')
+                new Response(200, [], '{"type": "FeatureCollection", "version": "draft", "features": [], "attribution": "BAN", "licence": "ODbL 1.0", "query": "5 Avenue Anatole France", "filters": {"postcode": "175007"}, "limit": 1}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('175007', '5 Avenue Anatole France');
 
@@ -115,7 +115,7 @@ class AdresseDataGouvTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 }

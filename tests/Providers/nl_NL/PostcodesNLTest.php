@@ -33,7 +33,7 @@ class PostcodesNLTest extends BaseProviderTest
     {
         $address = $this->postcodesNL->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"status":"ok","results":[{"nlzip6":"1118CP","streetname":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","latitude":"52.303047","longitude":"4.746179","phoneareacode":"020"}]}')
+                new Response(200, [], '{"status":"ok","results":[{"nlzip6":"1118CP","streetname":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","latitude":"52.303047","longitude":"4.746179","phoneareacode":"020"}]}'),
             ]),
         ]))->find('1118CP');
 
@@ -49,7 +49,7 @@ class PostcodesNLTest extends BaseProviderTest
             'municipality' => 'Haarlemmermeer',
             'province' => 'Noord-Holland',
             'latitude' => 52.303047,
-            'longitude' => 4.746179
+            'longitude' => 4.746179,
         ], $address->toArray());
     }
 
@@ -58,7 +58,7 @@ class PostcodesNLTest extends BaseProviderTest
     {
         $address = $this->postcodesNL->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"status":"error","errorcode":103,"errormessage":"invalid nlzip6"}')
+                new Response(200, [], '{"status":"error","errorcode":103,"errormessage":"invalid nlzip6"}'),
             ]),
         ]))->find('XXXXAB');
 
@@ -80,7 +80,7 @@ class PostcodesNLTest extends BaseProviderTest
     {
         $address = $this->postcodesNL->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"status":"ok","results":[{"nlzip6":"1118CP","streetname":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","latitude":"52.303894","longitude":"4.747910","phoneareacode":"020"}]}')
+                new Response(200, [], '{"status":"ok","results":[{"nlzip6":"1118CP","streetname":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","latitude":"52.303894","longitude":"4.747910","phoneareacode":"020"}]}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '202');
 
@@ -96,7 +96,7 @@ class PostcodesNLTest extends BaseProviderTest
             'municipality' => 'Haarlemmermeer',
             'province' => 'Noord-Holland',
             'latitude' => 52.303894,
-            'longitude' => 4.74791
+            'longitude' => 4.74791,
         ], $address->toArray());
     }
 
@@ -105,7 +105,7 @@ class PostcodesNLTest extends BaseProviderTest
     {
         $address = $this->postcodesNL->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"status":"error","errorcode":11,"errormessage":"no results"}')
+                new Response(200, [], '{"status":"error","errorcode":11,"errormessage":"no results"}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '1');
 

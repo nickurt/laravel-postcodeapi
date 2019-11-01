@@ -13,9 +13,9 @@ class Bing extends Provider
      */
     public function find($postCode)
     {
-        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
+        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&'.$options : '';
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postalCode=' . $postCode . '&key=' . $this->getApiKey() . $options);
+        $this->setRequestUrl($this->getRequestUrl().'?postalCode='.$postCode.'&key='.$this->getApiKey().$options);
 
         $response = $this->request();
 

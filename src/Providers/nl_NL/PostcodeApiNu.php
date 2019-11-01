@@ -19,8 +19,8 @@ class PostcodeApiNu extends Provider
 
         $response = $this->request();
 
-        if (!isset($response['_embedded']['addresses'][0])) {
-            /**
+        if (! isset($response['_embedded']['addresses'][0])) {
+            /*
              * Postcode / housenumber combination not found
              */
             return new Address();
@@ -42,8 +42,8 @@ class PostcodeApiNu extends Provider
     {
         $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
             'headers' => [
-                'X-Api-Key' => $this->getApiKey()
-            ]
+                'X-Api-Key' => $this->getApiKey(),
+            ],
         ]);
 
         return json_decode($response->getBody(), true);
@@ -71,8 +71,8 @@ class PostcodeApiNu extends Provider
 
         $response = $this->request();
 
-        if (!isset($response['_embedded']['addresses'][0])) {
-            /**
+        if (! isset($response['_embedded']['addresses'][0])) {
+            /*
              * Postcode / housenumber combination not found
              */
             return new Address();
@@ -80,7 +80,7 @@ class PostcodeApiNu extends Provider
 
         $address = new Address();
         $address
-            ->setHouseNo($response['_embedded']['addresses'][0]['number'] . $response['_embedded']['addresses'][0]['addition'])
+            ->setHouseNo($response['_embedded']['addresses'][0]['number'].$response['_embedded']['addresses'][0]['addition'])
             ->setStreet($response['_embedded']['addresses'][0]['street'])
             ->setTown($response['_embedded']['addresses'][0]['city']['label'])
             ->setMunicipality($response['_embedded']['addresses'][0]['municipality']['label'])

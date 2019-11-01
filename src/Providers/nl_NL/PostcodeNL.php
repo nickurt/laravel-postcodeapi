@@ -2,8 +2,8 @@
 
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
-use \nickurt\PostcodeApi\Providers\Provider;
-use \nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Providers\Provider;
 
 class PostcodeNL extends Provider
 {
@@ -18,8 +18,8 @@ class PostcodeNL extends Provider
         $client = $this->getHttpClient();
         $response = $client->request('GET', $this->getRequestUrl(), [
             'auth' => [
-                $this->getApiKey(), $this->getApiSecret()
-            ]
+                $this->getApiKey(), $this->getApiSecret(),
+            ],
         ]);
 
         return json_decode($response->getBody(), true);

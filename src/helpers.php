@@ -2,7 +2,7 @@
 
 use nickurt\PostcodeApi\ProviderFactory;
 
-if (!function_exists('postcodeapi')) {
+if (! function_exists('postcodeapi')) {
     /**
      * @param string $provider
      * @return \nickurt\PostcodeApi\ProviderFactory $provider

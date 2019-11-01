@@ -34,7 +34,7 @@ class Pro6PP_BETest extends BaseProviderTest
     {
         $address = $this->pro6PP_BE->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"status":"ok","results":[{"province_nl":"Brussel","province_fr":"Bruxelles","province":"Brussel","municipality_nl":"Brussel","municipality_fr":"Bruxelles","municipality":"Brussel","city_nl":"Brussel","city_fr":"Bruxelles","city":"Brussel","fourpp":1000,"lat":50.84379,"lng":4.3591}]}')
+                new Response(200, [], '{"status":"ok","results":[{"province_nl":"Brussel","province_fr":"Bruxelles","province":"Brussel","municipality_nl":"Brussel","municipality_fr":"Bruxelles","municipality":"Brussel","city_nl":"Brussel","city_fr":"Bruxelles","city":"Brussel","fourpp":1000,"lat":50.84379,"lng":4.3591}]}'),
             ]),
         ]))->find('1000');
 
@@ -50,7 +50,7 @@ class Pro6PP_BETest extends BaseProviderTest
             'municipality' => 'Brussel',
             'province' => 'Brussel',
             'latitude' => 50.84379,
-            'longitude' => 4.3591
+            'longitude' => 4.3591,
         ], $address->toArray());
     }
 
@@ -59,7 +59,7 @@ class Pro6PP_BETest extends BaseProviderTest
     {
         $address = $this->pro6PP_BE->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"status":"error","error":{"message":"be_fourpp not found"},"results":[]}')
+                new Response(200, [], '{"status":"error","error":{"message":"be_fourpp not found"},"results":[]}'),
             ]),
         ]))->find('1234');
 
@@ -72,7 +72,7 @@ class Pro6PP_BETest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 

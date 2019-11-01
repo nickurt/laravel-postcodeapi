@@ -74,7 +74,7 @@ abstract class Provider implements ProviderInterface
      */
     public function getHttpClient()
     {
-        if (!isset($this->httpClient)) {
+        if (! isset($this->httpClient)) {
             $this->httpClient = new Client();
 
             return $this->httpClient;

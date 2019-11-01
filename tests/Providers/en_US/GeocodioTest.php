@@ -34,7 +34,7 @@ class GeocodioTest extends BaseProviderTest
     {
         $address = $this->geocodio->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"input":{"address_components":{"zip":"92270","country":"US"},"formatted_address":"92270"},"results":[{"address_components":{"city":"Rancho Mirage","county":"Riverside County","state":"CA","zip":"92270","country":"US"},"formatted_address":"Rancho Mirage, CA 92270","location":{"lat":33.73974,"lng":-116.41279},"accuracy":1,"accuracy_type":"place","source":"TIGER\/Line\u00ae dataset from the US Census Bureau"}]}')
+                new Response(200, [], '{"input":{"address_components":{"zip":"92270","country":"US"},"formatted_address":"92270"},"results":[{"address_components":{"city":"Rancho Mirage","county":"Riverside County","state":"CA","zip":"92270","country":"US"},"formatted_address":"Rancho Mirage, CA 92270","location":{"lat":33.73974,"lng":-116.41279},"accuracy":1,"accuracy_type":"place","source":"TIGER\/Line\u00ae dataset from the US Census Bureau"}]}'),
             ]),
         ]))->find('92270');
 
@@ -50,7 +50,7 @@ class GeocodioTest extends BaseProviderTest
             'municipality' => 'CA',
             'province' => null,
             'latitude' => 33.73974,
-            'longitude' => -116.41279
+            'longitude' => -116.41279,
         ], $address->toArray());
     }
 
@@ -59,7 +59,7 @@ class GeocodioTest extends BaseProviderTest
     {
         $address = $this->geocodio->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"input":{"address_components":{"zip":"12370","country":"US"},"formatted_address":"12370"},"results":[]}')
+                new Response(200, [], '{"input":{"address_components":{"zip":"12370","country":"US"},"formatted_address":"12370"},"results":[]}'),
             ]),
         ]))->find('12370');
 
@@ -72,7 +72,7 @@ class GeocodioTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 

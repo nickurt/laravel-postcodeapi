@@ -13,7 +13,7 @@ class Google extends Provider
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '?address=' . $postCode . '&key=' . $this->getApiKey());
+        $this->setRequestUrl($this->getRequestUrl().'?address='.$postCode.'&key='.$this->getApiKey());
 
         $response = $this->request();
 

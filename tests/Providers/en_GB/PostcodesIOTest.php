@@ -33,7 +33,7 @@ class PostcodesIOTest extends BaseProviderTest
     {
         $address = $this->postcodesIO->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"status":200,"result":[{"postcode":"SW1A 1AA","quality":1,"eastings":529090,"northings":179645,"country":"England","nhs_ha":"London","longitude":-0.141588,"latitude":51.501009,"european_electoral_region":"London","primary_care_trust":"Westminster","region":"London","lsoa":"Westminster 018C","msoa":"Westminster 018","incode":"1AA","outcode":"SW1A","parliamentary_constituency":"Cities of London and Westminster","admin_district":"Westminster","parish":"Westminster, unparished area","admin_county":null,"admin_ward":"St James\'s","ced":null,"ccg":"NHS Central London (Westminster)","nuts":"Westminster","codes":{"admin_district":"E09000033","admin_county":"E99999999","admin_ward":"E05000644","parish":"E43000236","parliamentary_constituency":"E14000639","ccg":"E38000031","ced":"E99999999","nuts":"UKI32"}}]}')
+                new Response(200, [], '{"status":200,"result":[{"postcode":"SW1A 1AA","quality":1,"eastings":529090,"northings":179645,"country":"England","nhs_ha":"London","longitude":-0.141588,"latitude":51.501009,"european_electoral_region":"London","primary_care_trust":"Westminster","region":"London","lsoa":"Westminster 018C","msoa":"Westminster 018","incode":"1AA","outcode":"SW1A","parliamentary_constituency":"Cities of London and Westminster","admin_district":"Westminster","parish":"Westminster, unparished area","admin_county":null,"admin_ward":"St James\'s","ced":null,"ccg":"NHS Central London (Westminster)","nuts":"Westminster","codes":{"admin_district":"E09000033","admin_county":"E99999999","admin_ward":"E05000644","parish":"E43000236","parliamentary_constituency":"E14000639","ccg":"E38000031","ced":"E99999999","nuts":"UKI32"}}]}'),
             ]),
         ]))->find('SW1A1AA');
 
@@ -48,7 +48,7 @@ class PostcodesIOTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => 51.501009,
-            'longitude' => -0.141588
+            'longitude' => -0.141588,
         ], $address->toArray());
     }
 
@@ -57,7 +57,7 @@ class PostcodesIOTest extends BaseProviderTest
     {
         $address = $this->postcodesIO->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"status":200,"result":null}')
+                new Response(200, [], '{"status":200,"result":null}'),
             ]),
         ]))->find('QW1A1AA');
 
@@ -68,7 +68,7 @@ class PostcodesIOTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 

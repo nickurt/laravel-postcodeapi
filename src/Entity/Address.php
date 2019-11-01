@@ -161,7 +161,7 @@ class Address implements Arrayable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toArray()
     {
@@ -172,7 +172,7 @@ class Address implements Arrayable
             'municipality' => $this->getMunicipality(),
             'province' => $this->getProvince(),
             'latitude' => $this->getLatitude(),
-            'longitude' => $this->getLongitude()
+            'longitude' => $this->getLongitude(),
         ];
     }
 }

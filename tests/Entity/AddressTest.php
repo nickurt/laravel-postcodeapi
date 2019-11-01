@@ -75,7 +75,7 @@ class AddressTest extends TestCase
             'municipality' => 'Haarlemmermeer',
             'province' => 'Noord-Holland',
             'latitude' => 52.3038976,
-            'longitude' => 4.7479072
+            'longitude' => 4.7479072,
         ], $this->address->toArray());
     }
 }

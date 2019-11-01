@@ -57,7 +57,7 @@ class Pro6PP_NL extends Provider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode) . '&streetnumber=' . $houseNumber);
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode).'&streetnumber='.$houseNumber);
 
         $response = $this->request();
 

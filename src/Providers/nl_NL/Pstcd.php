@@ -2,8 +2,8 @@
 
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
-use \nickurt\PostcodeApi\Providers\Provider;
-use \nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Providers\Provider;
 
 class Pstcd extends Provider
 {

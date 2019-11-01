@@ -13,9 +13,9 @@ class Here extends Provider
      */
     public function find($postCode)
     {
-        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
+        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&'.$options : '';
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postalCode=' . $postCode . '&app_id=' . $this->getApiKey() . '&app_code=' . $this->getApiSecret() . '&gen=9' . $options);
+        $this->setRequestUrl($this->getRequestUrl().'?postalCode='.$postCode.'&app_id='.$this->getApiKey().'&app_code='.$this->getApiSecret().'&gen=9'.$options);
 
         $response = $this->request();
 

@@ -33,7 +33,7 @@ class GetAddressIOTest extends BaseProviderTest
     {
         $address = $this->getAddressIO->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"postcode":"SW1A 2AA","latitude":51.503038,"longitude":-0.128371,"addresses":[{"formatted_address":["Prime Minister & First Lord of the Treasury","10 Downing Street","","London",""],"thoroughfare":"Downing Street","building_name":"","sub_building_name":"Prime Minister & First Lord of the Treasury","sub_building_number":"","building_number":"10","line_1":"Prime Minister & First Lord of the Treasury","line_2":"10 Downing Street","line_3":"","line_4":"","locality":"","town_or_city":"London","county":"","district":"Westminster","country":"England"}]}')
+                new Response(200, [], '{"postcode":"SW1A 2AA","latitude":51.503038,"longitude":-0.128371,"addresses":[{"formatted_address":["Prime Minister & First Lord of the Treasury","10 Downing Street","","London",""],"thoroughfare":"Downing Street","building_name":"","sub_building_name":"Prime Minister & First Lord of the Treasury","sub_building_number":"","building_number":"10","line_1":"Prime Minister & First Lord of the Treasury","line_2":"10 Downing Street","line_3":"","line_4":"","locality":"","town_or_city":"London","county":"","district":"Westminster","country":"England"}]}'),
             ]),
         ]))->find('SW1A2AA');
 
@@ -48,7 +48,7 @@ class GetAddressIOTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => 51.503038,
-            'longitude' => -0.128371
+            'longitude' => -0.128371,
         ], $address->toArray());
     }
 
@@ -60,8 +60,8 @@ class GetAddressIOTest extends BaseProviderTest
 
         $address = $this->getAddressIO->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
-                new Response(404, [], '{"Message":"Not Found"}')
-            ])
+                new Response(404, [], '{"Message":"Not Found"}'),
+            ]),
         ]))->find('XX404X');
 
         $this->assertInstanceOf(Address::class, $address);
@@ -73,7 +73,7 @@ class GetAddressIOTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 
@@ -82,7 +82,7 @@ class GetAddressIOTest extends BaseProviderTest
     {
         $address = $this->getAddressIO->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"postcode":"NN1 3ER","latitude":52.2458053,"longitude":-0.8924692,"addresses":[{"formatted_address":["10 Watkin Terrace","","","Northampton","Northamptonshire"],"thoroughfare":"Watkin Terrace","building_name":"","sub_building_name":"","sub_building_number":"","building_number":"10","line_1":"10 Watkin Terrace","line_2":"","line_3":"","line_4":"","locality":"","town_or_city":"Northampton","county":"Northamptonshire","district":"Northampton","country":"England"}]}')
+                new Response(200, [], '{"postcode":"NN1 3ER","latitude":52.2458053,"longitude":-0.8924692,"addresses":[{"formatted_address":["10 Watkin Terrace","","","Northampton","Northamptonshire"],"thoroughfare":"Watkin Terrace","building_name":"","sub_building_name":"","sub_building_number":"","building_number":"10","line_1":"10 Watkin Terrace","line_2":"","line_3":"","line_4":"","locality":"","town_or_city":"Northampton","county":"Northamptonshire","district":"Northampton","country":"England"}]}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('NN13ER', '10');
 
@@ -97,7 +97,7 @@ class GetAddressIOTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => 52.2458053,
-            'longitude' => -0.8924692
+            'longitude' => -0.8924692,
         ], $address->toArray());
     }
 
@@ -109,7 +109,7 @@ class GetAddressIOTest extends BaseProviderTest
 
         $address = $this->getAddressIO->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
-                new Response(404, [], '{"Message":"Not Found"}')
+                new Response(404, [], '{"Message":"Not Found"}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('XX404X', '10');
 
@@ -122,7 +122,7 @@ class GetAddressIOTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 }

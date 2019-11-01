@@ -13,7 +13,7 @@ class PostcodesNL extends Provider
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode);
+        $this->setRequestUrl($this->getRequestUrl().'?apikey='.$this->getApiKey().'&nlzip6='.$postCode);
 
         $response = $this->request();
 
@@ -54,7 +54,7 @@ class PostcodesNL extends Provider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode . '&streetnumber=' . $houseNumber);
+        $this->setRequestUrl($this->getRequestUrl().'?apikey='.$this->getApiKey().'&nlzip6='.$postCode.'&streetnumber='.$houseNumber);
 
         $response = $this->request();
 

@@ -33,7 +33,7 @@ class ApiPostcodeTest extends BaseProviderTest
     {
         $address = $this->apiPostcode->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"street":"Evert van de Beekstraat","postcode":"1118CP","house_number":"202","city":"Schiphol","longitude":"4.7479072","latitude":"52.3038976","province":"Noord-Holland"}')
+                new Response(200, [], '{"street":"Evert van de Beekstraat","postcode":"1118CP","house_number":"202","city":"Schiphol","longitude":"4.7479072","latitude":"52.3038976","province":"Noord-Holland"}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '202');
 
@@ -49,7 +49,7 @@ class ApiPostcodeTest extends BaseProviderTest
             'municipality' => null,
             'province' => 'Noord-Holland',
             'latitude' => 52.3038976,
-            'longitude' => 4.7479072
+            'longitude' => 4.7479072,
         ], $address->toArray());
     }
 
@@ -61,7 +61,7 @@ class ApiPostcodeTest extends BaseProviderTest
 
         $address = $this->apiPostcode->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
-                new Response(404, [], '{"error":"Cannot resolve address for postcode: 1118CP"}')
+                new Response(404, [], '{"error":"Cannot resolve address for postcode: 1118CP"}'),
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '1');
 
@@ -74,7 +74,7 @@ class ApiPostcodeTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 
@@ -83,7 +83,7 @@ class ApiPostcodeTest extends BaseProviderTest
     {
         $address = $this->apiPostcode->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"street":"Evert van de Beekstraat","postcode":"1118CP","house_number":"178","city":"Schiphol","longitude":"4.7517046","latitude":"52.3052535","province":"Noord-Holland"}')
+                new Response(200, [], '{"street":"Evert van de Beekstraat","postcode":"1118CP","house_number":"178","city":"Schiphol","longitude":"4.7517046","latitude":"52.3052535","province":"Noord-Holland"}'),
             ]),
         ]))->find('1118CP');
 
@@ -99,7 +99,7 @@ class ApiPostcodeTest extends BaseProviderTest
             'municipality' => null,
             'province' => 'Noord-Holland',
             'latitude' => 52.3052535,
-            'longitude' => 4.7517046
+            'longitude' => 4.7517046,
         ], $address->toArray());
     }
 
@@ -111,7 +111,7 @@ class ApiPostcodeTest extends BaseProviderTest
 
         $address = $this->apiPostcode->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
-                new Response(400, [], '{"error":"Given postcode incorrect"}')
+                new Response(400, [], '{"error":"Given postcode incorrect"}'),
             ]),
         ]))->find('XXXXAB');
 
@@ -124,7 +124,7 @@ class ApiPostcodeTest extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 }

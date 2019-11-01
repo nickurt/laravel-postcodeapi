@@ -15,7 +15,7 @@ class ApiPostcode extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postcode=' . $postCode);
+        $this->setRequestUrl($this->getRequestUrl().'?postcode='.$postCode);
 
         $response = $this->request();
 
@@ -52,7 +52,7 @@ class ApiPostcode extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postcode=' . $postCode . '&number=' . $houseNumber);
+        $this->setRequestUrl($this->getRequestUrl().'?postcode='.$postCode.'&number='.$houseNumber);
 
         $response = $this->request();
 
@@ -77,8 +77,8 @@ class ApiPostcode extends Provider
         try {
             $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
                 'headers' => [
-                    'Token' => $this->getApiKey()
-                ]
+                    'Token' => $this->getApiKey(),
+                ],
             ]);
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             return json_decode($e->getResponse()->getBody(), true);
