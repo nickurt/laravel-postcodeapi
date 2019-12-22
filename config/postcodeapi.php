@@ -75,6 +75,11 @@ return [
         'secret' => '',
         'code' => 'en_US',
     ],
+    'OpenCage' => [
+        'url' => 'https://api.opencagedata.com/geocode/v1/json',
+        'key' => '',
+        'code' => 'en_US',
+    ],
 
     'IdealPostcodes' => [
         'url' => 'https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s',
