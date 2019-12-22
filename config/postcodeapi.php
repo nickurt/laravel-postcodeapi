@@ -80,6 +80,11 @@ return [
         'key' => '',
         'code' => 'en_US',
     ],
+    'Mapbox' => [
+        'url' => 'https://api.mapbox.com/geocoding/v5/mapbox.places/%s.json',
+        'key' => '',
+        'code' => 'en_US',
+    ],
     'OpenCage' => [
         'url' => 'https://api.opencagedata.com/geocode/v1/json',
         'key' => '',
