@@ -85,6 +85,11 @@ return [
         'key' => '',
         'code' => 'en_US',
     ],
+    'TomTom' => [
+        'url' => 'https://api.tomtom.com/search/2/geocode/%s.json',
+        'key' => '',
+        'code' => 'en_US',
+    ],
 
     'IdealPostcodes' => [
         'url' => 'https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s',
