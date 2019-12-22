@@ -75,6 +75,11 @@ return [
         'secret' => '',
         'code' => 'en_US',
     ],
+    'LocationIQ' => [
+        'url' => 'https://us1.locationiq.com/v1/search.php',
+        'key' => '',
+        'code' => 'en_US',
+    ],
     'OpenCage' => [
         'url' => 'https://api.opencagedata.com/geocode/v1/json',
         'key' => '',
