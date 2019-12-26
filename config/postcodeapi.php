@@ -54,6 +54,12 @@ return [
         'code' => 'nl_BE',
     ],
 
+    'Algolia' => [
+        'url' => 'https://places-dsn.algolia.net/1/places/query',
+        'key' => '',
+        'secret' => '',
+        'code' => 'en_US'
+    ],
     'Bing' => [
         'url' => 'https://dev.virtualearth.net/REST/v1/Locations',
         'key' => '',

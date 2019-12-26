@@ -37,7 +37,7 @@ abstract class Provider implements ProviderInterface
      */
     public function setOptions(array $options)
     {
-        $this->options = $options;
+        $this->options = array_merge($this->getOptions(), $options);
 
         return $this;
     }
