@@ -1,14 +1,16 @@
 <?php
 
-namespace nickurt\PostcodeApi;
+namespace nickurt\PostcodeApi\Facades;
+
+use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static create(string $provider)
+ * @method \nickurt\PostcodeApi\Concerns\Provider create(string $provider)
  * @method static extend(string $driver, \Closure $callback)
  *
  * @see \nickurt\PostcodeApi\ProviderManager
  */
-class Facade extends \Illuminate\Support\Facades\Facade
+class PostcodeApi extends Facade
 {
     /**
      * {@inheritDoc}

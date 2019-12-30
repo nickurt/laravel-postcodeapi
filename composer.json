@@ -45,7 +45,7 @@
         "nickurt\\PostcodeApi\\ServiceProvider"
       ],
       "aliases": {
-        "PostcodeApi": "nickurt\\PostcodeApi\\Facade"
+        "PostcodeApi": "nickurt\\PostcodeApi\\Facades\\PostcodeApi"
       }
     }
   }

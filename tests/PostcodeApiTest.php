@@ -2,7 +2,7 @@
 
 namespace nickurt\PostcodeApi\tests;
 
-use nickurt\PostcodeApi\Facade as PostcodeApi;
+use nickurt\PostcodeApi\Facades\PostcodeApi;
 
 class PostcodeApiTest extends TestCase
 {
