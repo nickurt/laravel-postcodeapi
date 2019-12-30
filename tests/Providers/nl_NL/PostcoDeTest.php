@@ -17,8 +17,7 @@ class PostcoDeTest extends BaseProviderTest
 
     public function setUp(): void
     {
-        $this->postcoDe = (new PostcoDe)
-            ->setRequestUrl('https://api.postco.de/v1/postcode/%s/%s');
+        $this->postcoDe = (new PostcoDe);
     }
 
     /** @test */
@@ -45,7 +44,7 @@ class PostcoDeTest extends BaseProviderTest
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '202');
 
-        $this->assertSame('https://api.postco.de/v1/postcode/1118CP/202', $this->postcoDe->getRequestUrl());
+        $this->assertSame('https://api.postco.de/v1/postcode/1118CP/202', (string)$this->postcoDe->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

@@ -3,10 +3,21 @@
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class ApiPostcode extends Provider
+class ApiPostcode extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'http://json.api-postcode.nl';
+
+    /**
+     * @param string $postCode
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
+    }
+
     /**
      * @param $postCode
      * @return Address
@@ -15,9 +26,11 @@ class ApiPostcode extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postcode=' . $postCode);
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '?postcode=' . $postCode, [
+            'headers' => [
+                'Token' => $this->getApiKey()
+            ]
+        ]);
 
         if (isset($response['error'])) {
             return new Address();
@@ -35,15 +48,6 @@ class ApiPostcode extends Provider
     }
 
     /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
-    }
-
-    /**
      * @param $postCode
      * @param $houseNumber
      * @return Address
@@ -52,9 +56,11 @@ class ApiPostcode extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postcode=' . $postCode . '&number=' . $houseNumber);
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '?postcode=' . $postCode . '&number=' . $houseNumber, [
+            'headers' => [
+                'Token' => $this->getApiKey()
+            ]
+        ]);
 
         if (isset($response['error'])) {
             return new Address();
@@ -70,20 +76,5 @@ class ApiPostcode extends Provider
             ->setLongitude($response['longitude']);
 
         return $address;
-    }
-
-    protected function request()
-    {
-        try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
-                'headers' => [
-                    'Token' => $this->getApiKey()
-                ]
-            ]);
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
-        }
-
-        return json_decode($response->getBody(), true);
     }
 }

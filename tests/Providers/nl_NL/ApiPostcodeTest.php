@@ -17,7 +17,6 @@ class ApiPostcodeTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->apiPostcode = (new ApiPostcode)
-            ->setRequestUrl('http://json.api-postcode.nl')
             ->setApiKey('c56a4180-65aa-42ec-a945-5fd21dec0538');
     }
 
@@ -29,41 +28,41 @@ class ApiPostcodeTest extends BaseProviderTest
     }
 
     /** @test */
-    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
+    public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
         $address = $this->apiPostcode->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"street":"Evert van de Beekstraat","postcode":"1118CP","house_number":"202","city":"Schiphol","longitude":"4.7479072","latitude":"52.3038976","province":"Noord-Holland"}')
+                new Response(200, [], '{"street":"Evert van de Beekstraat","postcode":"1118CP","house_number":"202","city":"Schiphol","longitude":"4.7479076","latitude":"52.3038972","province":"Noord-Holland"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('1118CP', '202');
+        ]))->find('1118CP');
 
         $this->assertSame('c56a4180-65aa-42ec-a945-5fd21dec0538', $this->apiPostcode->getApiKey());
-        $this->assertSame('http://json.api-postcode.nl?postcode=1118CP&number=202', $this->apiPostcode->getRequestUrl());
+        $this->assertSame('http://json.api-postcode.nl?postcode=1118CP', (string)$this->apiPostcode->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
         $this->assertSame([
             'street' => 'Evert van de Beekstraat',
-            'house_no' => '202',
+            'house_no' => null,
             'town' => 'Schiphol',
             'municipality' => null,
             'province' => 'Noord-Holland',
-            'latitude' => 52.3038976,
-            'longitude' => 4.7479072
+            'latitude' => 52.3038972,
+            'longitude' => 4.7479076
         ], $address->toArray());
     }
 
     /** @test */
-    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code()
+    public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
-        // GuzzleHttp\Exception\ClientException: Client error: `GET http://json.api-postcode.nl?postcode=1118CP&number=1` resulted in a `404 Not Found` response:
-        // {"error":"Cannot resolve address for postcode: 1118CP"}
+        // GuzzleHttp\Exception\ClientException: Client error: `GET http://json.api-postcode.nl?postcode=XXXXAB` resulted in a `400 Bad Request` response:
+        // {"error":"Given postcode incorrect"}
 
         $address = $this->apiPostcode->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
-                new Response(404, [], '{"error":"Cannot resolve address for postcode: 1118CP"}')
+                new Response(400, [], '{"error":"Given postcode incorrect"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('1118CP', '1');
+        ]))->find('XXXXAB');
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -79,41 +78,41 @@ class ApiPostcodeTest extends BaseProviderTest
     }
 
     /** @test */
-    public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
+    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
     {
         $address = $this->apiPostcode->setHttpClient(new Client([
             'handler' => new MockHandler([
-                new Response(200, [], '{"street":"Evert van de Beekstraat","postcode":"1118CP","house_number":"178","city":"Schiphol","longitude":"4.7517046","latitude":"52.3052535","province":"Noord-Holland"}')
+                new Response(200, [], '{"street":"Evert van de Beekstraat","postcode":"1118CP","house_number":"202","city":"Schiphol","longitude":"4.7479076","latitude":"52.3038972","province":"Noord-Holland"}')
             ]),
-        ]))->find('1118CP');
+        ]))->findByPostcodeAndHouseNumber('1118CP', '202');
 
         $this->assertSame('c56a4180-65aa-42ec-a945-5fd21dec0538', $this->apiPostcode->getApiKey());
-        $this->assertSame('http://json.api-postcode.nl?postcode=1118CP', $this->apiPostcode->getRequestUrl());
+        $this->assertSame('http://json.api-postcode.nl?postcode=1118CP&number=202', (string)$this->apiPostcode->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
         $this->assertSame([
             'street' => 'Evert van de Beekstraat',
-            'house_no' => null,
+            'house_no' => '202',
             'town' => 'Schiphol',
             'municipality' => null,
             'province' => 'Noord-Holland',
-            'latitude' => 52.3052535,
-            'longitude' => 4.7517046
+            'latitude' => 52.3038972,
+            'longitude' => 4.7479076
         ], $address->toArray());
     }
 
     /** @test */
-    public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
+    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code()
     {
-        // GuzzleHttp\Exception\ClientException: Client error: `GET http://json.api-postcode.nl?postcode=XXXXAB` resulted in a `400 Bad Request` response:
-        // {"error":"Given postcode incorrect"}
+        // GuzzleHttp\Exception\ClientException: Client error: `GET http://json.api-postcode.nl?postcode=1118CP&number=1` resulted in a `404 Not Found` response:
+        // {"error":"Cannot resolve address for postcode: 1118CP"}
 
         $address = $this->apiPostcode->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
-                new Response(400, [], '{"error":"Given postcode incorrect"}')
+                new Response(404, [], '{"error":"Cannot resolve address for postcode: 1118CP"}')
             ]),
-        ]))->find('XXXXAB');
+        ]))->findByPostcodeAndHouseNumber('1118CP', '1');
 
         $this->assertInstanceOf(Address::class, $address);
 

@@ -3,10 +3,21 @@
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class NationaalGeoRegister extends Provider
+class NationaalGeoRegister extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'http://geodata.nationaalgeoregister.nl/locatieserver/v3/free';
+
+    /**
+     * @param string $postCode
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
+    }
+
     /**
      * @param string $postCode
      * @return Address
@@ -15,9 +26,9 @@ class NationaalGeoRegister extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl($this->getRequestUrl() . '?q=postcode:' . $postCode . '&rows=1');
-
-        $response = $this->request();
+        $response = $this->get(
+            $this->getRequestUrl() . '?q=postcode:' . $postCode . '&rows=1'
+        );
 
         if (count($response['response']['docs']) < 1) {
             return new Address();
@@ -37,22 +48,6 @@ class NationaalGeoRegister extends Provider
         return $address;
     }
 
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
-    }
-
     /**
      * @param string $postCode
      * @param string $houseNumber
@@ -62,9 +57,9 @@ class NationaalGeoRegister extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl($this->getRequestUrl() . '?q=postcode:' . $postCode . '%20and%20housenumber:' . $houseNumber . '&rows=1');
-
-        $response = $this->request();
+        $response = $this->get(
+            $this->getRequestUrl() . '?q=postcode:' . $postCode . '%20and%20housenumber:' . $houseNumber . '&rows=1'
+        );
 
         if (count($response['response']['docs']) < 1) {
             return new Address();

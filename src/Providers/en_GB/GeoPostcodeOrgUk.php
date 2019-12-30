@@ -4,19 +4,28 @@ namespace nickurt\postcodeapi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class GeoPostcodeOrgUk extends Provider
+class GeoPostcodeOrgUk extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'http://www.geopostcode.org.uk/api/%s.json';
+
+    /**
+     * @param string $postCode
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
+    }
+
     /**
      * @param string $postCode
      * @return Address
      */
     public function find($postCode)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode));
-
-        if (!$response = $this->request()) {
+        if (!$response = $this->get(sprintf($this->getRequestUrl(), $postCode))) {
             return new Address();
         }
 
@@ -26,26 +35,6 @@ class GeoPostcodeOrgUk extends Provider
             ->setLongitude($response['wgs84']['lon']);
 
         return $address;
-    }
-
-    protected function request()
-    {
-        try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
-        }
-
-        return json_decode($response->getBody(), true);
-    }
-
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
     }
 
     /**

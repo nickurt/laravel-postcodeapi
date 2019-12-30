@@ -16,15 +16,14 @@ class NationaalGeoRegisterTest extends BaseProviderTest
 
     public function setUp(): void
     {
-        $this->nationaalGeoRegister = (new NationaalGeoRegister)
-            ->setRequestUrl('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free');
+        $this->nationaalGeoRegister = (new NationaalGeoRegister);
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame(null, $this->nationaalGeoRegister->getApiKey());
-        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', $this->nationaalGeoRegister->getRequestUrl());
+        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', (string)$this->nationaalGeoRegister->getRequestUrl());
     }
 
     /** @test */
@@ -36,7 +35,7 @@ class NationaalGeoRegisterTest extends BaseProviderTest
             ]),
         ]))->find('1118CP');
 
-        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free?q=postcode:1118CP&rows=1', $this->nationaalGeoRegister->getRequestUrl());
+        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free?q=postcode:1118CP&rows=1', (string)$this->nationaalGeoRegister->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -82,7 +81,7 @@ class NationaalGeoRegisterTest extends BaseProviderTest
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '202');
 
-        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free?q=postcode:1118CP%20and%20housenumber:202&rows=1', $this->nationaalGeoRegister->getRequestUrl());
+        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free?q=postcode:1118CP%20and%20housenumber:202&rows=1', (string)$this->nationaalGeoRegister->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

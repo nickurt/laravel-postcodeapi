@@ -3,10 +3,21 @@
 namespace nickurt\postcodeapi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class Bing extends Provider
+class Bing extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'https://dev.virtualearth.net/REST/v1/Locations';
+
+    /**
+     * @param string $postCode
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
+    }
+
     /**
      * @param string $postCode
      * @return Address
@@ -15,9 +26,7 @@ class Bing extends Provider
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postalCode=' . $postCode . '&key=' . $this->getApiKey() . $options);
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '?postalCode=' . $postCode . '&key=' . $this->getApiKey() . $options);
 
         if ($response['resourceSets'][0]['estimatedTotal'] < 1) {
             return new Address();
@@ -32,22 +41,6 @@ class Bing extends Provider
             ->setLongitude($response['resourceSets'][0]['resources'][0]['point']['coordinates'][1]);
 
         return $address;
-    }
-
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
     }
 
     /**

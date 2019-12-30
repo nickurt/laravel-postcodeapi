@@ -3,19 +3,32 @@
 namespace nickurt\postcodeapi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class GetAddressIO extends Provider
+class GetAddressIO extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'https://api.getaddress.io/find';
+
+    /**
+     * @param string $postCode
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
+    }
+
     /**
      * @param $postCode
      * @return Address
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '?expand=true');
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '/' . $postCode . '?expand=true', [
+            'headers' => [
+                'api-key' => $this->getApiKey()
+            ]
+        ]);
 
         if (isset($response['Message'])) {
             return new Address();
@@ -32,30 +45,6 @@ class GetAddressIO extends Provider
         return $address;
     }
 
-    protected function request()
-    {
-        try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
-                'headers' => [
-                    'api-key' => $this->getApiKey()
-                ]
-            ]);
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
-        }
-
-        return json_decode($response->getBody(), true);
-    }
-
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
-    }
-
     /**
      * @param string $postCode
      * @param string $houseNumber
@@ -63,9 +52,11 @@ class GetAddressIO extends Provider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber . '?expand=true');
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber . '?expand=true', [
+            'headers' => [
+                'api-key' => $this->getApiKey()
+            ]
+        ]);
 
         if (isset($response['Message'])) {
             return new Address();

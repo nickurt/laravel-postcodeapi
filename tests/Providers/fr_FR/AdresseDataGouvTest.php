@@ -16,15 +16,14 @@ class AdresseDataGouvTest extends BaseProviderTest
 
     public function setUp(): void
     {
-        $this->adresseDataGouv = (new AddresseDataGouv)
-            ->setRequestUrl('https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1');
+        $this->adresseDataGouv = (new AddresseDataGouv);
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame(null, $this->adresseDataGouv->getApiKey());
-        $this->assertSame('https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1', $this->adresseDataGouv->getRequestUrl());
+        $this->assertSame('https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1', (string)$this->adresseDataGouv->getRequestUrl());
     }
 
     /** @test */
@@ -36,7 +35,7 @@ class AdresseDataGouvTest extends BaseProviderTest
             ]),
         ]))->find('75007');
 
-        $this->assertSame('https://api-adresse.data.gouv.fr/search/?q=75007&postcode=&limit=1', $this->adresseDataGouv->getRequestUrl());
+        $this->assertSame('https://api-adresse.data.gouv.fr/search/?q=75007&postcode=&limit=1', (string)$this->adresseDataGouv->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -82,7 +81,7 @@ class AdresseDataGouvTest extends BaseProviderTest
             ]),
         ]))->findByPostcodeAndHouseNumber('75007', '5 Avenue Anatole France');
 
-        $this->assertSame('https://api-adresse.data.gouv.fr/search/?q=5+Avenue+Anatole+France&postcode=75007&limit=1', $this->adresseDataGouv->getRequestUrl());
+        $this->assertSame('https://api-adresse.data.gouv.fr/search/?q=5+Avenue+Anatole+France&postcode=75007&limit=1', (string)$this->adresseDataGouv->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

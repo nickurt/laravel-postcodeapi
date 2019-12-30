@@ -17,7 +17,6 @@ class PostcodesNLTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->postcodesNL = (new PostcodesNL)
-            ->setRequestUrl('http://api.postcodes.nl/1.0/address')
             ->setApiKey('qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas');
     }
 
@@ -25,7 +24,7 @@ class PostcodesNLTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas', $this->postcodesNL->getApiKey());
-        $this->assertSame('http://api.postcodes.nl/1.0/address', $this->postcodesNL->getRequestUrl());
+        $this->assertSame('https://api.postcodes.nl/1.0/address', $this->postcodesNL->getRequestUrl());
     }
 
     /** @test */
@@ -37,8 +36,7 @@ class PostcodesNLTest extends BaseProviderTest
             ]),
         ]))->find('1118CP');
 
-        $this->assertSame('qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas', $this->postcodesNL->getApiKey());
-        $this->assertSame('http://api.postcodes.nl/1.0/address?apikey=qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas&nlzip6=1118CP', $this->postcodesNL->getRequestUrl());
+        $this->assertSame('https://api.postcodes.nl/1.0/address?apikey=qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas&nlzip6=1118CP', (string)$this->postcodesNL->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -84,8 +82,7 @@ class PostcodesNLTest extends BaseProviderTest
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '202');
 
-        $this->assertSame('qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas', $this->postcodesNL->getApiKey());
-        $this->assertSame('http://api.postcodes.nl/1.0/address?apikey=qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas&nlzip6=1118CP&streetnumber=202', $this->postcodesNL->getRequestUrl());
+        $this->assertSame('https://api.postcodes.nl/1.0/address?apikey=qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopas&nlzip6=1118CP&streetnumber=202', (string)$this->postcodesNL->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

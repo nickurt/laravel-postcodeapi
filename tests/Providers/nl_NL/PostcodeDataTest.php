@@ -17,8 +17,7 @@ class PostcodeDataTest extends BaseProviderTest
 
     public function setUp(): void
     {
-        $this->postcodeData = (new PostcodeData)
-            ->setRequestUrl('http://api.postcodedata.nl/v1/postcode/?postcode=%s&streetnumber=%s&ref=%s');
+        $this->postcodeData = (new PostcodeData);
     }
 
     /** @test */
@@ -47,7 +46,7 @@ class PostcodeDataTest extends BaseProviderTest
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '202');
 
-        $this->assertSame('http://api.postcodedata.nl/v1/postcode/?postcode=1118CP&streetnumber=202&ref=localhost', $this->postcodeData->getRequestUrl());
+        $this->assertSame('http://api.postcodedata.nl/v1/postcode/?postcode=1118CP&streetnumber=202&ref=localhost', (string)$this->postcodeData->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -65,6 +64,8 @@ class PostcodeDataTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code()
     {
+        $_SERVER['HTTP_HOST'] = 'localhost';
+
         $address = $this->postcodeData->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"error","errormessage":"no results"}')

@@ -17,7 +17,6 @@ class MapboxTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->mapBox = (new \nickurt\PostcodeApi\Providers\en_US\Mapbox())
-            ->setRequestUrl('https://api.mapbox.com/geocoding/v5/mapbox.places/%s.json')
             ->setApiKey('pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g');
     }
 
@@ -25,7 +24,7 @@ class MapboxTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', $this->mapBox->getApiKey());
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/%s.json', $this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/%s.json', (string)$this->mapBox->getRequestUrl());
     }
 
     /** @test */
@@ -37,7 +36,7 @@ class MapboxTest extends BaseProviderTest
             ]),
         ]))->find('92270');
 
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/92270.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', $this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/92270.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', (string)$this->mapBox->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -61,7 +60,7 @@ class MapboxTest extends BaseProviderTest
             ]),
         ]))->find('1118CP');
 
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/1118CP.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', $this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/1118CP.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', (string)$this->mapBox->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -85,7 +84,7 @@ class MapboxTest extends BaseProviderTest
             ]),
         ]))->find('SW1A1AA');
 
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/SW1A1AA.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', $this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/SW1A1AA.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', (string)$this->mapBox->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -109,7 +108,7 @@ class MapboxTest extends BaseProviderTest
             ]),
         ]))->find('3066');
 
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/3066.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', $this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/3066.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', (string)$this->mapBox->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -133,7 +132,7 @@ class MapboxTest extends BaseProviderTest
             ]),
         ]))->find('75007');
 
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/75007.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', $this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/75007.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', (string)$this->mapBox->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -157,7 +156,7 @@ class MapboxTest extends BaseProviderTest
             ]),
         ]))->setOptions(['country' => 'be'])->find('1000');
 
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/1000.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g&country=be', $this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/1000.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g&country=be', (string)$this->mapBox->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -181,7 +180,7 @@ class MapboxTest extends BaseProviderTest
             ]),
         ]))->find('10115');
 
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/10115.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', $this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/10115.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', (string)$this->mapBox->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -205,7 +204,7 @@ class MapboxTest extends BaseProviderTest
             ]),
         ]))->setOptions(['country' => 'at'])->find('1010');
 
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/1010.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g&country=at', $this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/1010.json?access_token=pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g&country=at', (string)$this->mapBox->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

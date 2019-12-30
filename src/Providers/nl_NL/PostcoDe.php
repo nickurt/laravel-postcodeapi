@@ -4,27 +4,18 @@ namespace nickurt\postcodeapi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class PostcoDe extends Provider
+class PostcoDe extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'https://api.postco.de/v1/postcode/%s/%s';
+
     /**
      * @param string $postCode
      */
     public function find($postCode)
     {
         throw new NotSupportedException();
-    }
-
-    protected function request()
-    {
-        try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
-        }
-
-        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -44,9 +35,7 @@ class PostcoDe extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
 
         if (array_key_exists('error', $response)) {
             return new Address();

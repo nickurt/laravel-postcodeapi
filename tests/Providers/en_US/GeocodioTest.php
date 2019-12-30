@@ -18,7 +18,6 @@ class GeocodioTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->geocodio = (new Geocodio)
-            ->setRequestUrl('https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s')
             ->setApiKey('qwertyuiop');
     }
 
@@ -26,7 +25,7 @@ class GeocodioTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('qwertyuiop', $this->geocodio->getApiKey());
-        $this->assertSame('https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s', $this->geocodio->getRequestUrl());
+        $this->assertSame('https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s', (string)$this->geocodio->getRequestUrl());
     }
 
     /** @test */
@@ -39,7 +38,7 @@ class GeocodioTest extends BaseProviderTest
         ]))->find('92270');
 
         $this->assertSame('qwertyuiop', $this->geocodio->getApiKey());
-        $this->assertSame('https://api.geocod.io/v1.3/geocode/?q=92270&api_key=qwertyuiop', $this->geocodio->getRequestUrl());
+        $this->assertSame('https://api.geocod.io/v1.3/geocode/?q=92270&api_key=qwertyuiop', (string)$this->geocodio->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

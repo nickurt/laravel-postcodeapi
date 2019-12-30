@@ -3,10 +3,12 @@
 namespace nickurt\postcodeapi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class Algolia extends Provider
+class Algolia extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'https://places-dsn.algolia.net/1/places/query';
+
     /**
      * @param string $postCode
      * @return Address
@@ -27,7 +29,13 @@ class Algolia extends Provider
             'hitsPerPage' => 1,
         ]));
 
-        $response = $this->request();
+        $response = $this->post($this->getRequestUrl(), [
+            'headers' => [
+                'X-Algolia-Application-Id' => $this->getApiSecret(),
+                'X-Algolia-API-Key' => $this->getApiKey(),
+            ],
+            'body' => json_encode($this->getOptions())
+        ]);
 
         if ($response['nbHits'] < 1) {
             return new Address();
@@ -44,19 +52,6 @@ class Algolia extends Provider
         return $address;
     }
 
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('POST', $this->getRequestUrl(), [
-            'headers' => [
-                'X-Algolia-Application-Id' => $this->getApiSecret(),
-                'X-Algolia-API-Key' => $this->getApiKey(),
-            ],
-            'body' => json_encode($this->getOptions())
-        ]);
-
-        return json_decode($response->getBody(), true);
-    }
-
     /**
      * @param string $postCode
      * @param string $houseNumber
@@ -69,7 +64,13 @@ class Algolia extends Provider
             'hitsPerPage' => 1,
         ]));
 
-        $response = $this->request();
+        $response = $this->post($this->getRequestUrl(), [
+            'headers' => [
+                'X-Algolia-Application-Id' => $this->getApiSecret(),
+                'X-Algolia-API-Key' => $this->getApiKey(),
+            ],
+            'body' => json_encode($this->getOptions())
+        ]);
 
         if ($response['nbHits'] < 1) {
             return new Address();

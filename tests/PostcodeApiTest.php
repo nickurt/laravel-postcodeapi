@@ -35,7 +35,7 @@ class PostcodeApiTest extends TestCase
         /** @var \nickurt\PostcodeApi\Providers\nl_NL\NationaalGeoRegister $nationaalGeoRegister */
         $nationaalGeoRegister = PostcodeApi::create('NationaalGeoRegister');
 
-        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\Provider::class, $nationaalGeoRegister);
+        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\AbstractProvider::class, $nationaalGeoRegister);
         $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\NationaalGeoRegister::class, $nationaalGeoRegister);
 
         $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', $nationaalGeoRegister->getRequestUrl());

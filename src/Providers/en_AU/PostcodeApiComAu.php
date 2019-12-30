@@ -4,19 +4,28 @@ namespace nickurt\postcodeapi\Providers\en_AU;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class PostcodeApiComAu extends Provider
+class PostcodeApiComAu extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'http://v0.postcodeapi.com.au/suburbs/%s.json';
+
+    /**
+     * @param string $postCode
+     * @return mixed
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
+    }
+
     /**
      * @param string $postCode
      * @return Address
      */
     public function find($postCode)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode));
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), $postCode));
 
         if (count($response) < 1) {
             return new Address();
@@ -30,22 +39,6 @@ class PostcodeApiComAu extends Provider
             ->setLongitude($response[0]['longitude']);
 
         return $address;
-    }
-
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
-    /**
-     * @param string $postCode
-     * @return mixed
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
     }
 
     /**

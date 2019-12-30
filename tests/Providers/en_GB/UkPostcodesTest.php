@@ -19,15 +19,14 @@ class UkPostcodesTest extends BaseProviderTest
     {
         parent::setUp();
 
-        $this->ukPostcodes = (new UkPostcodes)
-            ->setRequestUrl('http://uk-postcodes.com/postcode/%s.json');
+        $this->ukPostcodes = (new UkPostcodes);
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame(null, $this->ukPostcodes->getApiKey());
-        $this->assertSame('http://uk-postcodes.com/postcode/%s.json', $this->ukPostcodes->getRequestUrl());
+        $this->assertSame('http://uk-postcodes.com/postcode/%s.json', (string)$this->ukPostcodes->getRequestUrl());
     }
 
     /** @test */
@@ -39,7 +38,7 @@ class UkPostcodesTest extends BaseProviderTest
             ]),
         ]))->find('SW1A1AA');
 
-        $this->assertSame('http://uk-postcodes.com/postcode/SW1A1AA.json', $this->ukPostcodes->getRequestUrl());
+        $this->assertSame('http://uk-postcodes.com/postcode/SW1A1AA.json', (string)$this->ukPostcodes->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

@@ -17,7 +17,6 @@ class GetAddressIOTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->getAddressIO = (new GetAddressIO)
-            ->setRequestUrl('https://api.getaddress.io/find')
             ->setApiKey('qwertyuiopasdfghjkl');
     }
 
@@ -25,7 +24,7 @@ class GetAddressIOTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('qwertyuiopasdfghjkl', $this->getAddressIO->getApiKey());
-        $this->assertSame('https://api.getaddress.io/find', $this->getAddressIO->getRequestUrl());
+        $this->assertSame('https://api.getaddress.io/find', (string)$this->getAddressIO->getRequestUrl());
     }
 
     /** @test */
@@ -37,7 +36,7 @@ class GetAddressIOTest extends BaseProviderTest
             ]),
         ]))->find('SW1A2AA');
 
-        $this->assertSame('https://api.getaddress.io/find/SW1A2AA?expand=true', $this->getAddressIO->getRequestUrl());
+        $this->assertSame('https://api.getaddress.io/find/SW1A2AA?expand=true', (string)$this->getAddressIO->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -86,7 +85,7 @@ class GetAddressIOTest extends BaseProviderTest
             ]),
         ]))->findByPostcodeAndHouseNumber('NN13ER', '10');
 
-        $this->assertSame('https://api.getaddress.io/find/NN13ER/10?expand=true', $this->getAddressIO->getRequestUrl());
+        $this->assertSame('https://api.getaddress.io/find/NN13ER/10?expand=true', (string)$this->getAddressIO->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

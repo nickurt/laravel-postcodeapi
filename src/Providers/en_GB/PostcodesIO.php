@@ -3,16 +3,19 @@
 namespace nickurt\postcodeapi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class PostcodesIO extends Provider
+class PostcodesIO extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
-    protected function request()
-    {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl());
+    /** @var string */
+    protected $requestUrl = 'https://api.postcodes.io/postcodes?q=%s';
 
-        return json_decode($response->getBody(), true);
+    /**
+     * @param string $postCode
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
     }
 
     /**
@@ -21,9 +24,7 @@ class PostcodesIO extends Provider
      */
     public function find($postCode)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode));
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), $postCode));
 
         if (!is_array($response['result'])) {
             return new Address();
@@ -36,15 +37,6 @@ class PostcodesIO extends Provider
             ->setLongitude($response['result'][0]['longitude']);
 
         return $address;
-    }
-
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
     }
 
     /**

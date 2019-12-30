@@ -17,7 +17,6 @@ class GoogleTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->google = (new Google)
-            ->setRequestUrl('https://maps.googleapis.com/maps/api/geocode/json')
             ->setApiKey('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie');
     }
 
@@ -25,7 +24,7 @@ class GoogleTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json', (string)$this->google->getRequestUrl());
     }
 
     /** @test */
@@ -38,7 +37,7 @@ class GoogleTest extends BaseProviderTest
         ]))->find('92270');
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=92270&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=92270&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -63,7 +62,7 @@ class GoogleTest extends BaseProviderTest
         ]))->find('1118CP');
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1118CP&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1118CP&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -88,7 +87,7 @@ class GoogleTest extends BaseProviderTest
         ]))->find('SW1A1AA');
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=SW1A1AA&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=SW1A1AA&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -113,7 +112,7 @@ class GoogleTest extends BaseProviderTest
         ]))->find('3066');
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=3066&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=3066&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -138,7 +137,7 @@ class GoogleTest extends BaseProviderTest
         ]))->find('75007');
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=75007&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=75007&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -163,7 +162,7 @@ class GoogleTest extends BaseProviderTest
         ]))->find('1000');
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1000&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1000&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -188,7 +187,7 @@ class GoogleTest extends BaseProviderTest
         ]))->find('10115');
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=10115&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=10115&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -213,7 +212,7 @@ class GoogleTest extends BaseProviderTest
         ]))->find('1010');
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1010&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1010&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -260,7 +259,7 @@ class GoogleTest extends BaseProviderTest
         ]))->findByPostcodeAndHouseNumber('92270', 1);
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=92270+1&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=92270+1&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -285,7 +284,7 @@ class GoogleTest extends BaseProviderTest
         ]))->findByPostcodeAndHouseNumber('1118CP', 202);
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1118CP+202&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1118CP+202&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -310,7 +309,7 @@ class GoogleTest extends BaseProviderTest
         ]))->findByPostcodeAndHouseNumber('SW1A2AA', 10);
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=SW1A2AA+10&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=SW1A2AA+10&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -335,7 +334,7 @@ class GoogleTest extends BaseProviderTest
         ]))->findByPostcodeAndHouseNumber('3066', 107);
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=3066+107&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=3066+107&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -360,7 +359,7 @@ class GoogleTest extends BaseProviderTest
         ]))->findByPostcodeAndHouseNumber('75007', 2);
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=75007+2&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=75007+2&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -385,7 +384,7 @@ class GoogleTest extends BaseProviderTest
         ]))->findByPostcodeAndHouseNumber('1000', 6);
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1000+6&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1000+6&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -410,7 +409,7 @@ class GoogleTest extends BaseProviderTest
         ]))->findByPostcodeAndHouseNumber('10115', 1);
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=10115+1&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=10115+1&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -435,7 +434,7 @@ class GoogleTest extends BaseProviderTest
         ]))->findByPostcodeAndHouseNumber('1010', 2);
 
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1010+2&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json?address=1010+2&key=Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', (string)$this->google->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

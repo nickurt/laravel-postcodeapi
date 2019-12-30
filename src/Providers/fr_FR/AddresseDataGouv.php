@@ -3,19 +3,28 @@
 namespace nickurt\postcodeapi\Providers\fr_FR;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class AddresseDataGouv extends Provider
+class AddresseDataGouv extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1';
+
+    /**
+     * @param string $postCode
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
+    }
+
     /**
      * @param string $postCode
      * @return Address
      */
     public function find($postCode)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, ''));
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), $postCode, ''));
 
         if (count($response['features']) < 1) {
             return new Address();
@@ -30,22 +39,6 @@ class AddresseDataGouv extends Provider
         return $address;
     }
 
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
-    }
-
     /**
      * @param string $postCode
      * @param string $houseNumber
@@ -53,9 +46,7 @@ class AddresseDataGouv extends Provider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), urlencode($houseNumber), $postCode));
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), urlencode($houseNumber), $postCode));
 
         if (count($response['features']) < 1) {
             return new Address();

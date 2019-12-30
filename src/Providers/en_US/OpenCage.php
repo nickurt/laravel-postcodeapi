@@ -3,10 +3,12 @@
 namespace nickurt\postcodeapi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class OpenCage extends Provider
+class OpenCage extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'https://api.opencagedata.com/geocode/v1/json';
+
     /**
      * @param string $postCode
      * @return Address
@@ -24,9 +26,7 @@ class OpenCage extends Provider
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $this->setRequestUrl($this->getRequestUrl() . '?q=' . $postCode . '&key=' . $this->getApiKey() . $options);
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '?q=' . $postCode . '&key=' . $this->getApiKey() . $options);
 
         if ($response['total_results'] < 1) {
             return new Address();
@@ -41,13 +41,6 @@ class OpenCage extends Provider
             ->setLongitude($response['results'][0]['geometry']['lng']);
 
         return $address;
-    }
-
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
     }
 
     /**

@@ -3,19 +3,28 @@
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class PostcodesNL extends Provider
+class PostcodesNL extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'https://api.postcodes.nl/1.0/address';
+
     /**
      * @param $postCode
-     * @return mixed|Address
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
+    }
+
+    /**
+     * @param $postCode
+     * @return Address
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode);
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode);
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();
@@ -34,29 +43,13 @@ class PostcodesNL extends Provider
     }
 
     /**
-     * @return mixed
-     */
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
-    public function findByPostcode($postCode)
-    {
-    }
-
-    /**
      * @param $postCode
      * @param $houseNumber
      * @return Address
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode . '&streetnumber=' . $houseNumber);
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode . '&streetnumber=' . $houseNumber);
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();

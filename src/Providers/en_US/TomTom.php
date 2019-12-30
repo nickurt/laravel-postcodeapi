@@ -4,10 +4,12 @@ namespace nickurt\postcodeapi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class TomTom extends Provider
+class TomTom extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'https://api.tomtom.com/search/2/geocode/%s.json';
+
     /**
      * @param string $postCode
      * @return Address
@@ -25,9 +27,7 @@ class TomTom extends Provider
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode) . '?key=' . $this->getApiKey() . $options);
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), $postCode) . '?key=' . $this->getApiKey() . $options);
 
         if ($response['summary']['totalResults'] < 1) {
             return new Address();
@@ -42,13 +42,6 @@ class TomTom extends Provider
             ->setLongitude($response['results'][0]['position']['lon']);
 
         return $address;
-    }
-
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
     }
 
     /**

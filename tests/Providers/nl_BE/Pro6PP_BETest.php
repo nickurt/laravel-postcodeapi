@@ -18,7 +18,6 @@ class Pro6PP_BETest extends BaseProviderTest
     public function setUp(): void
     {
         $this->pro6PP_BE = (new Pro6PP_BE)
-            ->setRequestUrl('https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&be_fourpp=%s')
             ->setApiKey('qwertyuiop');
     }
 
@@ -39,7 +38,7 @@ class Pro6PP_BETest extends BaseProviderTest
         ]))->find('1000');
 
         $this->assertSame('qwertyuiop', $this->pro6PP_BE->getApiKey());
-        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&be_fourpp=1000', $this->pro6PP_BE->getRequestUrl());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&be_fourpp=1000', (string)$this->pro6PP_BE->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

@@ -17,7 +17,6 @@ class Pro6PP_NLTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->pro6PP_NL = (new Pro6PP_NL)
-            ->setRequestUrl('https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s')
             ->setApiKey('qwertyuiop');
     }
 
@@ -25,7 +24,7 @@ class Pro6PP_NLTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('qwertyuiop', $this->pro6PP_NL->getApiKey());
-        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s', $this->pro6PP_NL->getRequestUrl());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s', (string)$this->pro6PP_NL->getRequestUrl());
     }
 
     /** @test */
@@ -37,8 +36,7 @@ class Pro6PP_NLTest extends BaseProviderTest
             ]),
         ]))->find('1118CP');
 
-        $this->assertSame('qwertyuiop', $this->pro6PP_NL->getApiKey());
-        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP', $this->pro6PP_NL->getRequestUrl());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP', (string)$this->pro6PP_NL->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -84,8 +82,7 @@ class Pro6PP_NLTest extends BaseProviderTest
             ]),
         ]))->findByPostcodeAndHouseNumber('1118CP', '202');
 
-        $this->assertSame('qwertyuiop', $this->pro6PP_NL->getApiKey());
-        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP&streetnumber=202', $this->pro6PP_NL->getRequestUrl());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP&streetnumber=202', (string)$this->pro6PP_NL->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

@@ -17,7 +17,6 @@ class LocationIQTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->locationIQ = (new \nickurt\PostcodeApi\Providers\en_US\LocationIQ())
-            ->setRequestUrl('https://us1.locationiq.com/v1/search.php')
             ->setApiKey('4390069143712a');
     }
 
@@ -25,7 +24,7 @@ class LocationIQTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('4390069143712a', $this->locationIQ->getApiKey());
-        $this->assertSame('https://us1.locationiq.com/v1/search.php', $this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php', (string)$this->locationIQ->getRequestUrl());
     }
 
     /** @test */
@@ -37,7 +36,7 @@ class LocationIQTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycodes' => 'US'])->find('92270');
 
-        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=92270&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=US', $this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=92270&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=US', (string)$this->locationIQ->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -61,7 +60,7 @@ class LocationIQTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycodes' => 'NL'])->find('1118CP');
 
-        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=1118CP&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=NL', $this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=1118CP&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=NL', (string)$this->locationIQ->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -85,7 +84,7 @@ class LocationIQTest extends BaseProviderTest
             ]),
         ]))->find('SW1A%201AA');
 
-        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=SW1A%201AA&statecode=1&addressdetails=1&format=json&key=4390069143712a', $this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=SW1A%201AA&statecode=1&addressdetails=1&format=json&key=4390069143712a', (string)$this->locationIQ->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -109,7 +108,7 @@ class LocationIQTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycodes' => 'au'])->find('3066');
 
-        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=3066&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=au', $this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=3066&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=au', (string)$this->locationIQ->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -133,7 +132,7 @@ class LocationIQTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycodes' => 'fr'])->find('75007');
 
-        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=75007&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=fr', $this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=75007&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=fr', (string)$this->locationIQ->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -157,7 +156,7 @@ class LocationIQTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycodes' => 'be'])->find('1000');
 
-        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=1000&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=be', $this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=1000&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=be', (string)$this->locationIQ->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -181,7 +180,7 @@ class LocationIQTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycodes' => 'de'])->find('10115');
 
-        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=10115&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=de', $this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=10115&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=de', (string)$this->locationIQ->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -205,7 +204,7 @@ class LocationIQTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycodes' => 'at'])->find('1010');
 
-        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=1010&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=at', $this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php?q=1010&statecode=1&addressdetails=1&format=json&key=4390069143712a&countrycodes=at', (string)$this->locationIQ->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

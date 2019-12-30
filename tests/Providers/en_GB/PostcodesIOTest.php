@@ -17,15 +17,14 @@ class PostcodesIOTest extends BaseProviderTest
 
     public function setUp(): void
     {
-        $this->postcodesIO = (new PostcodesIO)
-            ->setRequestUrl('https://api.postcodes.io/postcodes?q=%s');
+        $this->postcodesIO = (new PostcodesIO);
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame(null, $this->postcodesIO->getApiKey());
-        $this->assertSame('https://api.postcodes.io/postcodes?q=%s', $this->postcodesIO->getRequestUrl());
+        $this->assertSame('https://api.postcodes.io/postcodes?q=%s', (string)$this->postcodesIO->getRequestUrl());
     }
 
     /** @test */
@@ -37,7 +36,7 @@ class PostcodesIOTest extends BaseProviderTest
             ]),
         ]))->find('SW1A1AA');
 
-        $this->assertSame('https://api.postcodes.io/postcodes?q=SW1A1AA', $this->postcodesIO->getRequestUrl());
+        $this->assertSame('https://api.postcodes.io/postcodes?q=SW1A1AA', (string)$this->postcodesIO->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

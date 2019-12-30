@@ -3,16 +3,19 @@
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class Pro6PP_NL extends Provider
+class Pro6PP_NL extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
-    protected function request()
-    {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl());
+    /** @var string */
+    protected $requestUrl = 'https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s';
 
-        return json_decode($response->getBody(), true);
+    /**
+     * @param string $postCode
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
     }
 
     /**
@@ -21,9 +24,7 @@ class Pro6PP_NL extends Provider
      */
     public function find($postCode)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode));
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode));
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();
@@ -43,23 +44,12 @@ class Pro6PP_NL extends Provider
 
     /**
      * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
-    }
-
-    /**
-     * @param string $postCode
      * @param string $houseNumber
      * @return Address
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode) . '&streetnumber=' . $houseNumber);
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode) . '&streetnumber=' . $houseNumber);
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();

@@ -18,7 +18,6 @@ class BingTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->bing = (new Bing)
-            ->setRequestUrl('https://dev.virtualearth.net/REST/v1/Locations')
             ->setApiKey('KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N');
     }
 
@@ -26,7 +25,7 @@ class BingTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N', $this->bing->getApiKey());
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations', $this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations', (string)$this->bing->getRequestUrl());
     }
 
     /** @test */
@@ -38,7 +37,7 @@ class BingTest extends BaseProviderTest
             ]),
         ]))->find('92270');
 
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=92270&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N', $this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=92270&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N', (string)$this->bing->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -62,7 +61,7 @@ class BingTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countryRegion' => 'nl'])->find('1118CP');
 
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=1118CP&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=nl', $this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=1118CP&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=nl', (string)$this->bing->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -86,7 +85,7 @@ class BingTest extends BaseProviderTest
             ]),
         ]))->find('SW1A1AA');
 
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=SW1A1AA&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N', $this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=SW1A1AA&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N', (string)$this->bing->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -110,7 +109,7 @@ class BingTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countryRegion' => 'AUS'])->find('3066');
 
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=3066&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=AUS', $this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=3066&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=AUS', (string)$this->bing->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -134,7 +133,7 @@ class BingTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countryRegion' => 'FR'])->find('75007');
 
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=75007&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=FR', $this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=75007&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=FR', (string)$this->bing->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -158,7 +157,7 @@ class BingTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countryRegion' => 'BE'])->find('1000');
 
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=1000&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=BE', $this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=1000&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=BE', (string)$this->bing->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -182,7 +181,7 @@ class BingTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countryRegion' => 'DE'])->find('10115');
 
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=10115&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=DE', $this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=10115&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=DE', (string)$this->bing->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -206,7 +205,7 @@ class BingTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countryRegion' => 'AT'])->find('1010');
 
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=1010&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=AT', $this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations?postalCode=1010&key=KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N&countryRegion=AT', (string)$this->bing->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

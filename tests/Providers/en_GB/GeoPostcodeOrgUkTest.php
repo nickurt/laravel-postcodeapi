@@ -17,15 +17,14 @@ class GeoPostcodeOrkUkTest extends BaseProviderTest
 
     public function setUp(): void
     {
-        $this->geoPostcodeOrgUk = (new GeoPostcodeOrgUk)
-            ->setRequestUrl('http://www.geopostcode.org.uk/api/%s.json');
+        $this->geoPostcodeOrgUk = (new GeoPostcodeOrgUk);
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame(null, $this->geoPostcodeOrgUk->getApiKey());
-        $this->assertSame('http://www.geopostcode.org.uk/api/%s.json', $this->geoPostcodeOrgUk->getRequestUrl());
+        $this->assertSame('http://www.geopostcode.org.uk/api/%s.json', (string)$this->geoPostcodeOrgUk->getRequestUrl());
     }
 
     /** @test */
@@ -37,7 +36,7 @@ class GeoPostcodeOrkUkTest extends BaseProviderTest
             ]),
         ]))->find('SW1A1AA');
 
-        $this->assertSame('http://www.geopostcode.org.uk/api/SW1A1AA.json', $this->geoPostcodeOrgUk->getRequestUrl());
+        $this->assertSame('http://www.geopostcode.org.uk/api/SW1A1AA.json', (string)$this->geoPostcodeOrgUk->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

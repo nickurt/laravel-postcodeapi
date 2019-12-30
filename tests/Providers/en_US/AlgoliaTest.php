@@ -16,7 +16,6 @@ class AlgoliaTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->algolia = (new \nickurt\PostcodeApi\Providers\en_US\Algolia())
-            ->setRequestUrl('https://places-dsn.algolia.net/1/places/query')
             ->setApiKey('YourAPIKey')
             ->setApiSecret('YourApplicationId');
     }
@@ -38,7 +37,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'us'])->find('92270');
 
-        $this->assertSame(["countries" => "us", "query" => "92270", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "us", "query" => "92270", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -62,7 +61,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'nl'])->find('1118CP');
 
-        $this->assertSame(["countries" => "nl", "query" => "1118CP", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "nl", "query" => "1118CP", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -86,7 +85,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->find('SW1A1AA');
 
-        $this->assertSame(["query" => "SW1A1AA", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["query" => "SW1A1AA", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -110,7 +109,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'au'])->find('3066');
 
-        $this->assertSame(["countries" => "au", "query" => "3066", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "au", "query" => "3066", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -134,7 +133,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'fr'])->find('75007');
 
-        $this->assertSame(["countries" => "fr", "query" => "75007", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "fr", "query" => "75007", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -158,7 +157,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'be'])->find('1000');
 
-        $this->assertSame(["countries" => "be", "query" => "1000", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "be", "query" => "1000", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -182,7 +181,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'de'])->find('10115');
 
-        $this->assertSame(["countries" => "de", "query" => "10115", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "de", "query" => "10115", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -206,7 +205,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'at'])->find('1010');
 
-        $this->assertSame(["countries" => "at", "query" => "1010", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "at", "query" => "1010", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -252,7 +251,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'us'])->findByPostcodeAndHouseNumber('92270', 1);
 
-        $this->assertSame(["countries" => "us", "query" => "92270+1", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "us", "query" => "92270+1", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -276,7 +275,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'nl'])->findByPostcodeAndHouseNumber('1118CP', 202);
 
-        $this->assertSame(["countries" => "nl", "query" => "1118CP+202", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "nl", "query" => "1118CP+202", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -300,7 +299,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->findByPostcodeAndHouseNumber('SW1A2AA', 10);
 
-        $this->assertSame(["query" => "SW1A2AA+10", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["query" => "SW1A2AA+10", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -324,7 +323,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'au'])->findByPostcodeAndHouseNumber('3066', 107);
 
-        $this->assertSame(["countries" => "au", "query" => "3066+107", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "au", "query" => "3066+107", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -348,7 +347,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'fr'])->findByPostcodeAndHouseNumber('75007', 2);
 
-        $this->assertSame(["countries" => "fr", "query" => "75007+2", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "fr", "query" => "75007+2", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -372,7 +371,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'be'])->findByPostcodeAndHouseNumber('1000', 6);
 
-        $this->assertSame(["countries" => "be", "query" => "1000+6", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "be", "query" => "1000+6", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -396,7 +395,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'de'])->findByPostcodeAndHouseNumber('10115', 1);
 
-        $this->assertSame(["countries" => "de", "query" => "10115+1", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "de", "query" => "10115+1", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -420,7 +419,7 @@ class AlgoliaTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countries' => 'at'])->findByPostcodeAndHouseNumber('1010', 2);
 
-        $this->assertSame(["countries" => "at", "query" => "1010+2", "hitsPerPage" => 1], $this->algolia->getOptions());
+        $this->assertSame(["countries" => "at", "query" => "1010+2", "hitsPerPage" => 1], json_decode($this->algolia->getHttpClient()->getConfig('handler')->getLastRequest()->getBody(), true));
 
         $this->assertInstanceOf(Address::class, $address);
 

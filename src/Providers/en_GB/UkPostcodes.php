@@ -3,34 +3,11 @@
 namespace nickurt\postcodeapi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class UkPostcodes extends Provider
+class UkPostcodes extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
-    /**
-     * @param $postCode
-     * @return Address
-     */
-    public function find($postCode)
-    {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode));
-
-        $response = $this->request();
-
-        $address = new Address();
-        $address
-            ->setLatitude($response['geo']['lat'])
-            ->setLongitude($response['geo']['lng']);
-
-        return $address;
-    }
-
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
+    /** @var string */
+    protected $requestUrl = 'http://uk-postcodes.com/postcode/%s.json';
 
     /**
      * @param string $postCode
@@ -39,6 +16,22 @@ class UkPostcodes extends Provider
     public function findByPostcode($postCode)
     {
         return $this->find($postCode);
+    }
+
+    /**
+     * @param $postCode
+     * @return Address
+     */
+    public function find($postCode)
+    {
+        $response = $this->get(sprintf($this->getRequestUrl(), $postCode));
+
+        $address = new Address();
+        $address
+            ->setLatitude($response['geo']['lat'])
+            ->setLongitude($response['geo']['lng']);
+
+        return $address;
     }
 
     /**

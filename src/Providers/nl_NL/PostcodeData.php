@@ -3,10 +3,12 @@
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class PostcodeData extends Provider
+class PostcodeData extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'http://api.postcodedata.nl/v1/postcode/?postcode=%s&streetnumber=%s&ref=%s';
+
     /**
      * @param string $postCode
      */
@@ -30,9 +32,7 @@ class PostcodeData extends Provider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber, $_SERVER['HTTP_HOST']));
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), $postCode, $houseNumber, $_SERVER['HTTP_HOST']));
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();
@@ -49,12 +49,5 @@ class PostcodeData extends Provider
             ->setLongitude($response['details'][0]['lon']);
 
         return $address;
-    }
-
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
     }
 }

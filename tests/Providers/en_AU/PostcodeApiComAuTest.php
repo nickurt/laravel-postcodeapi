@@ -17,15 +17,14 @@ class PostcodeApiComAuTest extends BaseProviderTest
 
     public function setUp(): void
     {
-        $this->postcodeApiComAu = (new PostcodeApiComAu)
-            ->setRequestUrl('http://v0.postcodeapi.com.au/suburbs/%s.json');
+        $this->postcodeApiComAu = (new PostcodeApiComAu);
     }
 
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame(null, $this->postcodeApiComAu->getApiKey());
-        $this->assertSame('http://v0.postcodeapi.com.au/suburbs/%s.json', $this->postcodeApiComAu->getRequestUrl());
+        $this->assertSame('http://v0.postcodeapi.com.au/suburbs/%s.json', (string)$this->postcodeApiComAu->getRequestUrl());
     }
 
     /** @test */
@@ -37,7 +36,7 @@ class PostcodeApiComAuTest extends BaseProviderTest
             ]),
         ]))->find('3066');
 
-        $this->assertSame('http://v0.postcodeapi.com.au/suburbs/3066.json', $this->postcodeApiComAu->getRequestUrl());
+        $this->assertSame('http://v0.postcodeapi.com.au/suburbs/3066.json', (string)$this->postcodeApiComAu->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

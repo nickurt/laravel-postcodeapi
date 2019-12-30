@@ -18,7 +18,6 @@ class IdealPostcodesTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->idealPostcodes = (new IdealPostcodes)
-            ->setRequestUrl('https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s')
             ->setApiKey('iddqd');
     }
 
@@ -26,7 +25,7 @@ class IdealPostcodesTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('iddqd', $this->idealPostcodes->getApiKey());
-        $this->assertSame('https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s', $this->idealPostcodes->getRequestUrl());
+        $this->assertSame('https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s', (string)$this->idealPostcodes->getRequestUrl());
     }
 
     /** @test */
@@ -39,7 +38,7 @@ class IdealPostcodesTest extends BaseProviderTest
         ]))->find('SW1A2AA');
 
         $this->assertSame('iddqd', $this->idealPostcodes->getApiKey());
-        $this->assertSame('https://api.ideal-postcodes.co.uk/v1/postcodes/SW1A2AA?api_key=iddqd', $this->idealPostcodes->getRequestUrl());
+        $this->assertSame('https://api.ideal-postcodes.co.uk/v1/postcodes/SW1A2AA?api_key=iddqd', (string)$this->idealPostcodes->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

@@ -7,17 +7,17 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
+use nickurt\PostcodeApi\Providers\en_US\TomTom;
 use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
 class TomTomTest extends BaseProviderTest
 {
-    /** @var \nickurt\Providers\Providers\en_US\TomTom */
+    /** @var TomTom */
     protected $tomTom;
 
     public function setUp(): void
     {
-        $this->tomTom = (new \nickurt\PostcodeApi\Providers\en_US\TomTom())
-            ->setRequestUrl('https://api.tomtom.com/search/2/geocode/%s.json')
+        $this->tomTom = (new TomTom())
             ->setApiKey('fTBgJDvhz42xOaFykyPQsC2frczxZeC2');
     }
 
@@ -25,7 +25,7 @@ class TomTomTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('fTBgJDvhz42xOaFykyPQsC2frczxZeC2', $this->tomTom->getApiKey());
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/%s.json', $this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/%s.json', (string)$this->tomTom->getRequestUrl());
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class TomTomTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrySet' => 'US'])->find('92270');
 
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/92270.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=US', $this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/92270.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=US', (string)$this->tomTom->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -61,7 +61,7 @@ class TomTomTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrySet' => 'nl'])->find('1118CP');
 
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/1118CP.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=nl', $this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/1118CP.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=nl', (string)$this->tomTom->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -85,7 +85,7 @@ class TomTomTest extends BaseProviderTest
             ]),
         ]))->find('SW1A1AA');
 
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/SW1A1AA.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2', $this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/SW1A1AA.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2', (string)$this->tomTom->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -109,7 +109,7 @@ class TomTomTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrySet' => 'au'])->find('3066');
 
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/3066.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=au', $this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/3066.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=au', (string)$this->tomTom->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -133,7 +133,7 @@ class TomTomTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrySet' => 'fr'])->find('75007');
 
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/75007.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=fr', $this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/75007.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=fr', (string)$this->tomTom->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -157,7 +157,7 @@ class TomTomTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrySet' => 'be'])->find('1000');
 
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/1000.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=be', $this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/1000.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=be', (string)$this->tomTom->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -181,7 +181,7 @@ class TomTomTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrySet' => 'de'])->find('10115');
 
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/10115.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=de', $this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/10115.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=de', (string)$this->tomTom->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -205,7 +205,7 @@ class TomTomTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrySet' => 'at'])->find('1010');
 
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/1010.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=at', $this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/1010.json?key=fTBgJDvhz42xOaFykyPQsC2frczxZeC2&countrySet=at', (string)$this->tomTom->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

@@ -2,35 +2,29 @@
 
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
-use \nickurt\PostcodeApi\Providers\Provider;
-use \nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Entity\Address;
 
-class PostcodeNL extends Provider
+class PostcodeNL extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
-    protected $apiKey;
-    protected $requestUrl;
+    /** @var string */
+    protected $requestUrl = 'https://api.postcode.nl/rest/addresses/%s/%s';
 
     /**
-     * @return mixed
+     * @param string $postCode
+     * @return Address|void
      */
-    protected function request()
-    {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl(), [
-            'auth' => [
-                $this->getApiKey(), $this->getApiSecret()
-            ]
-        ]);
-
-        return json_decode($response->getBody(), true);
-    }
-
     public function find($postCode)
     {
+        throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }
 
+    /**
+     * @param string $postCode
+     * @return Address|void
+     */
     public function findByPostcode($postCode)
     {
+        throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }
 
     /**
@@ -40,14 +34,17 @@ class PostcodeNL extends Provider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
-        $response = $this->request();
+        $response = $this->get('https://api.postcode.eu/nl/v1/addresses/postcode/' . $postCode . '/' . $houseNumber, [
+            'auth' => [
+                $this->getApiKey(), $this->getApiSecret()
+            ]
+        ]);
 
         $address = new Address();
         $address
             ->setStreet($response['street'])
             ->setTown($response['city'])
-            ->setHouseNo($response['houseNumber'])
+            ->setHouseNo((string)$response['houseNumber'])
             ->setMunicipality($response['municipality'])
             ->setProvince($response['province'])
             ->setLatitude($response['latitude'])

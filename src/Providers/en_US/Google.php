@@ -3,10 +3,12 @@
 namespace nickurt\postcodeapi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class Google extends Provider
+class Google extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
+    /** @var string */
+    protected $requestUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+
     /**
      * @param string $postCode
      * @return Address
@@ -22,9 +24,7 @@ class Google extends Provider
      */
     public function find($postCode)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '?address=' . $postCode . '&key=' . $this->getApiKey());
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '?address=' . $postCode . '&key=' . $this->getApiKey());
 
         if (count($response['results']) < 1) {
             return new Address();
@@ -47,13 +47,6 @@ class Google extends Provider
         return $address;
     }
 
-    protected function request()
-    {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
-    }
-
     /**
      * @param string $postCode
      * @param string $houseNumber
@@ -61,9 +54,7 @@ class Google extends Provider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $this->setRequestUrl($this->getRequestUrl() . '?address=' . $postCode . '+' . $houseNumber . '&key=' . $this->getApiKey());
-
-        $response = $this->request();
+        $response = $this->get($this->getRequestUrl() . '?address=' . $postCode . '+' . $houseNumber . '&key=' . $this->getApiKey());
 
         if (count($response['results']) < 1) {
             return new Address();

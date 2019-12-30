@@ -42,11 +42,6 @@ return [
         'key' => '',
         'code' => 'nl_NL',
     ],
-    'Pstcd' => [
-        'url' => 'http://api.pstcd.nl/%s/?auth_key=%s&sixpp=%s&streetnumber=%s',
-        'key' => '',
-        'code' => 'nl_NL'
-    ],
 
     'Pro6PP_BE' => [
         'url' => 'https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&be_fourpp=%s',

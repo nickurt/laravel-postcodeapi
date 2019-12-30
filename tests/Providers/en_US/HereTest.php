@@ -18,7 +18,6 @@ class HereTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->here = (new Here)
-            ->setRequestUrl('https://geocoder.api.here.com/6.2/geocode.json')
             ->setApiKey('Q28yv1juyWQexhHdoJ1P')
             ->setApiSecret('pJKdj-mUwxw1thw8EjCX9v');
     }
@@ -28,7 +27,7 @@ class HereTest extends BaseProviderTest
     {
         $this->assertSame('Q28yv1juyWQexhHdoJ1P', $this->here->getApiKey());
         $this->assertSame('pJKdj-mUwxw1thw8EjCX9v', $this->here->getApiSecret());
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json', $this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json', (string)$this->here->getRequestUrl());
     }
 
     /** @test */
@@ -40,7 +39,7 @@ class HereTest extends BaseProviderTest
             ]),
         ]))->setOptions(['housenumber' => '42370', 'state' => 'CA', 'street' => 'Bob Hope Drive'])->find('92270');
 
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=92270&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&housenumber=42370&state=CA&street=Bob+Hope+Drive', $this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=92270&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&housenumber=42370&state=CA&street=Bob+Hope+Drive', (string)$this->here->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -64,7 +63,7 @@ class HereTest extends BaseProviderTest
             ]),
         ]))->find('1118CP');
 
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=1118CP&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9', $this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=1118CP&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9', (string)$this->here->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -88,7 +87,7 @@ class HereTest extends BaseProviderTest
             ]),
         ]))->find('SW1A1AA');
 
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=SW1A1AA&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9', $this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=SW1A1AA&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9', (string)$this->here->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -112,7 +111,7 @@ class HereTest extends BaseProviderTest
             ]),
         ]))->setOptions(['country' => 'AUS'])->find('3066');
 
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=3066&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=AUS', $this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=3066&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=AUS', (string)$this->here->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -136,7 +135,7 @@ class HereTest extends BaseProviderTest
             ]),
         ]))->setOptions(['country' => 'FRA'])->find('75007');
 
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=75007&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=FRA', $this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=75007&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=FRA', (string)$this->here->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -160,7 +159,7 @@ class HereTest extends BaseProviderTest
             ]),
         ]))->setOptions(['country' => 'BEL'])->find('1000');
 
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=1000&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=BEL', $this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=1000&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=BEL', (string)$this->here->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -184,7 +183,7 @@ class HereTest extends BaseProviderTest
             ]),
         ]))->setOptions(['country' => 'DE'])->find('10115');
 
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=10115&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=DE', $this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=10115&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=DE', (string)$this->here->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -208,7 +207,7 @@ class HereTest extends BaseProviderTest
             ]),
         ]))->setOptions(['country' => 'AT'])->find('1010');
 
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=1010&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=AT', $this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json?postalCode=1010&app_id=Q28yv1juyWQexhHdoJ1P&app_code=pJKdj-mUwxw1thw8EjCX9v&gen=9&country=AT', (string)$this->here->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

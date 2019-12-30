@@ -18,7 +18,6 @@ class OpenCageTest extends BaseProviderTest
     public function setUp(): void
     {
         $this->openCage = (new OpenCage())
-            ->setRequestUrl('https://api.opencagedata.com/geocode/v1/json')
             ->setApiKey('accy714xtv4ggfj0t7cpzvmznj0x3epk');
     }
 
@@ -26,7 +25,7 @@ class OpenCageTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('accy714xtv4ggfj0t7cpzvmznj0x3epk', $this->openCage->getApiKey());
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json', $this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json', (string)$this->openCage->getRequestUrl());
     }
 
     /** @test */
@@ -38,7 +37,7 @@ class OpenCageTest extends BaseProviderTest
             ])
         ]))->setOptions(['countrycode' => 'us'])->find('92270');
 
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=92270&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=us', $this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=92270&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=us', (string)$this->openCage->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -62,7 +61,7 @@ class OpenCageTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycode' => 'nl'])->find('1118CP');
 
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=1118CP&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=nl', $this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=1118CP&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=nl', (string)$this->openCage->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -86,7 +85,7 @@ class OpenCageTest extends BaseProviderTest
             ]),
         ]))->find('SW1A1AA');
 
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=SW1A1AA&key=accy714xtv4ggfj0t7cpzvmznj0x3epk', $this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=SW1A1AA&key=accy714xtv4ggfj0t7cpzvmznj0x3epk', (string)$this->openCage->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -110,7 +109,7 @@ class OpenCageTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycode' => 'au'])->find('3066');
 
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=3066&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=au', $this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=3066&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=au', (string)$this->openCage->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -134,7 +133,7 @@ class OpenCageTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycode' => 'fr'])->find('75007');
 
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=75007&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=fr', $this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=75007&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=fr', (string)$this->openCage->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -158,7 +157,7 @@ class OpenCageTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycode' => 'be'])->find('1000');
 
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=1000&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=be', $this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=1000&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=be', (string)$this->openCage->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -182,7 +181,7 @@ class OpenCageTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycode' => 'de'])->find('10115');
 
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=10115&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=de', $this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=10115&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=de', (string)$this->openCage->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -206,7 +205,7 @@ class OpenCageTest extends BaseProviderTest
             ]),
         ]))->setOptions(['countrycode' => 'at'])->find('1010');
 
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=1010&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=at', $this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json?q=1010&key=accy714xtv4ggfj0t7cpzvmznj0x3epk&countrycode=at', (string)$this->openCage->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 

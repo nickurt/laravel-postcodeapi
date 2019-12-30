@@ -3,19 +3,19 @@
 namespace nickurt\postcodeapi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\Provider;
 
-class IdealPostcodes extends Provider
+class IdealPostcodes extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
-    protected function request()
-    {
-        try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
-        }
+    /** @var string */
+    protected $requestUrl = 'https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s';
 
-        return json_decode($response->getBody(), true);
+    /**
+     * @param string $postCode
+     * @return Address
+     */
+    public function findByPostcode($postCode)
+    {
+        return $this->find($postCode);
     }
 
     /**
@@ -24,9 +24,7 @@ class IdealPostcodes extends Provider
      */
     public function find($postCode)
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()));
-
-        $response = $this->request();
+        $response = $this->get(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()));
 
         if (isset($response['message']) && $response['message'] != "Success") {
             return new Address();
@@ -40,15 +38,6 @@ class IdealPostcodes extends Provider
             ->setLongitude($response['result'][0]['longitude']);
 
         return $address;
-    }
-
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
-    {
-        return $this->find($postCode);
     }
 
     /**
