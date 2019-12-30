@@ -4,8 +4,9 @@ namespace nickurt\postcodeapi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
+use nickurt\PostcodeApi\Providers\AbstractProvider;
 
-class PostcoDe extends \nickurt\PostcodeApi\Providers\AbstractProvider
+class PostcoDe extends AbstractProvider
 {
     /** @var string */
     protected $requestUrl = 'https://api.postco.de/v1/postcode/%s/%s';

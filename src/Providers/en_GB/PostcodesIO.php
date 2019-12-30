@@ -3,8 +3,9 @@
 namespace nickurt\postcodeapi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Providers\AbstractProvider;
 
-class PostcodesIO extends \nickurt\PostcodeApi\Providers\AbstractProvider
+class PostcodesIO extends AbstractProvider
 {
     /** @var string */
     protected $requestUrl = 'https://api.postcodes.io/postcodes?q=%s';

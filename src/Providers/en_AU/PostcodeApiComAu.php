@@ -4,8 +4,9 @@ namespace nickurt\postcodeapi\Providers\en_AU;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
+use nickurt\PostcodeApi\Providers\AbstractProvider;
 
-class PostcodeApiComAu extends \nickurt\PostcodeApi\Providers\AbstractProvider
+class PostcodeApiComAu extends AbstractProvider
 {
     /** @var string */
     protected $requestUrl = 'http://v0.postcodeapi.com.au/suburbs/%s.json';

@@ -3,8 +3,9 @@
 namespace nickurt\postcodeapi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Providers\AbstractProvider;
 
-class Algolia extends \nickurt\PostcodeApi\Providers\AbstractProvider
+class Algolia extends AbstractProvider
 {
     /** @var string */
     protected $apiKey;

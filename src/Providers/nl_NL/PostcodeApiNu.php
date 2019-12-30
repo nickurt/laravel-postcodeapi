@@ -3,8 +3,9 @@
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Providers\AbstractProvider;
 
-class PostcodeApiNu extends \nickurt\PostcodeApi\Providers\AbstractProvider
+class PostcodeApiNu extends AbstractProvider
 {
     /** @var string */
     protected $apiKey;

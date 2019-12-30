@@ -4,8 +4,9 @@ namespace nickurt\postcodeapi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
+use nickurt\PostcodeApi\Providers\AbstractProvider;
 
-class Mapbox extends \nickurt\PostcodeApi\Providers\AbstractProvider
+class Mapbox extends AbstractProvider
 {
     /** @var string */
     protected $apiKey;

@@ -4,8 +4,9 @@ namespace nickurt\postcodeapi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
+use nickurt\PostcodeApi\Providers\AbstractProvider;
 
-class GeoPostcodeOrgUk extends \nickurt\PostcodeApi\Providers\AbstractProvider
+class GeoPostcodeOrgUk extends AbstractProvider
 {
     /** @var string */
     protected $requestUrl = 'http://www.geopostcode.org.uk/api/%s.json';

@@ -4,7 +4,7 @@ namespace nickurt\PostcodeApi;
 
 use Closure;
 use Illuminate\Foundation\Application;
-use nickurt\PostcodeApi\Providers\ProviderInterface;
+use nickurt\PostcodeApi\Concerns\Provider;
 
 class ProviderManager
 {
@@ -24,7 +24,7 @@ class ProviderManager
 
     /**
      * @param string $provider
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      * @throws \nickurt\PostcodeApi\Exception\InvalidArgumentException
      */
     public function create(string $provider)
@@ -46,7 +46,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createAddresseDataGouvDriver(array $config)
     {
@@ -54,17 +54,17 @@ class ProviderManager
     }
 
     /**
-     * @param \nickurt\PostcodeApi\Providers\ProviderInterface $driver
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @param \nickurt\PostcodeApi\Concerns\Provider $driver
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
-    protected function driver(ProviderInterface $driver)
+    protected function driver(Provider $driver)
     {
         return $driver;
     }
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createAlgoliaDriver(array $config)
     {
@@ -73,7 +73,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createApiPostcodeDriver(array $config)
     {
@@ -82,7 +82,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createBingDriver(array $config)
     {
@@ -91,7 +91,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createGeoPostcodeOrgUkDriver(array $config)
     {
@@ -100,7 +100,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createGeocodioDriver(array $config)
     {
@@ -109,7 +109,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createGetAddressIODriver(array $config)
     {
@@ -118,7 +118,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createGoogleDriver(array $config)
     {
@@ -127,7 +127,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createHereDriver(array $config)
     {
@@ -136,7 +136,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createIdealPostcodesDriver(array $config)
     {
@@ -145,7 +145,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createLocationIQDriver(array $config)
     {
@@ -154,7 +154,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createMapboxDriver(array $config)
     {
@@ -163,7 +163,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createNationaalGeoRegisterDriver(array $config)
     {
@@ -172,7 +172,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createOpenCageDriver(array $config)
     {
@@ -181,7 +181,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createPostcoDeDriver(array $config)
     {
@@ -190,7 +190,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createPostcodeApiComAuDriver(array $config)
     {
@@ -199,7 +199,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createPostcodeApiNuDriver(array $config)
     {
@@ -208,7 +208,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createPostcodeDataDriver(array $config)
     {
@@ -217,7 +217,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createPostcodeNLDriver(array $config)
     {
@@ -226,7 +226,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createPostcodesIODriver(array $config)
     {
@@ -235,7 +235,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createPostcodesNLDriver(array $config)
     {
@@ -244,7 +244,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createPro6PP_BEDriver(array $config)
     {
@@ -253,7 +253,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createPro6PP_NLDriver(array $config)
     {
@@ -262,7 +262,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createTomTomDriver(array $config)
     {
@@ -271,7 +271,7 @@ class ProviderManager
 
     /**
      * @param array $config
-     * @return \nickurt\PostcodeApi\Providers\ProviderInterface
+     * @return \nickurt\PostcodeApi\Concerns\Provider
      */
     protected function createUkPostcodesDriver(array $config)
     {
