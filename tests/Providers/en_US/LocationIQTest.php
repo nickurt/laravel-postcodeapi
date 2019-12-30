@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Exception\NotSupportedException;
+use nickurt\PostcodeApi\Exceptions\NotSupportedException;
 use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
 class LocationIQTest extends BaseProviderTest

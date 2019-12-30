@@ -41,6 +41,6 @@ class UkPostcodes extends AbstractProvider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
+        throw new \nickurt\PostcodeApi\Exceptions\NotSupportedException();
     }
 }

@@ -25,7 +25,7 @@ class ProviderManager
     /**
      * @param string $provider
      * @return \nickurt\PostcodeApi\Concerns\Provider
-     * @throws \nickurt\PostcodeApi\Exception\InvalidArgumentException
+     * @throws \nickurt\PostcodeApi\Exceptions\InvalidArgumentException
      */
     public function create(string $provider)
     {
@@ -40,7 +40,7 @@ class ProviderManager
                 return $this->{$method}($config);
             }
 
-            throw new \nickurt\PostcodeApi\Exception\InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
+            throw new \nickurt\PostcodeApi\Exceptions\InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
         }
     }
 

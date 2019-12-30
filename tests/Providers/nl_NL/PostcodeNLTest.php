@@ -5,7 +5,7 @@ namespace nickurt\PostcodeApi\tests\Providers\nl_NL;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
-use nickurt\PostcodeApi\Exception\NotSupportedException;
+use nickurt\PostcodeApi\Exceptions\NotSupportedException;
 use nickurt\PostcodeApi\Providers\nl_NL\PostcodeNL;
 use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 

@@ -22,7 +22,7 @@ class PostcodeNL extends AbstractProvider
      */
     public function find($postCode)
     {
-        throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
+        throw new \nickurt\PostcodeApi\Exceptions\NotSupportedException();
     }
 
     /**
@@ -31,7 +31,7 @@ class PostcodeNL extends AbstractProvider
      */
     public function findByPostcode($postCode)
     {
-        throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
+        throw new \nickurt\PostcodeApi\Exceptions\NotSupportedException();
     }
 
     /**

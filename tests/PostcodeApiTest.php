@@ -23,7 +23,7 @@ class PostcodeApiTest extends TestCase
     /** @test */
     public function it_can_throw_exception_by_unknown_provider()
     {
-        $this->expectException(\nickurt\PostcodeApi\Exception\InvalidArgumentException::class);
+        $this->expectException(\nickurt\PostcodeApi\Exceptions\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to use the provider "blablablabla"');
 
         PostcodeApi::create('blablablabla');
