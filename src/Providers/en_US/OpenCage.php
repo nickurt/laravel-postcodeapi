@@ -7,6 +7,9 @@ use nickurt\PostcodeApi\Entity\Address;
 class OpenCage extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://api.opencagedata.com/geocode/v1/json';
 
     /**
@@ -41,6 +44,25 @@ class OpenCage extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['results'][0]['geometry']['lng']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

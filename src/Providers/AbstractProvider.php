@@ -4,12 +4,6 @@ namespace nickurt\PostcodeApi\Providers;
 
 abstract class AbstractProvider implements ProviderInterface
 {
-    /** @var string */
-    protected $apiKey;
-
-    /** @var string */
-    protected $apiSecret;
-
     /** @var \GuzzleHttp\Client */
     protected $client;
 
@@ -41,44 +35,6 @@ abstract class AbstractProvider implements ProviderInterface
     public function getHttpClient()
     {
         return $this->client ?? $this->client = new \GuzzleHttp\Client();
-    }
-
-    /**
-     * @return string
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * @param $apiKey
-     * @return $this
-     */
-    public function setApiKey($apiKey)
-    {
-        $this->apiKey = $apiKey;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getApiSecret()
-    {
-        return $this->apiSecret;
-    }
-
-    /**
-     * @param string $apiSecret
-     * @return $this
-     */
-    public function setApiSecret($apiSecret)
-    {
-        $this->apiSecret = $apiSecret;
-
-        return $this;
     }
 
     /**

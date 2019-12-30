@@ -7,6 +7,9 @@ use nickurt\PostcodeApi\Entity\Address;
 class PostcodesNL extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://api.postcodes.nl/1.0/address';
 
     /**
@@ -40,6 +43,25 @@ class PostcodesNL extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['results'][0]['longitude']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

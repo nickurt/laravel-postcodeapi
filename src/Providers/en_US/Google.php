@@ -7,6 +7,9 @@ use nickurt\PostcodeApi\Entity\Address;
 class Google extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
 
     /**
@@ -45,6 +48,25 @@ class Google extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['results'][0]['geometry']['location']['lng']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

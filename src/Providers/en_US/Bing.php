@@ -7,6 +7,9 @@ use nickurt\PostcodeApi\Entity\Address;
 class Bing extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://dev.virtualearth.net/REST/v1/Locations';
 
     /**
@@ -41,6 +44,25 @@ class Bing extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['resourceSets'][0]['resources'][0]['point']['coordinates'][1]);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

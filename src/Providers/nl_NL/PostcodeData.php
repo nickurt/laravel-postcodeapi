@@ -7,6 +7,9 @@ use nickurt\PostcodeApi\Entity\Address;
 class PostcodeData extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $referer;
+
+    /** @var string */
     protected $requestUrl = 'http://api.postcodedata.nl/v1/postcode/?postcode=%s&streetnumber=%s&ref=%s';
 
     /**
@@ -32,7 +35,7 @@ class PostcodeData extends \nickurt\PostcodeApi\Providers\AbstractProvider
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), $postCode, $houseNumber, $_SERVER['HTTP_HOST']));
+        $response = $this->get(sprintf($this->getRequestUrl(), $postCode, $houseNumber, $this->getReferer()));
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();
@@ -49,5 +52,24 @@ class PostcodeData extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['details'][0]['lon']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReferer()
+    {
+        return $this->referer ?? $this->referer = $_SERVER['HTTP_HOST'];
+    }
+
+    /**
+     * @param $referer
+     * @return $this
+     */
+    public function setReferer($referer)
+    {
+        $this->referer = $referer;
+
+        return $this;
     }
 }

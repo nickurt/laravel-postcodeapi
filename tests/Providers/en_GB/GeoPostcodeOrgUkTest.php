@@ -23,7 +23,6 @@ class GeoPostcodeOrkUkTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame(null, $this->geoPostcodeOrgUk->getApiKey());
         $this->assertSame('http://www.geopostcode.org.uk/api/%s.json', (string)$this->geoPostcodeOrgUk->getRequestUrl());
     }
 

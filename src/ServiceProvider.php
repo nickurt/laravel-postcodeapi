@@ -2,8 +2,6 @@
 
 namespace nickurt\PostcodeApi;
 
-use \nickurt\PostcodeApi\ProviderFactory;
-
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
@@ -36,7 +34,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->app->singleton('PostcodeApi', function ($app) {
-            return new ProviderFactory();
+            return new ProviderManager($app);
         });
     }
 }

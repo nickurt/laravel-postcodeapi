@@ -22,7 +22,6 @@ class PostcodeNLTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame(null, $this->postcodeNL->getApiKey());
         $this->assertSame('https://api.postcode.nl/rest/addresses/%s/%s', $this->postcodeNL->getRequestUrl());
     }
 

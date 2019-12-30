@@ -1,14 +1,14 @@
 <?php
 
-use nickurt\PostcodeApi\ProviderFactory;
+use nickurt\PostcodeApi\ProviderManager;
 
 if (!function_exists('postcodeapi')) {
     /**
      * @param string $provider
-     * @return \nickurt\PostcodeApi\ProviderFactory $provider
+     * @return \nickurt\PostcodeApi\ProviderManager $provider
      */
     function postcodeapi(string $provider)
     {
-        return app(ProviderFactory::class)->create($provider);
+        return app(ProviderManager::class)->create($provider);
     }
 }

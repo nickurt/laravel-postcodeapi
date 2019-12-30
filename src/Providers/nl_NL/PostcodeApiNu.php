@@ -7,6 +7,9 @@ use nickurt\PostcodeApi\Entity\Address;
 class PostcodeApiNu extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://api.postcodeapi.nu/v3/lookup';
 
     /**
@@ -53,5 +56,24 @@ class PostcodeApiNu extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setProvince($response['province']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 }

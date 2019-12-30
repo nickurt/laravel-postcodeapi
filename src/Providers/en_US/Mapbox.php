@@ -8,6 +8,9 @@ use nickurt\PostcodeApi\Exception\NotSupportedException;
 class Mapbox extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/%s.json';
 
     /**
@@ -45,6 +48,25 @@ class Mapbox extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['features'][0]['geometry']['coordinates'][0]);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

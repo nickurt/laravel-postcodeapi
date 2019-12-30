@@ -2,7 +2,7 @@
 
 namespace nickurt\PostcodeApi\tests;
 
-use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
+use nickurt\PostcodeApi\Facade as PostcodeApi;
 
 class PostcodeApiTest extends TestCase
 {
@@ -15,9 +15,9 @@ class PostcodeApiTest extends TestCase
     /** @test */
     public function it_can_work_with_app_instance()
     {
-        $this->assertInstanceOf(PostcodeApi::class, app('PostcodeApi'));
+        $this->assertInstanceOf(\nickurt\PostcodeApi\ProviderManager::class, app('PostcodeApi'));
 
-        $this->assertInstanceOf(PostcodeApi::class, $this->app['PostcodeApi']);
+        $this->assertInstanceOf(\nickurt\PostcodeApi\ProviderManager::class, $this->app['PostcodeApi']);
     }
 
     /** @test */

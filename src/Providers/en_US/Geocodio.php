@@ -7,6 +7,9 @@ use nickurt\PostcodeApi\Entity\Address;
 class Geocodio extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s';
 
     /**
@@ -39,6 +42,25 @@ class Geocodio extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['results'][0]['location']['lng']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

@@ -23,7 +23,6 @@ class PostcoDeTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame(null, $this->postcoDe->getApiKey());
         $this->assertSame('https://api.postco.de/v1/postcode/%s/%s', $this->postcoDe->getRequestUrl());
     }
 

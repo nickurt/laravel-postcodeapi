@@ -23,7 +23,6 @@ class PostcodeApiComAuTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame(null, $this->postcodeApiComAu->getApiKey());
         $this->assertSame('http://v0.postcodeapi.com.au/suburbs/%s.json', (string)$this->postcodeApiComAu->getRequestUrl());
     }
 

@@ -8,6 +8,9 @@ use nickurt\PostcodeApi\Exception\NotSupportedException;
 class TomTom extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://api.tomtom.com/search/2/geocode/%s.json';
 
     /**
@@ -42,6 +45,25 @@ class TomTom extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['results'][0]['position']['lon']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

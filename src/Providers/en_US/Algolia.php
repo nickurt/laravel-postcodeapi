@@ -7,6 +7,12 @@ use nickurt\PostcodeApi\Entity\Address;
 class Algolia extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
+    protected $apiSecret;
+
+    /** @var string */
     protected $requestUrl = 'https://places-dsn.algolia.net/1/places/query';
 
     /**
@@ -50,6 +56,44 @@ class Algolia extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['hits'][0]['_geoloc']['lng']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiSecret()
+    {
+        return $this->apiSecret;
+    }
+
+    /**
+     * @param string $apiSecret
+     * @return $this
+     */
+    public function setApiSecret($apiSecret)
+    {
+        $this->apiSecret = $apiSecret;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

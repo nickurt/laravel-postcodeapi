@@ -7,6 +7,9 @@ use nickurt\PostcodeApi\Entity\Address;
 class IdealPostcodes extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s';
 
     /**
@@ -38,6 +41,25 @@ class IdealPostcodes extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['result'][0]['longitude']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

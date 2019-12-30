@@ -22,7 +22,6 @@ class AdresseDataGouvTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame(null, $this->adresseDataGouv->getApiKey());
         $this->assertSame('https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1', (string)$this->adresseDataGouv->getRequestUrl());
     }
 

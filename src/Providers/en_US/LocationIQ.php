@@ -7,6 +7,9 @@ use nickurt\PostcodeApi\Entity\Address;
 class LocationIQ extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** @var string */
     protected $requestUrl = 'https://us1.locationiq.com/v1/search.php';
 
     /**
@@ -41,6 +44,25 @@ class LocationIQ extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response[0]['lon']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

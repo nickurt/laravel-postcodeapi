@@ -7,6 +7,12 @@ use nickurt\PostcodeApi\Entity\Address;
 class Here extends \nickurt\PostcodeApi\Providers\AbstractProvider
 {
     /** @var string */
+    protected $apiKey;
+
+    /** string */
+    protected $apiSecret;
+
+    /** @var string */
     protected $requestUrl = 'https://geocoder.api.here.com/6.2/geocode.json';
 
     /**
@@ -43,6 +49,44 @@ class Here extends \nickurt\PostcodeApi\Providers\AbstractProvider
             ->setLongitude($response['Response']['View'][0]['Result'][0]['Location']['DisplayPosition']['Longitude']);
 
         return $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiSecret()
+    {
+        return $this->apiSecret;
+    }
+
+    /**
+     * @param string $apiSecret
+     * @return $this
+     */
+    public function setApiSecret($apiSecret)
+    {
+        $this->apiSecret = $apiSecret;
+
+        return $this;
     }
 
     /**
