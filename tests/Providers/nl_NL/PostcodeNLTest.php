@@ -11,7 +11,7 @@ use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
 class PostcodeNLTest extends BaseProviderTest
 {
-    /** @var \nickurt\postcodeapi\Providers\nl_NL\PostcodeNL */
+    /** @var \nickurt\PostcodeApi\Providers\nl_NL\PostcodeNL */
     protected $postcodeNL;
 
     public function setUp(): void

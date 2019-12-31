@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\postcodeapi\Providers\en_GB;
+namespace nickurt\PostcodeApi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;

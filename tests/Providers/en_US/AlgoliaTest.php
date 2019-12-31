@@ -10,7 +10,7 @@ use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
 class AlgoliaTest extends BaseProviderTest
 {
-    /** @var \nickurt\postcodeapi\Providers\en_US\Algolia */
+    /** @var \nickurt\PostcodeApi\Providers\en_US\Algolia */
     protected $algolia;
 
     public function setUp(): void

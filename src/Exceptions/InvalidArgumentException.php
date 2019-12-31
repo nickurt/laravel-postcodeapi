@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\postcodeapi\Exceptions;
+namespace nickurt\PostcodeApi\Exceptions;
 
 use Exception;
 
