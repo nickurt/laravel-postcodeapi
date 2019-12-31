@@ -23,7 +23,7 @@ class PostcodesIOTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('https://api.postcodes.io/postcodes?q=%s', (string)$this->postcodesIO->getRequestUrl());
+        $this->assertSame('https://api.postcodes.io/postcodes?q=%s', $this->postcodesIO->getRequestUrl());
     }
 
     /** @test */

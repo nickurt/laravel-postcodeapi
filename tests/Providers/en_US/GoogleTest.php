@@ -24,7 +24,7 @@ class GoogleTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('Wrai_nwnetck2jlztk6vgwjaysrzbkzuvhhaaie', $this->google->getApiKey());
-        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json', (string)$this->google->getRequestUrl());
+        $this->assertSame('https://maps.googleapis.com/maps/api/geocode/json', $this->google->getRequestUrl());
     }
 
     /** @test */

@@ -25,7 +25,7 @@ class UkPostcodesTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('http://uk-postcodes.com/postcode/%s.json', (string)$this->ukPostcodes->getRequestUrl());
+        $this->assertSame('http://uk-postcodes.com/postcode/%s.json', $this->ukPostcodes->getRequestUrl());
     }
 
     /** @test */

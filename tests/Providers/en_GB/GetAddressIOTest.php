@@ -24,7 +24,7 @@ class GetAddressIOTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('qwertyuiopasdfghjkl', $this->getAddressIO->getApiKey());
-        $this->assertSame('https://api.getaddress.io/find', (string)$this->getAddressIO->getRequestUrl());
+        $this->assertSame('https://api.getaddress.io/find', $this->getAddressIO->getRequestUrl());
     }
 
     /** @test */

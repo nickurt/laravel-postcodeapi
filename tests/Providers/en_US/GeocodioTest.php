@@ -25,7 +25,7 @@ class GeocodioTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('qwertyuiop', $this->geocodio->getApiKey());
-        $this->assertSame('https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s', (string)$this->geocodio->getRequestUrl());
+        $this->assertSame('https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s', $this->geocodio->getRequestUrl());
     }
 
     /** @test */

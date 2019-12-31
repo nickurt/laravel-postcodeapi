@@ -24,7 +24,7 @@ class MapboxTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('pk.hd5FuVYvSRnJwzSQ2LJyyFQSWXuJEN5wTzgtGFcgxpWxRrWtATeQYLEuJxnPnqXAMZ.Or19S7KmYPHW8YjRz82v6g', $this->mapBox->getApiKey());
-        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/%s.json', (string)$this->mapBox->getRequestUrl());
+        $this->assertSame('https://api.mapbox.com/geocoding/v5/mapbox.places/%s.json', $this->mapBox->getRequestUrl());
     }
 
     /** @test */

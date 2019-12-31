@@ -22,7 +22,7 @@ class NationaalGeoRegisterTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_default_config_values_for_this_provider()
     {
-        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', (string)$this->nationaalGeoRegister->getRequestUrl());
+        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', $this->nationaalGeoRegister->getRequestUrl());
     }
 
     /** @test */

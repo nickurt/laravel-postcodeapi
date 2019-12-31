@@ -25,7 +25,7 @@ class OpenCageTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('accy714xtv4ggfj0t7cpzvmznj0x3epk', $this->openCage->getApiKey());
-        $this->assertSame('https://api.opencagedata.com/geocode/v1/json', (string)$this->openCage->getRequestUrl());
+        $this->assertSame('https://api.opencagedata.com/geocode/v1/json', $this->openCage->getRequestUrl());
     }
 
     /** @test */

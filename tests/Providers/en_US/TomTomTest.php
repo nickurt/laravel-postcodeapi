@@ -25,7 +25,7 @@ class TomTomTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('fTBgJDvhz42xOaFykyPQsC2frczxZeC2', $this->tomTom->getApiKey());
-        $this->assertSame('https://api.tomtom.com/search/2/geocode/%s.json', (string)$this->tomTom->getRequestUrl());
+        $this->assertSame('https://api.tomtom.com/search/2/geocode/%s.json', $this->tomTom->getRequestUrl());
     }
 
     /** @test */

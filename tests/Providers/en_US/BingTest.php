@@ -25,7 +25,7 @@ class BingTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('KiDvfeMKAupV8LryymvklMJDEPJ4_04iLA2AN5Ayf4dUuwndTGlYPP3fOPFHXp0N', $this->bing->getApiKey());
-        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations', (string)$this->bing->getRequestUrl());
+        $this->assertSame('https://dev.virtualearth.net/REST/v1/Locations', $this->bing->getRequestUrl());
     }
 
     /** @test */

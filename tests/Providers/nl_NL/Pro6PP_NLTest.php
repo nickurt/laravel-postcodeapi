@@ -24,7 +24,7 @@ class Pro6PP_NLTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('qwertyuiop', $this->pro6PP_NL->getApiKey());
-        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s', (string)$this->pro6PP_NL->getRequestUrl());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s', $this->pro6PP_NL->getRequestUrl());
     }
 
     /** @test */

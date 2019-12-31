@@ -27,7 +27,7 @@ class HereTest extends BaseProviderTest
     {
         $this->assertSame('Q28yv1juyWQexhHdoJ1P', $this->here->getApiKey());
         $this->assertSame('pJKdj-mUwxw1thw8EjCX9v', $this->here->getApiSecret());
-        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json', (string)$this->here->getRequestUrl());
+        $this->assertSame('https://geocoder.api.here.com/6.2/geocode.json', $this->here->getRequestUrl());
     }
 
     /** @test */

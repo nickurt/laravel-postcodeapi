@@ -24,7 +24,7 @@ class LocationIQTest extends BaseProviderTest
     public function it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame('4390069143712a', $this->locationIQ->getApiKey());
-        $this->assertSame('https://us1.locationiq.com/v1/search.php', (string)$this->locationIQ->getRequestUrl());
+        $this->assertSame('https://us1.locationiq.com/v1/search.php', $this->locationIQ->getRequestUrl());
     }
 
     /** @test */
