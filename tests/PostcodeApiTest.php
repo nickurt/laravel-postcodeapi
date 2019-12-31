@@ -9,15 +9,15 @@ class PostcodeApiTest extends TestCase
     /** @test */
     public function it_can_create_a_new_provider_via_helper_function()
     {
-        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\NationaalGeoRegister::class, postcodeapi('NationaalGeoRegister'));
+        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\Provider::class, postcodeapi('NationaalGeoRegister'));
+
+        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\NationaalGeoRegister::class, postcodeapi('NationaalGeoRegister')->getAdapter());
     }
 
     /** @test */
-    public function it_can_work_with_app_instance()
+    public function it_can_get_the_http_client()
     {
-        $this->assertInstanceOf(\nickurt\PostcodeApi\ProviderManager::class, app('PostcodeApi'));
-
-        $this->assertInstanceOf(\nickurt\PostcodeApi\ProviderManager::class, $this->app['PostcodeApi']);
+        $this->assertInstanceOf(\GuzzleHttp\Client::class, PostcodeApi::create('NationaalGeoRegister')->getAdapter()->getHttpClient());
     }
 
     /** @test */
@@ -32,18 +32,19 @@ class PostcodeApiTest extends TestCase
     /** @test */
     public function it_can_work_via_postcodeapi_facade_factory_for_a_known_provider()
     {
-        /** @var \nickurt\PostcodeApi\Providers\nl_NL\NationaalGeoRegister $nationaalGeoRegister */
-        $nationaalGeoRegister = PostcodeApi::create('NationaalGeoRegister');
+        $postcodeApi = PostcodeApi::create('NationaalGeoRegister');
 
-        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\AbstractProvider::class, $nationaalGeoRegister);
-        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\NationaalGeoRegister::class, $nationaalGeoRegister);
+        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\AbstractAdapter::class, $postcodeApi->getAdapter());
+        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\NationaalGeoRegister::class, $postcodeApi->getAdapter());
 
-        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', $nationaalGeoRegister->getRequestUrl());
+        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', $postcodeApi->getAdapter()->getRequestUrl());
     }
 
     /** @test */
-    public function it_can_get_the_http_client()
+    public function it_can_work_with_app_instance()
     {
-        $this->assertInstanceOf(\GuzzleHttp\Client::class, PostcodeApi::create('NationaalGeoRegister')->getHttpClient());
+        $this->assertInstanceOf(\nickurt\PostcodeApi\ProviderManager::class, app('PostcodeApi'));
+
+        $this->assertInstanceOf(\nickurt\PostcodeApi\ProviderManager::class, $this->app['PostcodeApi']);
     }
 }

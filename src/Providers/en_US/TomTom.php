@@ -4,9 +4,9 @@ namespace nickurt\postcodeapi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exceptions\NotSupportedException;
-use nickurt\PostcodeApi\Providers\AbstractProvider;
+use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
-class TomTom extends AbstractProvider
+class TomTom extends AbstractAdapter
 {
     /** @var string */
     protected $apiKey;

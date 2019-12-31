@@ -2,7 +2,7 @@
 
 namespace nickurt\PostcodeApi\Concerns;
 
-interface Provider
+interface Adapter
 {
     /**
      * @param string $postCode
@@ -22,9 +22,4 @@ interface Provider
      * @return \nickurt\PostcodeApi\Entity\Address
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber);
-
-    /**
-     * @return \nickurt\PostcodeApi\Concerns\Adapter
-     */
-    public function getAdapter();
 }

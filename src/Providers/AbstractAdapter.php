@@ -2,9 +2,9 @@
 
 namespace nickurt\PostcodeApi\Providers;
 
-use nickurt\PostcodeApi\Concerns\Provider;
+use nickurt\PostcodeApi\Concerns\Adapter;
 
-abstract class AbstractProvider implements Provider
+abstract class AbstractAdapter implements Adapter
 {
     /** @var \GuzzleHttp\Client */
     protected $client;

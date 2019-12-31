@@ -3,9 +3,9 @@
 namespace nickurt\postcodeapi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\AbstractProvider;
+use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
-class UkPostcodes extends AbstractProvider
+class UkPostcodes extends AbstractAdapter
 {
     /** @var string */
     protected $requestUrl = 'http://uk-postcodes.com/postcode/%s.json';

@@ -3,9 +3,9 @@
 namespace nickurt\postcodeapi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\AbstractProvider;
+use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
-class NationaalGeoRegister extends AbstractProvider
+class NationaalGeoRegister extends AbstractAdapter
 {
     /** @var string */
     protected $requestUrl = 'http://geodata.nationaalgeoregister.nl/locatieserver/v3/free';

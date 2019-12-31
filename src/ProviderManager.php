@@ -3,19 +3,19 @@
 namespace nickurt\PostcodeApi;
 
 use Closure;
-use Illuminate\Foundation\Application;
-use nickurt\PostcodeApi\Concerns\Provider;
+use Illuminate\Contracts\Foundation\Application;
+use nickurt\PostcodeApi\Concerns\Adapter;
 
 class ProviderManager
 {
-    /** @var \Illuminate\Foundation\Application */
+    /** @var \Illuminate\Contracts\Foundation\Application */
     protected $app;
 
     /** @var array */
     protected $providers = [];
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     public function __construct(Application $app)
     {
@@ -32,7 +32,7 @@ class ProviderManager
         $config = $this->app['config']["postcodeapi.{$provider}"];
 
         if (isset($this->providers[$provider])) {
-            //
+            return $this->providers[$provider]($this->app, $config);
         } else {
             $method = 'create' . ucfirst($provider) . 'Driver';
 
@@ -54,12 +54,12 @@ class ProviderManager
     }
 
     /**
-     * @param \nickurt\PostcodeApi\Concerns\Provider $driver
-     * @return \nickurt\PostcodeApi\Concerns\Provider
+     * @param \nickurt\PostcodeApi\Concerns\Adapter $driver
+     * @return \nickurt\PostcodeApi\Providers\Provider
      */
-    protected function driver(Provider $driver)
+    protected function driver(Adapter $driver)
     {
-        return $driver;
+        return new \nickurt\PostcodeApi\Providers\Provider($driver);
     }
 
     /**

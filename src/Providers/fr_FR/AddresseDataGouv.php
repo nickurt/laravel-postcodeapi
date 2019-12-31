@@ -3,9 +3,9 @@
 namespace nickurt\postcodeapi\Providers\fr_FR;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\AbstractProvider;
+use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
-class AddresseDataGouv extends AbstractProvider
+class AddresseDataGouv extends AbstractAdapter
 {
     /** @var string */
     protected $requestUrl = 'https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1';

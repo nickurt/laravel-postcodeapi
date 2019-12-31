@@ -3,9 +3,9 @@
 namespace nickurt\postcodeapi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\AbstractProvider;
+use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
-class Google extends AbstractProvider
+class Google extends AbstractAdapter
 {
     /** @var string */
     protected $apiKey;

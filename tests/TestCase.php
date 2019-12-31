@@ -31,7 +31,7 @@ class TestCase extends Orchestra
     protected function getPackageAliases($app)
     {
         return [
-            'PostcodeApi' => \nickurt\PostcodeApi\Facade::class
+            'PostcodeApi' => \nickurt\PostcodeApi\Facades\PostcodeApi::class
         ];
     }
 
