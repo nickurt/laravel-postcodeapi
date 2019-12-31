@@ -26,6 +26,13 @@ class AlgoliaTest extends BaseProviderTest
         $this->assertSame('YourAPIKey', $this->algolia->getApiKey());
         $this->assertSame('YourApplicationId', $this->algolia->getApiSecret());
         $this->assertSame('https://places-dsn.algolia.net/1/places/query', $this->algolia->getRequestUrl());
+
+        $this->assertSame([
+            'X-Algolia-Application-Id' => 'YourApplicationId',
+            'X-Algolia-API-Key' => 'YourAPIKey',
+        ], $this->algolia->getHeaders());
+
+        $this->assertSame([], $this->algolia->setApiKey('')->setApiSecret(null)->getHeaders());
     }
 
     /** @test */

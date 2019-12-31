@@ -37,10 +37,7 @@ class Algolia extends AbstractAdapter
         ]));
 
         $response = $this->post($this->getRequestUrl(), [
-            'headers' => [
-                'X-Algolia-Application-Id' => $this->getApiSecret(),
-                'X-Algolia-API-Key' => $this->getApiKey(),
-            ],
+            'headers' => $this->getHeaders(),
             'body' => json_encode($this->getOptions())
         ]);
 
@@ -60,22 +57,18 @@ class Algolia extends AbstractAdapter
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getApiSecret()
+    public function getHeaders()
     {
-        return $this->apiSecret;
-    }
+        if (empty($this->getApiKey()) || empty($this->getApiSecret())) {
+            return [];
+        }
 
-    /**
-     * @param string $apiSecret
-     * @return $this
-     */
-    public function setApiSecret($apiSecret)
-    {
-        $this->apiSecret = $apiSecret;
-
-        return $this;
+        return [
+            'X-Algolia-Application-Id' => $this->getApiSecret(),
+            'X-Algolia-API-Key' => $this->getApiKey(),
+        ];
     }
 
     /**
@@ -98,6 +91,25 @@ class Algolia extends AbstractAdapter
     }
 
     /**
+     * @return string
+     */
+    public function getApiSecret()
+    {
+        return $this->apiSecret;
+    }
+
+    /**
+     * @param string $apiSecret
+     * @return $this
+     */
+    public function setApiSecret($apiSecret)
+    {
+        $this->apiSecret = $apiSecret;
+
+        return $this;
+    }
+
+    /**
      * @param string $postCode
      * @param string $houseNumber
      * @return Address
@@ -110,10 +122,7 @@ class Algolia extends AbstractAdapter
         ]));
 
         $response = $this->post($this->getRequestUrl(), [
-            'headers' => [
-                'X-Algolia-Application-Id' => $this->getApiSecret(),
-                'X-Algolia-API-Key' => $this->getApiKey(),
-            ],
+            'headers' => $this->getHeaders(),
             'body' => json_encode($this->getOptions())
         ]);
 
