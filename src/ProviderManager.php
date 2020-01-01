@@ -50,7 +50,124 @@ class ProviderManager
      */
     protected function createAddresseDataGouvDriver(array $config)
     {
-        return $this->driver(new \nickurt\PostcodeApi\Providers\fr_FR\AddresseDataGouv());
+        return $this->driver(new \nickurt\PostcodeApi\Providers\fr_FR\AddresseDataGouv(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createAlgoliaDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Algolia(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key'])->setApiKey($config['secret']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createApiPostcodeDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\ApiPostcode(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createBingDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Bing(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createGeoPostcodeOrgUkDriver(array $config)
+    {
+        return $this->driver(new \nickurt\PostcodeApi\Providers\en_GB\GeoPostcodeOrgUk(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createGeocodioDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Geocodio(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createGetAddressIODriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_GB\GetAddressIO(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createGoogleDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Google(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createHereDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Here(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createIdealPostcodesDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_GB\IdealPostcodes(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createLocationIQDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\LocationIQ(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createMapboxDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Mapbox(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createNationaalGeoRegisterDriver(array $config)
+    {
+        return $this->driver(new \nickurt\PostcodeApi\Providers\nl_NL\NationaalGeoRegister(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createNominatimDriver(array $config)
+    {
+        return $this->driver(new \nickurt\PostcodeApi\Providers\en_US\Nominatim(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /**
@@ -66,117 +183,18 @@ class ProviderManager
      * @param array $config
      * @return \nickurt\PostcodeApi\Concerns\Provider
      */
-    protected function createAlgoliaDriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Algolia())->setApiKey($config['key'])->setApiKey($config['secret']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createApiPostcodeDriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\ApiPostcode())->setApiKey($config['key']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createBingDriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Bing())->setApiKey($config['key']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createGeoPostcodeOrgUkDriver(array $config)
-    {
-        return $this->driver(new \nickurt\PostcodeApi\Providers\en_GB\GeoPostcodeOrgUk());
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createGeocodioDriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Geocodio())->setApiKey($config['key']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createGetAddressIODriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_GB\GetAddressIO())->setApiKey($config['key']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createGoogleDriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Google())->setApiKey($config['key']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createHereDriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Here())->setApiKey($config['key']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createIdealPostcodesDriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_GB\IdealPostcodes())->setApiKey($config['key']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createLocationIQDriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\LocationIQ())->setApiKey($config['key']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createMapboxDriver(array $config)
-    {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\Mapbox())->setApiKey($config['key']));
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
-    protected function createNationaalGeoRegisterDriver(array $config)
-    {
-        return $this->driver(new \nickurt\PostcodeApi\Providers\nl_NL\NationaalGeoRegister());
-    }
-
-    /**
-     * @param array $config
-     * @return \nickurt\PostcodeApi\Concerns\Provider
-     */
     protected function createOpenCageDriver(array $config)
     {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\OpenCage())->setApiKey($config['key']));
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\OpenCage(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createPhotonDriver(array $config)
+    {
+        return $this->driver(new \nickurt\PostcodeApi\Providers\en_US\Photon(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /**
@@ -185,7 +203,7 @@ class ProviderManager
      */
     protected function createPostcoDeDriver(array $config)
     {
-        return $this->driver(new \nickurt\PostcodeApi\Providers\nl_NL\PostcoDe());
+        return $this->driver(new \nickurt\PostcodeApi\Providers\nl_NL\PostcoDe(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /**
@@ -194,7 +212,7 @@ class ProviderManager
      */
     protected function createPostcodeApiComAuDriver(array $config)
     {
-        return $this->driver(new \nickurt\PostcodeApi\Providers\en_AU\PostcodeApiComAu());
+        return $this->driver(new \nickurt\PostcodeApi\Providers\en_AU\PostcodeApiComAu(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /**
@@ -203,7 +221,7 @@ class ProviderManager
      */
     protected function createPostcodeApiNuDriver(array $config)
     {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\PostcodeApiNu())->setApiKey($config['key']));
+        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\PostcodeApiNu(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
     }
 
     /**
@@ -212,7 +230,7 @@ class ProviderManager
      */
     protected function createPostcodeDataDriver(array $config)
     {
-        return $this->driver(new \nickurt\PostcodeApi\Providers\nl_NL\PostcodeData());
+        return $this->driver(new \nickurt\PostcodeApi\Providers\nl_NL\PostcodeData(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /**
@@ -221,7 +239,7 @@ class ProviderManager
      */
     protected function createPostcodeNLDriver(array $config)
     {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\PostcodeNL())->setApiKey($config['key'])->setApiSecret($config['secret']));
+        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\PostcodeNL(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key'])->setApiSecret($config['secret']));
     }
 
     /**
@@ -230,7 +248,7 @@ class ProviderManager
      */
     protected function createPostcodesIODriver(array $config)
     {
-        return $this->driver(new \nickurt\PostcodeApi\Providers\en_GB\PostcodesIO());
+        return $this->driver(new \nickurt\PostcodeApi\Providers\en_GB\PostcodesIO(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /**
@@ -239,7 +257,7 @@ class ProviderManager
      */
     protected function createPostcodesNLDriver(array $config)
     {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\PostcodesNL())->setApiKey($config['key']));
+        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\PostcodesNL(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
     }
 
     /**
@@ -248,7 +266,7 @@ class ProviderManager
      */
     protected function createPro6PP_BEDriver(array $config)
     {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_BE\Pro6PP_BE())->setApiKey($config['key']));
+        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_BE\Pro6PP_BE(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
     }
 
     /**
@@ -257,7 +275,7 @@ class ProviderManager
      */
     protected function createPro6PP_NLDriver(array $config)
     {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\Pro6PP_NL())->setApiKey($config['key']));
+        return $this->driver((new \nickurt\PostcodeApi\Providers\nl_NL\Pro6PP_NL(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
     }
 
     /**
@@ -266,7 +284,7 @@ class ProviderManager
      */
     protected function createTomTomDriver(array $config)
     {
-        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\TomTom())->setApiKey($config['key']));
+        return $this->driver((new \nickurt\PostcodeApi\Providers\en_US\TomTom(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
     }
 
     /**
@@ -275,7 +293,7 @@ class ProviderManager
      */
     protected function createUkPostcodesDriver(array $config)
     {
-        return $this->driver(new \nickurt\PostcodeApi\Providers\en_GB\UkPostcodes());
+        return $this->driver(new \nickurt\PostcodeApi\Providers\en_GB\UkPostcodes(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /**

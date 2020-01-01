@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as PostcodeNLClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class PostcodeNL extends AbstractAdapter
@@ -13,8 +14,19 @@ class PostcodeNL extends AbstractAdapter
     /** @var string */
     protected $apiSecret;
 
+    /** @var PostcodeNLClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.postcode.nl/rest/addresses/%s/%s';
+
+    /**
+     * @param PostcodeNLClient $client
+     */
+    public function __construct(PostcodeNLClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -41,11 +53,11 @@ class PostcodeNL extends AbstractAdapter
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $response = $this->get('https://api.postcode.eu/nl/v1/addresses/postcode/' . $postCode . '/' . $houseNumber, [
+        $response = json_decode($this->client->get('https://api.postcode.eu/nl/v1/addresses/postcode/' . $postCode . '/' . $houseNumber, [
             'auth' => [
                 $this->getApiKey(), $this->getApiSecret()
             ]
-        ]);
+        ])->getBody(), true);
 
         $address = new Address();
         $address

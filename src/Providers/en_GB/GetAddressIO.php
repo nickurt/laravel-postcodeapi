@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as GetAddressIOClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class GetAddressIO extends AbstractAdapter
@@ -10,8 +11,19 @@ class GetAddressIO extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var GetAddressIOClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.getaddress.io/find';
+
+    /**
+     * @param GetAddressIOClient $client
+     */
+    public function __construct(GetAddressIOClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -28,11 +40,11 @@ class GetAddressIO extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get($this->getRequestUrl() . '/' . $postCode . '?expand=true', [
+        $response = json_decode($this->client->get($this->getRequestUrl() . '/' . $postCode . '?expand=true', [
             'headers' => [
                 'api-key' => $this->getApiKey()
             ]
-        ]);
+        ])->getBody(), true);
 
         if (isset($response['Message'])) {
             return new Address();
@@ -75,11 +87,11 @@ class GetAddressIO extends AbstractAdapter
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $response = $this->get($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber . '?expand=true', [
+        $response = json_decode($this->client->get($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber . '?expand=true', [
             'headers' => [
                 'api-key' => $this->getApiKey()
             ]
-        ]);
+        ])->getBody(), true);
 
         if (isset($response['Message'])) {
             return new Address();

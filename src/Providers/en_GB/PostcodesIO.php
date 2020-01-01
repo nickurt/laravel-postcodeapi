@@ -3,12 +3,24 @@
 namespace nickurt\PostcodeApi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as PostcodesIOClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class PostcodesIO extends AbstractAdapter
 {
+    /** @var PostcodesIOClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.postcodes.io/postcodes?q=%s';
+
+    /**
+     * @param PostcodesIOClient $client
+     */
+    public function __construct(PostcodesIOClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -25,7 +37,7 @@ class PostcodesIO extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), $postCode));
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $postCode))->getBody(), true);
 
         if (!is_array($response['result'])) {
             return new Address();

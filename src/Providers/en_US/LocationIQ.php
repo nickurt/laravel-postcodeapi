@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as LocationIQClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class LocationIQ extends AbstractAdapter
@@ -10,8 +11,19 @@ class LocationIQ extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var LocationIQClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://us1.locationiq.com/v1/search.php';
+
+    /**
+     * @param LocationIQClient $client
+     */
+    public function __construct(LocationIQClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -30,7 +42,7 @@ class LocationIQ extends AbstractAdapter
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $response = $this->get($this->getRequestUrl() . '?q=' . $postCode . '&statecode=1&addressdetails=1&format=json&key=' . $this->getApiKey() . $options);
+        $response = json_decode($this->client->get($this->getRequestUrl() . '?q=' . $postCode . '&statecode=1&addressdetails=1&format=json&key=' . $this->getApiKey() . $options)->getBody(), true);
 
         if (isset($response['error'])) {
             return new Address();

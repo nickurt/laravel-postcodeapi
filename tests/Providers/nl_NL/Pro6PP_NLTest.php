@@ -14,9 +14,12 @@ class Pro6PP_NLTest extends BaseProviderTest
     /** @var Pro6PP_NL */
     protected $pro6PP_NL;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
-        $this->pro6PP_NL = (new Pro6PP_NL)
+        $this->pro6PP_NL = (new Pro6PP_NL($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))
             ->setApiKey('qwertyuiop');
     }
 
@@ -30,13 +33,15 @@ class Pro6PP_NLTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $address = $this->pro6PP_NL->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"ok","results":[{"nl_sixpp":"1118CP","street":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","streetnumbers":"202;300-306","lat":52.30295,"lng":4.746278,"areacode":"020"}]}')
             ]),
-        ]))->find('1118CP');
+        ]));
 
-        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP', (string)$this->pro6PP_NL->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->pro6PP_NL->find('1118CP');
+
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -54,11 +59,13 @@ class Pro6PP_NLTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
-        $address = $this->pro6PP_NL->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"error","error":{"message":"Invalid nl_sixpp format"},"results":[]}')
             ]),
-        ]))->find('XXXXAB');
+        ]));
+
+        $address = $this->pro6PP_NL->find('XXXXAB');
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -76,13 +83,15 @@ class Pro6PP_NLTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
     {
-        $address = $this->pro6PP_NL->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"ok","results":[{"nl_sixpp":"1118CP","street":"Evert van de Beekstraat","street_nen5825":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","streetnumbers":"202;300-306","lat":52.3038977,"lng":4.7479069,"areacode":"020","surface":16800,"functions":["kantoorfunctie"],"construction_year":2007}]}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('1118CP', '202');
+        ]));
 
-        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP&streetnumber=202', (string)$this->pro6PP_NL->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->pro6PP_NL->findByPostcodeAndHouseNumber('1118CP', '202');
+
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=1118CP&streetnumber=202', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -100,11 +109,13 @@ class Pro6PP_NLTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code()
     {
-        $address = $this->pro6PP_NL->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"error","error":{"message":"Streetnumber not found"},"results":[]}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('1118CP', '1');
+        ]));
+
+        $address = $this->pro6PP_NL->findByPostcodeAndHouseNumber('1118CP', '1');
 
         $this->assertInstanceOf(Address::class, $address);
 

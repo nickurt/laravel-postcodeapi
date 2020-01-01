@@ -2,7 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers;
 
-use \nickurt\PostcodeApi\Concerns\Adapter;
+use nickurt\PostcodeApi\Concerns\Adapter;
 
 class Provider implements \nickurt\PostcodeApi\Concerns\Provider
 {

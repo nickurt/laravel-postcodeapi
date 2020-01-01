@@ -15,9 +15,12 @@ class IdealPostcodesTest extends BaseProviderTest
     /** @var IdealPostcodes */
     protected $idealPostcodes;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
-        $this->idealPostcodes = (new IdealPostcodes)
+        $this->idealPostcodes = (new IdealPostcodes($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))
             ->setApiKey('iddqd');
     }
 
@@ -31,14 +34,16 @@ class IdealPostcodesTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $address = $this->idealPostcodes->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"result":[{"postcode":"SW1A 2AA","postcode_inward":"2AA","postcode_outward":"SW1A","post_town":"LONDON","dependant_locality":"","double_dependant_locality":"","thoroughfare":"Downing Street","dependant_thoroughfare":"","building_number":"10","building_name":"","sub_building_name":"","po_box":"","department_name":"","organisation_name":"Prime Minister & First Lord Of The Treasury","udprn":23747771,"umprn":"","postcode_type":"L","su_organisation_indicator":"","delivery_point_suffix":"1A","line_1":"Prime Minister & First Lord Of The Treasury","line_2":"10 Downing Street","line_3":"","premise":"10","longitude":-0.127695,"latitude":51.50354,"eastings":530047,"northings":179951,"country":"England","traditional_county":"Greater London","administrative_county":"","postal_county":"London","county":"London","district":"Westminster","ward":"St James\'s"}],"code":2000,"message":"Success"}')
             ]),
-        ]))->find('SW1A2AA');
+        ]));
+
+        $address = $this->idealPostcodes->find('SW1A2AA');
 
         $this->assertSame('iddqd', $this->idealPostcodes->getApiKey());
-        $this->assertSame('https://api.ideal-postcodes.co.uk/v1/postcodes/SW1A2AA?api_key=iddqd', (string)$this->idealPostcodes->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $this->assertSame('https://api.ideal-postcodes.co.uk/v1/postcodes/SW1A2AA?api_key=iddqd', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -59,11 +64,13 @@ class IdealPostcodesTest extends BaseProviderTest
         // GuzzleHttp\Exception\ClientException: Client error: `GET https://api.ideal-postcodes.co.uk/v1/postcodes/QW1A2AA?api_key=iddqd` resulted in a `404 Not Found` response:
         // {"code":4040,"message":"Postcode Not Found"}
 
-        $address = $this->idealPostcodes->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"code":4040,"message":"Postcode Not Found"}')
             ]),
-        ]))->find('QW1A2AA');
+        ]));
+
+        $address = $this->idealPostcodes->find('QW1A2AA');
 
         $this->assertInstanceOf(Address::class, $address);
 

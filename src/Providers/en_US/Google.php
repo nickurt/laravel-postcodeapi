@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as GoogleClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class Google extends AbstractAdapter
@@ -10,8 +11,19 @@ class Google extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var GoogleClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+
+    /**
+     * @param GoogleClient $client
+     */
+    public function __construct(GoogleClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -28,7 +40,7 @@ class Google extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get($this->getRequestUrl() . '?address=' . $postCode . '&key=' . $this->getApiKey());
+        $response = json_decode($this->client->get($this->getRequestUrl() . '?address=' . $postCode . '&key=' . $this->getApiKey())->getBody(), true);
 
         if (count($response['results']) < 1) {
             return new Address();
@@ -77,7 +89,7 @@ class Google extends AbstractAdapter
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $response = $this->get($this->getRequestUrl() . '?address=' . $postCode . '+' . $houseNumber . '&key=' . $this->getApiKey());
+        $response = json_decode($this->client->get($this->getRequestUrl() . '?address=' . $postCode . '+' . $houseNumber . '&key=' . $this->getApiKey())->getBody(), true);
 
         if (count($response['results']) < 1) {
             return new Address();

@@ -3,12 +3,24 @@
 namespace nickurt\PostcodeApi\Providers\fr_FR;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as AddresseDataGouvClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class AddresseDataGouv extends AbstractAdapter
 {
+    /** @var AddresseDataGouvClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1';
+
+    /**
+     * @param AddresseDataGouvClient $client
+     */
+    public function __construct(AddresseDataGouvClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -25,7 +37,7 @@ class AddresseDataGouv extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), $postCode, ''));
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $postCode, ''))->getBody(), true);
 
         if (count($response['features']) < 1) {
             return new Address();
@@ -47,7 +59,7 @@ class AddresseDataGouv extends AbstractAdapter
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), urlencode($houseNumber), $postCode));
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), urlencode($houseNumber), $postCode))->getBody(), true);
 
         if (count($response['features']) < 1) {
             return new Address();

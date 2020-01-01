@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as GeocodioClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class Geocodio extends AbstractAdapter
@@ -10,8 +11,19 @@ class Geocodio extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var GeocodioClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.geocod.io/v1.3/geocode/?q=%s&api_key=%s';
+
+    /**
+     * @param GeocodioClient $client
+     */
+    public function __construct(GeocodioClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -28,7 +40,7 @@ class Geocodio extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()));
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()))->getBody(), true);
 
         if (count($response['results']) < 1) {
             return new Address();

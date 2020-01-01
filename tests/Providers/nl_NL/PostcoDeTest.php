@@ -15,9 +15,12 @@ class PostcoDeTest extends BaseProviderTest
     /** @var PostcoDe */
     protected $postcoDe;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
-        $this->postcoDe = (new PostcoDe);
+        $this->postcoDe = (new PostcoDe($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /** @test */
@@ -37,13 +40,15 @@ class PostcoDeTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
     {
-        $address = $this->postcoDe->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"street":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","postcode":"1118CP","pnum":"1118","pchar":"CP","rd_x":"111361.82633333333333333333","rd_y":"479700.34883333333333333333","lat":"52.3035437835548","lon":"4.7474064734608"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('1118CP', '202');
+        ]));
 
-        $this->assertSame('https://api.postco.de/v1/postcode/1118CP/202', (string)$this->postcoDe->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->postcoDe->findByPostcodeAndHouseNumber('1118CP', '202');
+
+        $this->assertSame('https://api.postco.de/v1/postcode/1118CP/202', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -64,11 +69,13 @@ class PostcoDeTest extends BaseProviderTest
         // GuzzleHttp\Exception\ClientException: Client error: `GET https://api.postco.de/v1/postcode/XXXXAB/1` resulted in a `404 Not Found` response:
         // {"error":"No results"}
 
-        $address = $this->postcoDe->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"error":"No results"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('XXXXAB', '1');
+        ]));
+
+        $address = $this->postcoDe->findByPostcodeAndHouseNumber('XXXXAB', '1');
 
         $this->assertInstanceOf(Address::class, $address);
 

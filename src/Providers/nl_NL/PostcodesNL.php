@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as PostcodesNLClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class PostcodesNL extends AbstractAdapter
@@ -10,8 +11,19 @@ class PostcodesNL extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var PostcodesNLClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.postcodes.nl/1.0/address';
+
+    /**
+     * @param PostcodesNLClient $client
+     */
+    public function __construct(PostcodesNLClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param $postCode
@@ -28,7 +40,7 @@ class PostcodesNL extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode);
+        $response = json_decode($this->client->get($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode)->getBody(), true);
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();
@@ -72,7 +84,7 @@ class PostcodesNL extends AbstractAdapter
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $response = $this->get($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode . '&streetnumber=' . $houseNumber);
+        $response = json_decode($this->client->get($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode . '&streetnumber=' . $houseNumber)->getBody(), true);
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();

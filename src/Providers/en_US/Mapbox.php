@@ -4,6 +4,7 @@ namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exceptions\NotSupportedException;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as MapboxClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class Mapbox extends AbstractAdapter
@@ -11,8 +12,19 @@ class Mapbox extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var MapboxClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/%s.json';
+
+    /**
+     * @param MapboxClient $client
+     */
+    public function __construct(MapboxClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -31,7 +43,7 @@ class Mapbox extends AbstractAdapter
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $response = $this->get(sprintf($this->getRequestUrl(), $postCode) . '?access_token=' . $this->getApiKey() . $options);
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $postCode) . '?access_token=' . $this->getApiKey() . $options)->getBody(), true);
 
         if (count($response['features']) < 1) {
             return new Address();

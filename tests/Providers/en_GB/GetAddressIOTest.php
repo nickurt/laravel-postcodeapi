@@ -14,9 +14,12 @@ class GetAddressIOTest extends BaseProviderTest
     /** @var GetAddressIO */
     protected $getAddressIO;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
-        $this->getAddressIO = (new GetAddressIO)
+        $this->getAddressIO = (new GetAddressIO($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))
             ->setApiKey('qwertyuiopasdfghjkl');
     }
 
@@ -30,13 +33,15 @@ class GetAddressIOTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $address = $this->getAddressIO->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"postcode":"SW1A 2AA","latitude":51.503038,"longitude":-0.128371,"addresses":[{"formatted_address":["Prime Minister & First Lord of the Treasury","10 Downing Street","","London",""],"thoroughfare":"Downing Street","building_name":"","sub_building_name":"Prime Minister & First Lord of the Treasury","sub_building_number":"","building_number":"10","line_1":"Prime Minister & First Lord of the Treasury","line_2":"10 Downing Street","line_3":"","line_4":"","locality":"","town_or_city":"London","county":"","district":"Westminster","country":"England"}]}')
             ]),
-        ]))->find('SW1A2AA');
+        ]));
 
-        $this->assertSame('https://api.getaddress.io/find/SW1A2AA?expand=true', (string)$this->getAddressIO->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->getAddressIO->find('SW1A2AA');
+
+        $this->assertSame('https://api.getaddress.io/find/SW1A2AA?expand=true', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -57,11 +62,13 @@ class GetAddressIOTest extends BaseProviderTest
         // GuzzleHttp\Exception\ClientException: Client error: `GET https://api.getaddress.io/find/XX404X?expand=true` resulted in a `404 Not Found` response:
         // {"Message":"Not Found"}
 
-        $address = $this->getAddressIO->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"Message":"Not Found"}')
             ])
-        ]))->find('XX404X');
+        ]));
+
+        $address = $this->getAddressIO->find('XX404X');
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -79,13 +86,15 @@ class GetAddressIOTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
     {
-        $address = $this->getAddressIO->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"postcode":"NN1 3ER","latitude":52.2458053,"longitude":-0.8924692,"addresses":[{"formatted_address":["10 Watkin Terrace","","","Northampton","Northamptonshire"],"thoroughfare":"Watkin Terrace","building_name":"","sub_building_name":"","sub_building_number":"","building_number":"10","line_1":"10 Watkin Terrace","line_2":"","line_3":"","line_4":"","locality":"","town_or_city":"Northampton","county":"Northamptonshire","district":"Northampton","country":"England"}]}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('NN13ER', '10');
+        ]));
 
-        $this->assertSame('https://api.getaddress.io/find/NN13ER/10?expand=true', (string)$this->getAddressIO->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->getAddressIO->findByPostcodeAndHouseNumber('NN13ER', '10');
+
+        $this->assertSame('https://api.getaddress.io/find/NN13ER/10?expand=true', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -106,11 +115,13 @@ class GetAddressIOTest extends BaseProviderTest
         // GuzzleHttp\Exception\ClientException: Client error: `GET https://api.getaddress.io/find/XX404X/10?expand=true` resulted in a `404 Not Found` response:
         // {"Message":"Not Found"}
 
-        $address = $this->getAddressIO->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"Message":"Not Found"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('XX404X', '10');
+        ]));
+
+        $address = $this->getAddressIO->findByPostcodeAndHouseNumber('XX404X', '10');
 
         $this->assertInstanceOf(Address::class, $address);
 

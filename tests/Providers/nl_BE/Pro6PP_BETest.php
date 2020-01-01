@@ -15,9 +15,12 @@ class Pro6PP_BETest extends BaseProviderTest
     /** @var Pro6PP_BE */
     protected $pro6PP_BE;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
-        $this->pro6PP_BE = (new Pro6PP_BE)
+        $this->pro6PP_BE = (new Pro6PP_BE($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))
             ->setApiKey('qwertyuiop');
     }
 
@@ -31,14 +34,16 @@ class Pro6PP_BETest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $address = $this->pro6PP_BE->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"ok","results":[{"province_nl":"Brussel","province_fr":"Bruxelles","province":"Brussel","municipality_nl":"Brussel","municipality_fr":"Bruxelles","municipality":"Brussel","city_nl":"Brussel","city_fr":"Bruxelles","city":"Brussel","fourpp":1000,"lat":50.84379,"lng":4.3591}]}')
             ]),
-        ]))->find('1000');
+        ]));
+
+        $address = $this->pro6PP_BE->find('1000');
 
         $this->assertSame('qwertyuiop', $this->pro6PP_BE->getApiKey());
-        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&be_fourpp=1000', (string)$this->pro6PP_BE->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&be_fourpp=1000', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -56,11 +61,13 @@ class Pro6PP_BETest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
-        $address = $this->pro6PP_BE->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"error","error":{"message":"be_fourpp not found"},"results":[]}')
             ]),
-        ]))->find('1234');
+        ]));
+
+        $address = $this->pro6PP_BE->find('1234');
 
         $this->assertInstanceOf(Address::class, $address);
 

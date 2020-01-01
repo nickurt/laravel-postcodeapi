@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as HereClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class Here extends AbstractAdapter
@@ -10,11 +11,22 @@ class Here extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
-    /** string */
+    /** @var string */
     protected $apiSecret;
+
+    /** @var HereClient */
+    protected $client;
 
     /** @var string */
     protected $requestUrl = 'https://geocoder.api.here.com/6.2/geocode.json';
+
+    /**
+     * @param HereClient $client
+     */
+    public function __construct(HereClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -33,7 +45,7 @@ class Here extends AbstractAdapter
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $response = $this->get($this->getRequestUrl() . '?postalCode=' . $postCode . '&app_id=' . $this->getApiKey() . '&app_code=' . $this->getApiSecret() . '&gen=9' . $options);
+        $response = json_decode($this->client->get($this->getRequestUrl() . '?postalCode=' . $postCode . '&app_id=' . $this->getApiKey() . '&app_code=' . $this->getApiSecret() . '&gen=9' . $options)->getBody(), true);
 
         if (count($response['Response']['View']) < 1) {
             return new Address();

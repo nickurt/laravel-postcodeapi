@@ -15,12 +15,6 @@ class PostcodeApiTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_http_client()
-    {
-        $this->assertInstanceOf(\GuzzleHttp\Client::class, PostcodeApi::create('NationaalGeoRegister')->getAdapter()->getHttpClient());
-    }
-
-    /** @test */
     public function it_can_throw_exception_by_unknown_provider()
     {
         $this->expectException(\nickurt\PostcodeApi\Exceptions\InvalidArgumentException::class);

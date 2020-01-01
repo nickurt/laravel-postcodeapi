@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as Pro6PPNLClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class Pro6PP_NL extends AbstractAdapter
@@ -10,8 +11,19 @@ class Pro6PP_NL extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var Pro6PPNLClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s';
+
+    /**
+     * @param Pro6PPNLClient $client
+     */
+    public function __construct(Pro6PPNLClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -28,7 +40,7 @@ class Pro6PP_NL extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode));
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode))->getBody(), true);
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();
@@ -72,7 +84,7 @@ class Pro6PP_NL extends AbstractAdapter
      */
     public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode) . '&streetnumber=' . $houseNumber);
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode) . '&streetnumber=' . $houseNumber)->getBody(), true);
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();

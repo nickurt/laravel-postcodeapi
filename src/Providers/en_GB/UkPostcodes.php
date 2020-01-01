@@ -3,12 +3,24 @@
 namespace nickurt\PostcodeApi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as UkPostcodesClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class UkPostcodes extends AbstractAdapter
 {
+    /** @var UkPostcodesClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'http://uk-postcodes.com/postcode/%s.json';
+
+    /**
+     * @param UkPostcodesClient $client
+     */
+    public function __construct(UkPostcodesClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -25,7 +37,7 @@ class UkPostcodes extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), $postCode));
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $postCode))->getBody(), true);
 
         $address = new Address();
         $address

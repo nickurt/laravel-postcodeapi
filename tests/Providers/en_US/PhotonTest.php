@@ -11,12 +11,15 @@ use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
 class PhotonTest extends BaseProviderTest
 {
-    /** @var photon */
+    /** @var Photon */
     protected $photon;
+
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
 
     public function setUp(): void
     {
-        $this->photon = (new Photon);
+        $this->photon = (new Photon($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /** @test */
@@ -28,13 +31,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[-116.42687402345575,33.770859],"type":"Point"},"type":"Feature","properties":{"osm_id":2866319,"osm_type":"R","extent":[-116.4777316,33.8269354,-116.3881501,33.7140741],"country":"United States of America","osm_key":"place","city":"Rancho Mirage","street":"Cromwell Court","osm_value":"town","postcode":"CA 92270","name":"Rancho Mirage","state":"California"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->find('92270');
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=92270&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->find('92270');
+
+        $this->assertSame('https://photon.komoot.de/api/?q=92270&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -52,13 +57,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code2()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[4.7452654,52.3043478],"type":"Point"},"type":"Feature","properties":{"osm_id":232148333,"osm_type":"W","extent":[4.7442827,52.305741,4.7461203,52.302845],"country":"The Netherlands","osm_key":"highway","city":"Haarlemmermeer","osm_value":"motorway","postcode":"1118CP","state":"North Holland"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->find('1118CP');
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=1118CP&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->find('1118CP');
+
+        $this->assertSame('https://photon.komoot.de/api/?q=1118CP&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -76,13 +83,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code3()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[-0.14058648979892263,51.501839950000004],"type":"Point"},"type":"Feature","properties":{"osm_id":374945234,"osm_type":"W","extent":[-0.1407086,51.5019161,-0.1404644,51.5017637],"country":"United Kingdom","osm_key":"tourism","city":"London","street":"Constitution Hill","osm_value":"attraction","postcode":"SW1A 1AA","name":"Victoria Memorial","state":"England"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->find('SW1A 1AA');
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=SW1A%201AA&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->find('SW1A 1AA');
+
+        $this->assertSame('https://photon.komoot.de/api/?q=SW1A%201AA&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -100,13 +109,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code4()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[144.9881387,-37.802104],"type":"Point"},"type":"Feature","properties":{"osm_id":2383182,"osm_type":"R","extent":[144.98255,-37.7938788,144.9937455,-37.8097888],"country":"Australia","osm_key":"place","osm_value":"suburb","postcode":"3066","name":"Collingwood","state":"Victoria"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->find('3066');
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=3066&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->find('3066');
+
+        $this->assertSame('https://photon.komoot.de/api/?q=3066&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -124,13 +135,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code5()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[2.3201953,48.8570281],"type":"Point"},"type":"Feature","properties":{"osm_id":248177663,"osm_type":"N","country":"France","osm_key":"place","city":"Paris","osm_value":"suburb","postcode":"75007","name":"7th Arrondissement","state":"Ile-de-France"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->find('75007');
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=75007&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->find('75007');
+
+        $this->assertSame('https://photon.komoot.de/api/?q=75007&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -148,13 +161,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code6()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[4.3482287,50.8466964],"type":"Point"},"type":"Feature","properties":{"osm_id":4413902500,"osm_type":"N","country":"Belgium","osm_key":"shop","housenumber":"132-136","city":"Ville de Bruxelles - Stad Brussel","street":"Boulevard Anspach - Anspachlaan","osm_value":"copyshop","postcode":"1000","name":"Belgium Copy","state":"Brussels-Capital"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->find('1000');
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=1000&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->find('1000');
+
+        $this->assertSame('https://photon.komoot.de/api/?q=1000&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -172,13 +187,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code7()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[10.4234469,51.0834196],"type":"Point"},"type":"Feature","properties":{"osm_id":51477,"osm_type":"R","extent":[5.8663153,55.099161,15.0419319,47.2701114],"country":"Germany","osm_key":"place","osm_value":"country","name":"Germany"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->find('10115');
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=10115&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->find('10115');
+
+        $this->assertSame('https://photon.komoot.de/api/?q=10115&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -196,13 +213,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code8()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[16.365686888324177,48.2116436],"type":"Point"},"type":"Feature","properties":{"osm_id":307567824,"osm_type":"W","extent":[16.3656524,48.2116669,16.3657213,48.2116222],"country":"Austria","osm_key":"amenity","city":"Vienna","street":"Freyung","osm_value":"fountain","postcode":"1010","name":"Austriabrunnen","state":"Vienna"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->find('1010');
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=1010&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->find('1010');
+
+        $this->assertSame('https://photon.komoot.de/api/?q=1010&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -220,11 +239,13 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[],"type":"FeatureCollection"}')
             ]),
-        ]))->find('zeroresults');
+        ]));
+
+        $address = $this->photon->find('zeroresults');
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -242,13 +263,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[-116.4208697,33.7476236],"type":"Point"},"type":"Feature","properties":{"osm_id":704701882,"osm_type":"W","extent":[-116.4219321,33.748194,-116.4206799,33.7475341],"country":"United States of America","osm_key":"highway","city":"Rancho Mirage","osm_value":"primary","postcode":"CA 92270","name":"Highway 111","state":"California"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('92270', 1);
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=92270,1&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->findByPostcodeAndHouseNumber('92270', 1);
+
+        $this->assertSame('https://photon.komoot.de/api/?q=92270,1&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -266,13 +289,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code2()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[4.7479076,52.3038972],"type":"Point"},"type":"Feature","properties":{"osm_id":2739765969,"osm_type":"N","country":"The Netherlands","osm_key":"place","housenumber":"202","city":"Haarlemmermeer","street":"Evert van de Beekstraat","osm_value":"house","postcode":"1118CP","state":"North Holland"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('1118CP', 202);
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=1118CP,202&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->findByPostcodeAndHouseNumber('1118CP', 202);
+
+        $this->assertSame('https://photon.komoot.de/api/?q=1118CP,202&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -290,13 +315,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code3()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[-0.12770820958562096,51.50344025],"type":"Point"},"type":"Feature","properties":{"osm_id":1879842,"osm_type":"R","extent":[-0.1278356,51.5036483,-0.1273038,51.5032573],"country":"United Kingdom","osm_key":"tourism","housenumber":"10","city":"London","street":"Downing Street","osm_value":"attraction","postcode":"SW1A 2AA","name":"Prime Minister\u2019s Office","state":"England"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('SW1A 2AA', 10);
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=SW1A%202AA,10&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->findByPostcodeAndHouseNumber('SW1A 2AA', 10);
+
+        $this->assertSame('https://photon.komoot.de/api/?q=SW1A%202AA,10&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -320,13 +347,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code5()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[2.3153959,48.8481462],"type":"Point"},"type":"Feature","properties":{"osm_id":3904913457,"osm_type":"N","country":"France","osm_key":"amenity","city":"Paris","street":"Rue Duroc","osm_value":"car_sharing","postcode":"75007","name":"Paris/Duroc/2","state":"Ile-de-France"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('75007', 2);
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=75007,2&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->findByPostcodeAndHouseNumber('75007', 2);
+
+        $this->assertSame('https://photon.komoot.de/api/?q=75007,2&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -344,13 +373,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code6()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[4.352739504086289,50.8502776],"type":"Point"},"type":"Feature","properties":{"osm_id":74034262,"osm_type":"W","extent":[4.3520005,50.8507621,4.353511,50.8497501],"country":"Belgium","osm_key":"building","housenumber":"6","city":"Ville de Bruxelles - Stad Brussel","street":"Boulevard Anspach - Anspachlaan","osm_value":"office","postcode":"1000","name":"Centre administratif ville de Bruxelles - Administratief centrum stad Brussel","state":"Brussels-Capital"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('1000', 6);
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=1000,6&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->findByPostcodeAndHouseNumber('1000', 6);
+
+        $this->assertSame('https://photon.komoot.de/api/?q=1000,6&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -374,13 +405,15 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code8()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[{"geometry":{"coordinates":[16.3736933,48.2128719],"type":"Point"},"type":"Feature","properties":{"osm_id":334637049,"osm_type":"N","country":"Austria","osm_key":"shop","housenumber":"2","city":"Vienna","street":"Salzgries","osm_value":"furniture","postcode":"1010","name":"Bretz Austria","state":"Vienna"}}],"type":"FeatureCollection"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('1010', 2);
+        ]));
 
-        $this->assertSame('https://photon.komoot.de/api/?q=1010,2&limit=1', (string)$this->photon->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->photon->findByPostcodeAndHouseNumber('1010', 2);
+
+        $this->assertSame('https://photon.komoot.de/api/?q=1010,2&limit=1', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -398,11 +431,13 @@ class PhotonTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code()
     {
-        $address = $this->photon->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"features":[],"type":"FeatureCollection"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('zeroresults', 'zeroresults');
+        ]));
+
+        $address = $this->photon->findByPostcodeAndHouseNumber('zeroresults', 'zeroresults');
 
         $this->assertInstanceOf(Address::class, $address);
 

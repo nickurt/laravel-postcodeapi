@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as PostcodeApiNuClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class PostcodeApiNu extends AbstractAdapter
@@ -10,8 +11,19 @@ class PostcodeApiNu extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var PostcodeApiNuClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.postcodeapi.nu/v3/lookup';
+
+    /**
+     * @param PostcodeApiNuClient $client
+     */
+    public function __construct(PostcodeApiNuClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -38,11 +50,11 @@ class PostcodeApiNu extends AbstractAdapter
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $response = $this->get($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber, [
+        $response = json_decode($this->client->get($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber, [
             'headers' => [
                 'X-Api-Key' => $this->getApiKey()
             ]
-        ]);
+        ])->getBody(), true);
 
         if (isset($response['title'])) {
             return new Address();

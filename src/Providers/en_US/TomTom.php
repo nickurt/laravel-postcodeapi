@@ -4,6 +4,7 @@ namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exceptions\NotSupportedException;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as TomTomClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class TomTom extends AbstractAdapter
@@ -11,8 +12,19 @@ class TomTom extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var TomTomClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.tomtom.com/search/2/geocode/%s.json';
+
+    /**
+     * @param TomTomClient $client
+     */
+    public function __construct(TomTomClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -31,7 +43,7 @@ class TomTom extends AbstractAdapter
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $response = $this->get(sprintf($this->getRequestUrl(), $postCode) . '?key=' . $this->getApiKey() . $options);
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $postCode) . '?key=' . $this->getApiKey() . $options)->getBody(), true);
 
         if ($response['summary']['totalResults'] < 1) {
             return new Address();

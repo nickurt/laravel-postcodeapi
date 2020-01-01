@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\nl_BE;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as Pro6PPBEClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class Pro6PP_BE extends AbstractAdapter
@@ -10,8 +11,19 @@ class Pro6PP_BE extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var Pro6PPBEClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&be_fourpp=%s';
+
+    /**
+     * @param Pro6PPBEClient $client
+     */
+    public function __construct(Pro6PPBEClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -28,7 +40,7 @@ class Pro6PP_BE extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode));
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode))->getBody(), true);
 
         if (isset($response['status']) && $response['status'] == 'error') {
             return new Address();

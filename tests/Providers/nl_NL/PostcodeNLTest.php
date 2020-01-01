@@ -14,9 +14,12 @@ class PostcodeNLTest extends BaseProviderTest
     /** @var \nickurt\PostcodeApi\Providers\nl_NL\PostcodeNL */
     protected $postcodeNL;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
-        $this->postcodeNL = (new PostcodeNL);
+        $this->postcodeNL = (new PostcodeNL($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /** @test */
@@ -36,13 +39,15 @@ class PostcodeNLTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
     {
-        $address = $this->postcodeNL->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"street":"Julianastraat","streetNen":"Julianastraat","houseNumber":30,"houseNumberAddition":"","postcode":"2012ES","city":"Haarlem","cityShort":"Haarlem","municipality":"Haarlem","municipalityShort":"Haarlem","province":"Noord-Holland","rdX":103242,"rdY":487716,"latitude":52.37487801,"longitude":4.62714526,"bagNumberDesignationId":"0392200000029398","bagAddressableObjectId":"0392010000029398","addressType":"building","purposes":["office"],"surfaceArea":643,"houseNumberAdditions":[""]}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('2012ES', '30');
+        ]));
 
-        $this->assertSame('https://api.postcode.eu/nl/v1/addresses/postcode/2012ES/30', (string)$this->postcodeNL->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->postcodeNL->findByPostcodeAndHouseNumber('2012ES', '30');
+
+        $this->assertSame('https://api.postcode.eu/nl/v1/addresses/postcode/2012ES/30', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertSame([
             'street' => 'Julianastraat',

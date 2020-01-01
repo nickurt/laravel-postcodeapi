@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as BingClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class Bing extends AbstractAdapter
@@ -10,8 +11,19 @@ class Bing extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var BingClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://dev.virtualearth.net/REST/v1/Locations';
+
+    /**
+     * @param BingClient $client
+     */
+    public function __construct(BingClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -30,7 +42,7 @@ class Bing extends AbstractAdapter
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $response = $this->get($this->getRequestUrl() . '?postalCode=' . $postCode . '&key=' . $this->getApiKey() . $options);
+        $response = json_decode($this->client->get($this->getRequestUrl() . '?postalCode=' . $postCode . '&key=' . $this->getApiKey() . $options)->getBody(), true);
 
         if ($response['resourceSets'][0]['estimatedTotal'] < 1) {
             return new Address();

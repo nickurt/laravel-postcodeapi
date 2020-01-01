@@ -86,8 +86,18 @@ return [
         'key' => '',
         'code' => 'en_US',
     ],
+    'Nominatim' => [
+        'url' => 'https://nominatim.openstreetmap.org/search',
+        'key' => '',
+        'code' => 'en_US',
+    ],
     'OpenCage' => [
         'url' => 'https://api.opencagedata.com/geocode/v1/json',
+        'key' => '',
+        'code' => 'en_US',
+    ],
+    'Photon' => [
+        'url' => 'https://photon.komoot.de',
         'key' => '',
         'code' => 'en_US',
     ],

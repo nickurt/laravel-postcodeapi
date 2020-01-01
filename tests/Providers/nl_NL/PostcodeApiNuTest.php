@@ -15,9 +15,12 @@ class PostcodeApiNuTest extends BaseProviderTest
     /** @var PostcodeApiNu */
     protected $postcodeApiNu;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
-        $this->postcodeApiNu = (new PostcodeApiNu)
+        $this->postcodeApiNu = (new PostcodeApiNu($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))
             ->setApiKey('qwertyuiop');
     }
 
@@ -39,14 +42,16 @@ class PostcodeApiNuTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
     {
-        $address = $this->postcodeApiNu->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"postcode":"6545CA","number":29,"street":"Waldeck Pyrmontsingel","city":"Nijmegen","municipality":"Nijmegen","province":"Gelderland"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('6545CA', '29');
+        ]));
+
+        $address = $this->postcodeApiNu->findByPostcodeAndHouseNumber('6545CA', '29');
 
         $this->assertSame('qwertyuiop', $this->postcodeApiNu->getApiKey());
-        $this->assertSame('https://api.postcodeapi.nu/v3/lookup/6545CA/29', (string)$this->postcodeApiNu->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $this->assertSame('https://api.postcodeapi.nu/v3/lookup/6545CA/29', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -64,11 +69,13 @@ class PostcodeApiNuTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code()
     {
-        $address = $this->postcodeApiNu->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
                 new Response(400, [], '{"title":"Request validation failed","invalidParams":[{"name":"postcode","reason":"should match pattern \"^[0-9]{4}[a-zA-Z]{2}$\""},{"name":"number","reason":"should be integer"}]}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('6545C', '29a');
+        ]));
+
+        $address = $this->postcodeApiNu->findByPostcodeAndHouseNumber('6545C', '29a');
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -86,11 +93,13 @@ class PostcodeApiNuTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code2()
     {
-        $address = $this->postcodeApiNu->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => MockHandler::createWithMiddleware([
                 new Response(404, [], '{"title":"Resource not found"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('6545CA', '299');
+        ]));
+
+        $address = $this->postcodeApiNu->findByPostcodeAndHouseNumber('6545CA', '299');
 
         $this->assertInstanceOf(Address::class, $address);
 

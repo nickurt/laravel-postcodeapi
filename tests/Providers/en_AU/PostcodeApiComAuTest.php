@@ -15,9 +15,12 @@ class PostcodeApiComAuTest extends BaseProviderTest
     /** @var PostcodeApiComAu */
     protected $postcodeApiComAu;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
-        $this->postcodeApiComAu = (new PostcodeApiComAu);
+        $this->postcodeApiComAu = (new PostcodeApiComAu($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /** @test */
@@ -29,13 +32,15 @@ class PostcodeApiComAuTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $address = $this->postcodeApiComAu->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '[{"name": "Collingwood", "postcode": 3066, "state": {"name": "Victoria", "abbreviation": "VIC"}, "locality": "HAWTHORN", "latitude": -37.799999999999997, "longitude": 144.98330000000001}]')
             ]),
-        ]))->find('3066');
+        ]));
 
-        $this->assertSame('http://v0.postcodeapi.com.au/suburbs/3066.json', (string)$this->postcodeApiComAu->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->postcodeApiComAu->find('3066');
+
+        $this->assertSame('http://v0.postcodeapi.com.au/suburbs/3066.json', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -53,11 +58,13 @@ class PostcodeApiComAuTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
-        $address = $this->postcodeApiComAu->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '[]')
             ]),
-        ]))->find('9065');
+        ]));
+
+        $address = $this->postcodeApiComAu->find('9065');
 
         $this->assertInstanceOf(Address::class, $address);
 

@@ -15,9 +15,12 @@ class PostcodeDataTest extends BaseProviderTest
     /** @var PostcodeData */
     protected $postcodeData;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
-        $this->postcodeData = (new PostcodeData);
+        $this->postcodeData = (new PostcodeData($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /** @test */
@@ -39,13 +42,15 @@ class PostcodeDataTest extends BaseProviderTest
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
 
-        $address = $this->postcodeData->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"ok","details":[{"street":"Evert van de Beekstraat","city":"Schiphol","municipality":"Haarlemmermeer","province":"Noord-Holland","postcode":"1118 CP","pnum":"1118","pchar":"CP","rd_x":"111361.82633333333333333333","rd_y":"479700.34883333333333333333","lat":"52.3035437835548","lon":"4.7474064734608"}]}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('1118CP', '202');
+        ]));
 
-        $this->assertSame('http://api.postcodedata.nl/v1/postcode/?postcode=1118CP&streetnumber=202&ref=localhost', (string)$this->postcodeData->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->postcodeData->findByPostcodeAndHouseNumber('1118CP', '202');
+
+        $this->assertSame('http://api.postcodedata.nl/v1/postcode/?postcode=1118CP&streetnumber=202&ref=localhost', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -65,11 +70,13 @@ class PostcodeDataTest extends BaseProviderTest
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
 
-        $address = $this->postcodeData->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"status":"error","errormessage":"no results"}')
             ]),
-        ]))->findByPostcodeAndHouseNumber('9999CP', '202');
+        ]));
+
+        $address = $this->postcodeData->findByPostcodeAndHouseNumber('9999CP', '202');
 
         $this->assertInstanceOf(Address::class, $address);
 

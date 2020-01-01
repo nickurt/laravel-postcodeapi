@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as OpenCageClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class OpenCage extends AbstractAdapter
@@ -10,8 +11,19 @@ class OpenCage extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var OpenCageClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.opencagedata.com/geocode/v1/json';
+
+    /**
+     * @param OpenCageClient $client
+     */
+    public function __construct(OpenCageClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -30,7 +42,7 @@ class OpenCage extends AbstractAdapter
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $response = $this->get($this->getRequestUrl() . '?q=' . $postCode . '&key=' . $this->getApiKey() . $options);
+        $response = json_decode($this->client->get($this->getRequestUrl() . '?q=' . $postCode . '&key=' . $this->getApiKey() . $options)->getBody(), true);
 
         if ($response['total_results'] < 1) {
             return new Address();

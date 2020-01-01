@@ -3,12 +3,24 @@
 namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as PhotonClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class Photon extends AbstractAdapter
 {
+    /** @var PhotonClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://photon.komoot.de';
+
+    /**
+     * @param PhotonClient $client
+     */
+    public function __construct(PhotonClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -27,7 +39,7 @@ class Photon extends AbstractAdapter
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $response = $this->get($this->getRequestUrl() . '/api/?q=' . $postCode . '&limit=1' . $options);
+        $response = json_decode($this->client->get($this->getRequestUrl() . '/api/?q=' . $postCode . '&limit=1' . $options)->getBody(), true);
 
         if (count($response['features']) < 1) {
             return new Address();
@@ -52,7 +64,7 @@ class Photon extends AbstractAdapter
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
-        $response = $this->get($this->getRequestUrl() . '/api/?q=' . $postCode . ',' . $houseNumber . '&limit=1' . $options);
+        $response = json_decode($this->client->get($this->getRequestUrl() . '/api/?q=' . $postCode . ',' . $houseNumber . '&limit=1' . $options)->getBody(), true);
 
         if (count($response['features']) < 1) {
             return new Address();

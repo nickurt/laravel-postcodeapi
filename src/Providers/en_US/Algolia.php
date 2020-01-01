@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\en_US;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as AlgoliaClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class Algolia extends AbstractAdapter
@@ -13,8 +14,19 @@ class Algolia extends AbstractAdapter
     /** @var string */
     protected $apiSecret;
 
+    /** @var AlgoliaClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://places-dsn.algolia.net/1/places/query';
+
+    /**
+     * @param AlgoliaClient $client
+     */
+    public function __construct(AlgoliaClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -36,10 +48,10 @@ class Algolia extends AbstractAdapter
             'hitsPerPage' => 1,
         ]));
 
-        $response = $this->post($this->getRequestUrl(), [
+        $response = json_decode($this->client->post($this->getRequestUrl(), [
             'headers' => $this->getHeaders(),
             'body' => json_encode($this->getOptions())
-        ]);
+        ])->getBody(), true);
 
         if ($response['nbHits'] < 1) {
             return new Address();
@@ -121,10 +133,10 @@ class Algolia extends AbstractAdapter
             'hitsPerPage' => 1,
         ]));
 
-        $response = $this->post($this->getRequestUrl(), [
+        $response = json_decode($this->client->post($this->getRequestUrl(), [
             'headers' => $this->getHeaders(),
             'body' => json_encode($this->getOptions())
-        ]);
+        ])->getBody(), true);
 
         if ($response['nbHits'] < 1) {
             return new Address();

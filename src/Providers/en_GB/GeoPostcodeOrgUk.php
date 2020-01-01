@@ -4,12 +4,24 @@ namespace nickurt\PostcodeApi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exceptions\NotSupportedException;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as GeoPostcodeOrgUkClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class GeoPostcodeOrgUk extends AbstractAdapter
 {
+    /** @var GeoPostcodeOrgUkClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'http://www.geopostcode.org.uk/api/%s.json';
+
+    /**
+     * @param GeoPostcodeOrgUkClient $client
+     */
+    public function __construct(GeoPostcodeOrgUkClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -26,7 +38,7 @@ class GeoPostcodeOrgUk extends AbstractAdapter
      */
     public function find($postCode)
     {
-        if (!$response = $this->get(sprintf($this->getRequestUrl(), $postCode))) {
+        if (!$response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $postCode))->getBody(), true)) {
             return new Address();
         }
 

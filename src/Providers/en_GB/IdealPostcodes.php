@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\en_GB;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as IdealPostcodesClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class IdealPostcodes extends AbstractAdapter
@@ -10,8 +11,19 @@ class IdealPostcodes extends AbstractAdapter
     /** @var string */
     protected $apiKey;
 
+    /** @var IdealPostcodesClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'https://api.ideal-postcodes.co.uk/v1/postcodes/%s?api_key=%s';
+
+    /**
+     * @param IdealPostcodesClient $client
+     */
+    public function __construct(IdealPostcodesClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -28,7 +40,7 @@ class IdealPostcodes extends AbstractAdapter
      */
     public function find($postCode)
     {
-        $response = $this->get(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()));
+        $response = json_decode($this->client->get(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()))->getBody(), true);
 
         if (isset($response['message']) && $response['message'] != "Success") {
             return new Address();

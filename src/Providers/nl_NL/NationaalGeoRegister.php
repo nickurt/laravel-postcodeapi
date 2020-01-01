@@ -3,12 +3,24 @@
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
 use nickurt\PostcodeApi\Entity\Address;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as NationaalGeoRegisterClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
 class NationaalGeoRegister extends AbstractAdapter
 {
+    /** @var NationaalGeoRegisterClient */
+    protected $client;
+
     /** @var string */
     protected $requestUrl = 'http://geodata.nationaalgeoregister.nl/locatieserver/v3/free';
+
+    /**
+     * @param NationaalGeoRegisterClient $client
+     */
+    public function __construct(NationaalGeoRegisterClient $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param string $postCode
@@ -27,9 +39,9 @@ class NationaalGeoRegister extends AbstractAdapter
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $response = $this->get(
+        $response = json_decode($this->client->get(
             $this->getRequestUrl() . '?q=postcode:' . $postCode . '&rows=1'
-        );
+        )->getBody(), true);
 
         if (count($response['response']['docs']) < 1) {
             return new Address();
@@ -58,9 +70,9 @@ class NationaalGeoRegister extends AbstractAdapter
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $response = $this->get(
+        $response = json_decode($this->client->get(
             $this->getRequestUrl() . '?q=postcode:' . $postCode . '%20and%20housenumber:' . $houseNumber . '&rows=1'
-        );
+        )->getBody(), true);
 
         if (count($response['response']['docs']) < 1) {
             return new Address();

@@ -15,11 +15,14 @@ class UkPostcodesTest extends BaseProviderTest
     /** @var UkPostcodes */
     protected $ukPostcodes;
 
+    /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
+    protected $httpClient;
+
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->ukPostcodes = (new UkPostcodes);
+        $this->ukPostcodes = (new UkPostcodes($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /** @test */
@@ -31,13 +34,15 @@ class UkPostcodesTest extends BaseProviderTest
     /** @test */
     public function it_can_get_the_correct_values_for_find_a_valid_postal_code()
     {
-        $address = $this->ukPostcodes->setHttpClient(new Client([
+        $this->httpClient->setHttpClient(new Client([
             'handler' => new MockHandler([
                 new Response(200, [], '{"postcode":"SW1A 1AA","geo":{"lat":51.501009174414,"lng":-0.14157319687256,"easting":529090,"northing":179645,"geohash":"http://geohash.org/gcpuuz2zj5gq"},"administrative":{"council":{"title":"City of Westminster","uri":"http://statistics.data.gov.uk/id/statistical-geography/E09000033","code":"E09000033"},"ward":{"title":"St. James\'s","uri":"http://statistics.data.gov.uk/id/statistical-geography/E05000644","code":"E05000644"},"constituency":{"title":"Cities of London and Westminster","uri":"http://statistics.data.gov.uk/id/statistical-geography/E14000639","code":"E14000639"}}}')
             ]),
-        ]))->find('SW1A1AA');
+        ]));
 
-        $this->assertSame('http://uk-postcodes.com/postcode/SW1A1AA.json', (string)$this->ukPostcodes->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
+        $address = $this->ukPostcodes->find('SW1A1AA');
+
+        $this->assertSame('http://uk-postcodes.com/postcode/SW1A1AA.json', (string)$this->httpClient->getHttpClient()->getConfig('handler')->getLastRequest()->getUri());
 
         $this->assertInstanceOf(Address::class, $address);
 
