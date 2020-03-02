@@ -1,8 +1,8 @@
 ## Laravel PostcodeApi
-[![Latest Stable Version](https://poser.pugx.org/nickurt/laravel-postcodeapi/v/stable?format=flat-square)](https://packagist.org/packages/nickurt/laravel-postcodeapi)
-[![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/nickurt/laravel-postcodeapi/master.svg?style=flat-square)](https://travis-ci.org/nickurt/laravel-postcodeapi)
-[![Total Downloads](https://img.shields.io/packagist/dt/nickurt/laravel-postcodeapi.svg?style=flat-square)](https://packagist.org/packages/nickurt/laravel-postcodeapi)
+[![Build Status](https://github.com/nickurt/laravel-postcodeapi/workflows/tests/badge.svg)](https://github.com/nickurt/laravel-postcodeapi/actions)
+[![Total Downloads](https://poser.pugx.org/nickurt/laravel-postcodeapi/d/total.svg)](https://packagist.org/packages/nickurt/laravel-postcodeapi)
+[![Latest Stable Version](https://poser.pugx.org/nickurt/laravel-postcodeapi/v/stable.svg)](https://packagist.org/packages/nickurt/laravel-postcodeapi)
+[![MIT Licensed](https://poser.pugx.org/nickurt/laravel-postcodeapi/license.svg)](LICENSE.md)
 
 ### Installation
 Install this package with composer:
