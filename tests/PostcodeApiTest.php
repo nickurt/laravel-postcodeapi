@@ -46,4 +46,11 @@ class PostcodeApiTest extends TestCase
     {
         $this->assertInstanceOf(\GuzzleHttp\Client::class, PostcodeApi::create('NationaalGeoRegister')->getHttpClient());
     }
+
+    /** @test */
+    public function it_can_create_a_new_provider_with_alias_via_helper_function()
+    {
+        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\PostcodeApiNuV3::class, postcodeapi('PostcodeApiNuV3Sandbox'));
+    }
+
 }

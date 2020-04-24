@@ -19,7 +19,8 @@ class ProviderFactory
         }
 
         /** @var Provider $class */
-        if (class_exists($providerClass = 'nickurt\\PostcodeApi\\Providers\\' . $config['code'] . '\\' . $provider)) {
+        $providerClass = !empty($config['alias']) ? $config['alias'] : "nickurt\\PostcodeApi\\Providers\\{$config['code']}\\{$provider}";
+        if (class_exists($providerClass)) {
             $class = (new $providerClass);
             $class->setApiKey($config['key']);
             $class->setRequestUrl($config['url']);
