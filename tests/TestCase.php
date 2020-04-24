@@ -21,6 +21,12 @@ class TestCase extends Orchestra
                 'key' => '',
                 'code' => 'nl_NL'
             ],
+            'PostcodeApiNuV3Sandbox' => [
+                'alias' => 'nickurt\\PostcodeApi\\Providers\\nl_NL\\PostcodeApiNuV3',
+                'url' => 'https://sandbox.postcodeapi.nu/v3/lookup/%s/%s',
+                'key' => '',
+                'code' => 'nl_NL'
+            ],
         ]);
     }
 

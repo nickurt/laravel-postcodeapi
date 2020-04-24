@@ -27,6 +27,17 @@ return [
         'key' => '',
         'code' => 'nl_NL',
     ],
+    'PostcodeApiNuV3' => [
+        'url' => 'https://api.postcodeapi.nu/v3/lookup/%s/%s',
+        'key' => '',
+        'code' => 'nl_NL'
+    ],
+    'PostcodeApiNuV3Sandbox' => [
+        'alias' => nickurt\PostcodeApi\Providers\nl_NL\PostcodeApiNuV3::class,
+        'url' => 'https://sandbox.postcodeapi.nu/v3/lookup/%s/%s',
+        'key' => '',
+        'code' => 'nl_NL'
+    ],
     'PostcodeData' => [
         'url' => 'http://api.postcodedata.nl/v1/postcode/?postcode=%s&streetnumber=%s&ref=%s',
         'key' => '',
