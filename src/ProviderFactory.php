@@ -18,24 +18,27 @@ class ProviderFactory
             throw new InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
         }
 
-        /** @var Provider $class */
-        $providerClass = !empty($config['alias']) ? $config['alias'] : "nickurt\\PostcodeApi\\Providers\\{$config['code']}\\{$provider}";
-        if (class_exists($providerClass)) {
-            $class = (new $providerClass);
-            $class->setApiKey($config['key']);
-            $class->setRequestUrl($config['url']);
+        /** @var Provider $providerClass */
+        $providerClass = isset($config['alias']) && class_exists($config['alias'])
+            ? $config['alias']
+            : "nickurt\\PostcodeApi\\Providers\\{$config['code']}\\{$provider}";
 
-            if (isset($config['secret'])) {
-                $class->setApiSecret($config['secret']);
-            }
-
-            if (isset($config['options'])) {
-                $class->setOptions($config['options']);
-            }
-
-            return $class;
+        if (!class_exists($providerClass)) {
+            throw new InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
         }
 
-        throw new InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
+        $class = (new $providerClass);
+        $class->setApiKey($config['key']);
+        $class->setRequestUrl($config['url']);
+
+        if (isset($config['secret'])) {
+            $class->setApiSecret($config['secret']);
+        }
+
+        if (isset($config['options'])) {
+            $class->setOptions($config['options']);
+        }
+
+        return $class;
     }
 }

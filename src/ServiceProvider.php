@@ -2,8 +2,6 @@
 
 namespace nickurt\PostcodeApi;
 
-use \nickurt\PostcodeApi\ProviderFactory;
-
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
@@ -16,16 +14,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/postcodeapi.php' => config_path('postcodeapi.php'),
         ], 'config');
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['PostcodeApi'];
     }
 
     /**

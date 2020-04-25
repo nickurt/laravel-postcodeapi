@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
+## 1.12.0 - 2020-04-25
+
+- Support for 'Aliasing of providers' (#17, #18)
+
 ## 1.11.0 - 2020-02-24
 
 - Adding support for Laravel 7

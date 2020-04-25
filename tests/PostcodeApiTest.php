@@ -30,6 +30,15 @@ class PostcodeApiTest extends TestCase
     }
 
     /** @test */
+    public function it_can_throw_exception_by_known_provider_unknown_class()
+    {
+        $this->expectException(\nickurt\PostcodeApi\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unable to use the provider "Fake"');
+
+        PostcodeApi::create('Fake');
+    }
+
+    /** @test */
     public function it_can_work_via_postcodeapi_facade_factory_for_a_known_provider()
     {
         /** @var \nickurt\PostcodeApi\Providers\nl_NL\NationaalGeoRegister $nationaalGeoRegister */
@@ -38,6 +47,9 @@ class PostcodeApiTest extends TestCase
         $this->assertInstanceOf(\nickurt\postcodeapi\Providers\Provider::class, $nationaalGeoRegister);
         $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\NationaalGeoRegister::class, $nationaalGeoRegister);
 
+        $this->assertSame(['foo' => 'bar'], $nationaalGeoRegister->getOptions());
+        $this->assertSame('key', $nationaalGeoRegister->getApiKey());
+        $this->assertSame('secret', $nationaalGeoRegister->getApiSecret());
         $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', $nationaalGeoRegister->getRequestUrl());
     }
 
