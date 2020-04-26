@@ -6,12 +6,12 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Providers\fr_FR\AddresseDataGouv;
+use nickurt\PostcodeApi\Providers\fr_FR\AdresseDataGouv;
 use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
 class AdresseDataGouvTest extends BaseProviderTest
 {
-    /** @var AddresseDataGouv */
+    /** @var AdresseDataGouv */
     protected $adresseDataGouv;
 
     /** @var \nickurt\PostcodeApi\Http\Guzzle6HttpClient */
@@ -19,7 +19,7 @@ class AdresseDataGouvTest extends BaseProviderTest
 
     public function setUp(): void
     {
-        $this->adresseDataGouv = (new AddresseDataGouv($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
+        $this->adresseDataGouv = (new \nickurt\PostcodeApi\Providers\fr_FR\AdresseDataGouv($this->httpClient = new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
     }
 
     /** @test */

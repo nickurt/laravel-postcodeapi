@@ -16,11 +16,12 @@ class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app)
     {
         config()->set('postcodeapi', [
-            'NationaalGeoRegister' => [
-                'url' => 'http://geodata.nationaalgeoregister.nl/locatieserver/v3/free',
-                'key' => '',
-                'code' => 'nl_NL'
-            ],
+            'providers' => [
+                'NationaalGeoRegister' => [
+                    'driver' => 'NationaalGeoRegister',
+                    //
+                ],
+            ]
         ]);
     }
 

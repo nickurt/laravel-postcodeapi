@@ -29,15 +29,34 @@ class ProviderManager
      */
     public function create(string $provider)
     {
-        $config = $this->app['config']["postcodeapi.{$provider}"];
+        /** @var array $config */
+        $config = $this->app['config']['postcodeapi'];
+
+        $config = array_key_exists('providers', $config)
+            ? (array_key_exists($provider, $config["providers"]) ? $config['providers'][$provider] : '')
+            : (array_key_exists($provider, $config) ? $config[$provider] : '');
 
         if (isset($this->providers[$provider])) {
             return $this->providers[$provider]($this->app, $config);
         } else {
-            $method = 'create' . ucfirst($provider) . 'Driver';
+            if (isset($config['alias']) && class_exists($config['alias'])) {
+                $class = new $config['alias'](new \nickurt\PostcodeApi\Http\Guzzle6HttpClient());
 
-            if (method_exists($this, $method)) {
-                return $this->{$method}($config);
+                if (isset($config['key'])) {
+                    $class->setApiKey($config['key']);
+                }
+
+                if (isset($config['secret'])) {
+                    $class->setApiKey($config['secret']);
+                }
+
+                return $this->driver($class);
+            } else {
+                $method = 'create' . ucfirst($config['driver'] ?? $provider) . 'Driver';
+
+                if (method_exists($this, $method)) {
+                    return $this->{$method}($config);
+                }
             }
 
             throw new \nickurt\PostcodeApi\Exceptions\InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
@@ -48,9 +67,18 @@ class ProviderManager
      * @param array $config
      * @return \nickurt\PostcodeApi\Concerns\Provider
      */
-    protected function createAddresseDataGouvDriver(array $config)
+    protected function createAdresseDataGouvDriver(array $config)
     {
-        return $this->driver(new \nickurt\PostcodeApi\Providers\fr_FR\AddresseDataGouv(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
+        return $this->driver(new \nickurt\PostcodeApi\Providers\fr_FR\AdresseDataGouv(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
+    }
+
+    /**
+     * @param \nickurt\PostcodeApi\Concerns\Adapter $driver
+     * @return \nickurt\PostcodeApi\Providers\Provider
+     */
+    protected function driver(Adapter $driver)
+    {
+        return new \nickurt\PostcodeApi\Providers\Provider($driver);
     }
 
     /**
@@ -171,15 +199,6 @@ class ProviderManager
     }
 
     /**
-     * @param \nickurt\PostcodeApi\Concerns\Adapter $driver
-     * @return \nickurt\PostcodeApi\Providers\Provider
-     */
-    protected function driver(Adapter $driver)
-    {
-        return new \nickurt\PostcodeApi\Providers\Provider($driver);
-    }
-
-    /**
      * @param array $config
      * @return \nickurt\PostcodeApi\Concerns\Provider
      */
@@ -195,6 +214,15 @@ class ProviderManager
     protected function createPhotonDriver(array $config)
     {
         return $this->driver(new \nickurt\PostcodeApi\Providers\en_US\Photon(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()));
+    }
+
+    /**
+     * @param array $config
+     * @return \nickurt\PostcodeApi\Concerns\Provider
+     */
+    protected function createPickPointDriver(array $config)
+    {
+        return $this->driver((new \nickurt\PostcodeApi\Providers\ru_RU\PickPoint(new \nickurt\PostcodeApi\Http\Guzzle6HttpClient()))->setApiKey($config['key']));
     }
 
     /**

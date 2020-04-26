@@ -3,21 +3,21 @@
 namespace nickurt\PostcodeApi\Providers\fr_FR;
 
 use nickurt\PostcodeApi\Entity\Address;
-use nickurt\PostcodeApi\Http\Guzzle6HttpClient as AddresseDataGouvClient;
+use nickurt\PostcodeApi\Http\Guzzle6HttpClient as AdresseDataGouvClient;
 use nickurt\PostcodeApi\Providers\AbstractAdapter;
 
-class AddresseDataGouv extends AbstractAdapter
+class AdresseDataGouv extends AbstractAdapter
 {
-    /** @var AddresseDataGouvClient */
+    /** @var AdresseDataGouvClient */
     protected $client;
 
     /** @var string */
     protected $requestUrl = 'https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1';
 
     /**
-     * @param AddresseDataGouvClient $client
+     * @param AdresseDataGouvClient $client
      */
-    public function __construct(AddresseDataGouvClient $client)
+    public function __construct(AdresseDataGouvClient $client)
     {
         $this->client = $client;
     }

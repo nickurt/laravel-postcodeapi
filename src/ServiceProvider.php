@@ -17,16 +17,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['PostcodeApi'];
-    }
-
-    /**
      * Register the service provider.
      *
      * @return void
