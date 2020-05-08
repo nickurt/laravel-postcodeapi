@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\PostcodeApi\tests;
+namespace nickurt\PostcodeApi\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 

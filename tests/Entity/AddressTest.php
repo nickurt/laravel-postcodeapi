@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\PostcodeApi\tests\Entity;
+namespace nickurt\PostcodeApi\Tests\Entity;
 
 use nickurt\PostcodeApi\Entity\Address;
 use PHPUnit\Framework\TestCase;

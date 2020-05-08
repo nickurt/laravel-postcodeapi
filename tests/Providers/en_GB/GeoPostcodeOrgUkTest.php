@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\PostcodeApi\tests\Providers\en_GB;
+namespace nickurt\PostcodeApi\Tests\Providers\en_GB;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -8,9 +8,9 @@ use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
 use nickurt\PostcodeApi\Providers\en_GB\GeoPostcodeOrgUk;
-use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
+use nickurt\PostcodeApi\Tests\Providers\BaseProviderTest;
 
-class GeoPostcodeOrkUkTest extends BaseProviderTest
+class GeoPostcodeOrgUkTest extends BaseProviderTest
 {
     /** @var GeoPostcodeOrgUk */
     protected $geoPostcodeOrgUk;

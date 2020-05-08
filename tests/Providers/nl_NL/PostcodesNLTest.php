@@ -1,13 +1,13 @@
 <?php
 
-namespace nickurt\PostcodeApi\tests\Providers\nl_NL;
+namespace nickurt\PostcodeApi\Tests\Providers\nl_NL;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\nl_NL\PostcodesNL;
-use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
+use nickurt\PostcodeApi\Tests\Providers\BaseProviderTest;
 
 class PostcodesNLTest extends BaseProviderTest
 {
