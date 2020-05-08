@@ -42,3 +42,8 @@ jobs:
 
             -   name: Execute tests
                 run: vendor/bin/phpunit
+
+            -   name: Execute tests with frozen classmap
+                run: |
+                    composer dump-autoload --classmap-authoritative
+                    vendor/bin/phpunit
