@@ -12,7 +12,7 @@ jobs:
 
         strategy:
             matrix:
-                php: [7.4, 7.3]
+                php: [8.0, 7.4, 7.3]
                 laravel: [7.0, 6.0]
                 dependency-version: [prefer-lowest, prefer-stable]
                 os: [ubuntu-latest]
@@ -21,6 +21,9 @@ jobs:
                       testbench: 5.0
                     - laravel: 6.0
                       testbench: 4.0
+                exclude:
+                    - php: 8.0
+                      laravel: 6.0
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
@@ -49,6 +52,10 @@ jobs:
                         ${{ matrix.os }}-composer-${{ matrix.php }}-
                         ${{ matrix.os }}-composer-
 
+
+            -   name: Spoof being PHP 7.4 (PHP 8.0 only)
+                if: matrix.php == '8.0'
+                run: composer config platform.php 7.4.5
 
             -   name: Install dependencies
                 run: |
