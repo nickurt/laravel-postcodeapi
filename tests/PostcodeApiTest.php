@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\PostcodeApi\tests;
+namespace nickurt\PostcodeApi\Tests;
 
 use nickurt\PostcodeApi\ProviderFactory as PostcodeApi;
 
@@ -9,7 +9,7 @@ class PostcodeApiTest extends TestCase
     /** @test */
     public function it_can_create_a_new_provider_via_helper_function()
     {
-        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\NationaalGeoRegister::class, postcodeapi('NationaalGeoRegister'));
+        $this->assertInstanceOf(\nickurt\PostcodeApi\Providers\nl_NL\NationaalGeoRegister::class, postcodeapi('NationaalGeoRegister'));
     }
 
     /** @test */
@@ -44,8 +44,8 @@ class PostcodeApiTest extends TestCase
         /** @var \nickurt\PostcodeApi\Providers\nl_NL\NationaalGeoRegister $nationaalGeoRegister */
         $nationaalGeoRegister = PostcodeApi::create('NationaalGeoRegister');
 
-        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\Provider::class, $nationaalGeoRegister);
-        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\NationaalGeoRegister::class, $nationaalGeoRegister);
+        $this->assertInstanceOf(\nickurt\PostcodeApi\Providers\Provider::class, $nationaalGeoRegister);
+        $this->assertInstanceOf(\nickurt\PostcodeApi\Providers\nl_NL\NationaalGeoRegister::class, $nationaalGeoRegister);
 
         $this->assertSame(['foo' => 'bar'], $nationaalGeoRegister->getOptions());
         $this->assertSame('key', $nationaalGeoRegister->getApiKey());
@@ -62,7 +62,7 @@ class PostcodeApiTest extends TestCase
     /** @test */
     public function it_can_create_a_new_provider_with_alias_via_helper_function()
     {
-        $this->assertInstanceOf(\nickurt\postcodeapi\Providers\nl_NL\PostcodeApiNuV3::class, postcodeapi('PostcodeApiNuV3Sandbox'));
+        $this->assertInstanceOf(\nickurt\PostcodeApi\Providers\nl_NL\PostcodeApiNuV3::class, postcodeapi('PostcodeApiNuV3Sandbox'));
     }
 
 }

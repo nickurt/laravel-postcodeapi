@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\postcodeapi\Providers\en_AU;
+namespace nickurt\PostcodeApi\Providers\en_AU;
 
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;

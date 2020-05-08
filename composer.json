@@ -30,7 +30,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "nickurt\\PostcodeApi\\tests\\": "tests"
+      "nickurt\\PostcodeApi\\Tests\\": "tests"
     }
   },
   "minimum-stability": "dev",

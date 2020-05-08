@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\PostcodeApi\tests\Providers;
+namespace nickurt\PostcodeApi\Tests\Providers;
 
 use PHPUnit\Framework\TestCase;
 
