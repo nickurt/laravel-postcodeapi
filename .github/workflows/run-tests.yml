@@ -12,15 +12,18 @@ jobs:
 
         strategy:
             matrix:
-                php: [7.4, 7.3]
-                laravel: [7.*, 6.*]
+                php: [8.0, 7.4, 7.3]
+                laravel: [7.0, 6.0]
                 dependency-version: [prefer-lowest, prefer-stable]
                 os: [ubuntu-latest]
                 include:
-                    - laravel: 7.*
-                      testbench: 5.*
-                    - laravel: 6.*
-                      testbench: 4.*
+                    - laravel: 7.0
+                      testbench: 5.0
+                    - laravel: 6.0
+                      testbench: 4.0
+                exclude:
+                    - php: 8.0
+                      laravel: 6.0
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
@@ -35,9 +38,28 @@ jobs:
                     extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                     coverage: none
 
+            -   name: Get composer cache directory
+                id: composer-cache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache dependencies
+                uses: actions/cache@v1
+                with:
+                    path: ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ matrix.os }}-composer-${{ matrix.php }}-${{ matrix.laravel }}-${{ matrix.dependency-version }}
+                    restore-keys: |
+                        ${{ matrix.os }}-composer-${{ matrix.php }}-${{ matrix.laravel }}-
+                        ${{ matrix.os }}-composer-${{ matrix.php }}-
+                        ${{ matrix.os }}-composer-
+
+
+            -   name: Spoof being PHP 7.4 (PHP 8.0 only)
+                if: matrix.php == '8.0'
+                run: composer config platform.php 7.4.5
+
             -   name: Install dependencies
                 run: |
-                    composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+                    composer require "laravel/framework:^${{ matrix.laravel }}" "orchestra/testbench:^${{ matrix.testbench }}" --no-interaction --no-update
                     composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
             -   name: Execute tests
