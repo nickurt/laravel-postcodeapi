@@ -9,6 +9,7 @@ on:
 jobs:
     php-tests:
         runs-on: ${{ matrix.os }}
+        continue-on-error: ${{ matrix.php == 8.0 }}
 
         strategy:
             matrix:
