@@ -16,10 +16,7 @@ jobs:
                 laravel: [7.0, 6.0]
                 dependency-version: [prefer-lowest, prefer-stable]
                 os: [ubuntu-latest]
-                experimental: [false]
                 include:
-                    - php: 8.0
-                      experimental: true
                     - laravel: 7.0
                       testbench: 5.0
                     - laravel: 6.0
@@ -29,8 +26,6 @@ jobs:
                       laravel: 6.0
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
-
-        continue-on-error: ${{ matrix.experimental }}
 
         steps:
             -   name: Checkout code
