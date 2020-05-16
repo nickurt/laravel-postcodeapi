@@ -8,15 +8,16 @@ on:
 
 jobs:
     php-tests:
-        runs-on: ${{ matrix.os }}
-
         strategy:
             matrix:
                 php: [8.0, 7.4, 7.3]
                 laravel: [7.0, 6.0]
                 dependency-version: [prefer-lowest, prefer-stable]
+                experimental: [false]
                 os: [ubuntu-latest]
                 include:
+                    - php: 8.0
+                      experimental: true
                     - laravel: 7.0
                       testbench: 5.0
                     - laravel: 6.0
@@ -24,6 +25,10 @@ jobs:
                 exclude:
                     - php: 8.0
                       laravel: 6.0
+
+        runs-on: ${{ matrix.os }}
+
+        continue-on-error: ${{ matrix.experimental }}
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
