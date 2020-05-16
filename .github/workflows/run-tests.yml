@@ -7,6 +7,8 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
+    runs-on: ${{ matrix.os }}
+
     php-tests:
         strategy:
             matrix:
@@ -25,8 +27,6 @@ jobs:
                 exclude:
                     - php: 8.0
                       laravel: 6.0
-
-        runs-on: ${{ matrix.os }}
 
         continue-on-error: ${{ matrix.experimental }}
 
