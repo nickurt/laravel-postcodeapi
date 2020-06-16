@@ -130,26 +130,26 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @return mixed
+     * @param string $postCode
+     * @return Address
      */
-    abstract protected function request();
+    abstract public function find($postCode);
 
     /**
      * @param string $postCode
      * @return Address
      */
-    abstract protected function find($postCode);
-
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    abstract protected function findByPostcode($postCode);
+    abstract public function findByPostcode($postCode);
 
     /**
      * @param string $postCode
      * @param string $houseNumber
      * @return Address
      */
-    abstract protected function findByPostcodeAndHouseNumber($postCode, $houseNumber);
+    abstract public function findByPostcodeAndHouseNumber($postCode, $houseNumber);
+
+    /**
+     * @return mixed
+     */
+    abstract protected function request();
 }
