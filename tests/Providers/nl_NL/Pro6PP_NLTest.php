@@ -54,6 +54,31 @@ class Pro6PP_NLTest extends BaseProviderTest
     }
 
     /** @test */
+    public function it_can_get_the_correct_values_for_find_a_valid_postal_code_without_coordinates()
+    {
+        $address = $this->pro6PP_NL->setHttpClient(new Client([
+            'handler' => new MockHandler([
+                new Response(200, [], '{"status":"ok","results":[{"nl_sixpp":"4493ZG","street":"Postbus","street_nen5825":"Postbus","city":"Kamperland","municipality":"Noord-Beveland","province":"Zeeland","lat":null,"lng":null,"areacode":"0113","surface":null,"functions":null,"construction_year":null}]}')
+            ]),
+        ]))->find('4493ZG');
+
+        $this->assertSame('qwertyuiop', $this->pro6PP_NL->getApiKey());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=4493ZG', $this->pro6PP_NL->getRequestUrl());
+
+        $this->assertInstanceOf(Address::class, $address);
+
+        $this->assertSame([
+            'street' => 'Postbus',
+            'house_no' => null,
+            'town' => 'Kamperland',
+            'municipality' => 'Noord-Beveland',
+            'province' => 'Zeeland',
+            'latitude' => null,
+            'longitude' => null
+        ], $address->toArray());
+    }
+
+    /** @test */
     public function it_can_get_the_correct_values_for_find_an_invalid_postal_code()
     {
         $address = $this->pro6PP_NL->setHttpClient(new Client([
@@ -97,6 +122,31 @@ class Pro6PP_NLTest extends BaseProviderTest
             'province' => 'Noord-Holland',
             'latitude' => 52.3038977,
             'longitude' => 4.7479069
+        ], $address->toArray());
+    }
+
+    /** @test */
+    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code_without_coordinates()
+    {
+        $address = $this->pro6PP_NL->setHttpClient(new Client([
+            'handler' => new MockHandler([
+                new Response(200, [], '{"status":"ok","results":[{"nl_sixpp":"4493ZG","street":"Postbus","street_nen5825":"Postbus","city":"Kamperland","municipality":"Noord-Beveland","province":"Zeeland","lat":null,"lng":null,"areacode":"0113","surface":null,"functions":null,"construction_year":null}]}')
+            ]),
+        ]))->findByPostcodeAndHouseNumber('4493ZG', '35');
+
+        $this->assertSame('qwertyuiop', $this->pro6PP_NL->getApiKey());
+        $this->assertSame('https://api.pro6pp.nl/v1/autocomplete?auth_key=qwertyuiop&nl_sixpp=4493ZG&streetnumber=35', $this->pro6PP_NL->getRequestUrl());
+
+        $this->assertInstanceOf(Address::class, $address);
+
+        $this->assertSame([
+            'street' => 'Postbus',
+            'house_no' => '35',
+            'town' => 'Kamperland',
+            'municipality' => 'Noord-Beveland',
+            'province' => 'Zeeland',
+            'latitude' => null,
+            'longitude' => null
         ], $address->toArray());
     }
 

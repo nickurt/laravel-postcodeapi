@@ -29,16 +29,7 @@ class Pro6PP_NL extends Provider
             return new Address();
         }
 
-        $address = new Address();
-        $address
-            ->setStreet($response['results'][0]['street'])
-            ->setTown($response['results'][0]['city'])
-            ->setMunicipality($response['results'][0]['municipality'])
-            ->setProvince($response['results'][0]['province'])
-            ->setLatitude($response['results'][0]['lat'])
-            ->setLongitude($response['results'][0]['lng']);
-
-        return $address;
+        return $this->toAddress($response);
     }
 
     /**
@@ -65,15 +56,27 @@ class Pro6PP_NL extends Provider
             return new Address();
         }
 
+        return $this->toAddress($response)
+            ->setHouseNo($houseNumber);
+    }
+
+    /**
+     * @param  array  $response
+     * @return Address
+     */
+    protected function toAddress(array $response)
+    {
         $address = new Address();
         $address
-            ->setHouseNo($houseNumber)
             ->setStreet($response['results'][0]['street'])
             ->setTown($response['results'][0]['city'])
             ->setMunicipality($response['results'][0]['municipality'])
-            ->setProvince($response['results'][0]['province'])
-            ->setLatitude($response['results'][0]['lat'])
-            ->setLongitude($response['results'][0]['lng']);
+            ->setProvince($response['results'][0]['province']);
+
+        if (! empty($latitude = $response['results'][0]['lat']) && ! empty($longitude = $response['results'][0]['lng'])) {
+            $address->setLatitude($latitude)
+                ->setLongitude($longitude);
+        }
 
         return $address;
     }
