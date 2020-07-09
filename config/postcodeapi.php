@@ -149,5 +149,15 @@ return [
         'url' => 'https://api-adresse.data.gouv.fr/search/?q=%s&postcode=%s&limit=1',
         'key' => '',
         'code' => 'fr_FR'
+    ],
+   'GeonamesDE' => [
+        'url' => 'http://api.geonames.org/postalCodeLookupJSON?postalcode=%s&country=DE&username=demo',
+        'key' => '',
+        'code' => 'de_DE'
+    ],
+   'ZippopotamusDE' => [
+        'url' => 'http://api.zippopotam.us/DE/%s',
+        'key' => '',
+        'code' => 'de_DE'
     ]
 ];
