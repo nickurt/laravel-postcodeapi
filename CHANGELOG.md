@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
+## 1.15.0 - 2020-09-09
+
+- Adding support for Laravel 8 ([#26](https://github.com/nickurt/laravel-postcodeapi/pull/26))
+
 ## 1.14.0 - 2020-06-16
 
 - Change visibility of find methods in Provider class ([#23](https://github.com/nickurt/laravel-postcodeapi/pull/23))
