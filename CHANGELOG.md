@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
+## 1.16.0 - 2020-11-29
+
+- Adding support for PHP 8.0, ditched PHP 7.2 and PHP 7.3
+
 ## 1.15.0 - 2020-09-09
 
 - Adding support for Laravel 8 ([#26](https://github.com/nickurt/laravel-postcodeapi/pull/26))
