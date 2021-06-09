@@ -123,10 +123,10 @@ class Address implements Arrayable
     }
 
     /**
-     * @param float $latitude
+     * @param float|null $latitude
      * @return $this
      */
-    public function setLatitude(float $latitude)
+    public function setLatitude(?float $latitude = null)
     {
         $this->latitude = $latitude;
 
@@ -142,10 +142,10 @@ class Address implements Arrayable
     }
 
     /**
-     * @param float $longitude
+     * @param float|null $longitude
      * @return $this
      */
-    public function setLongitude(float $longitude)
+    public function setLongitude(?float $longitude = null)
     {
         $this->longitude = $longitude;
 
