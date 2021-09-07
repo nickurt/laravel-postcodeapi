@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
+## 1.16.1 - 2021-09-07
+
+- Add url variable to MalformedURLException for debugging ([#29](https://github.com/nickurt/laravel-postcodeapi/pull/29))
+- Allow null value for long/latitude ([#28](https://github.com/nickurt/laravel-postcodeapi/pull/28))
+- Upgrade to GitHub-native Dependabot ([#27](https://github.com/nickurt/laravel-postcodeapi/pull/27))
+
 ## 1.16.0 - 2020-11-29
 
 - Adding support for PHP 8.0, ditched PHP 7.2 and PHP 7.3
