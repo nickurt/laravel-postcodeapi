@@ -110,7 +110,7 @@ abstract class Provider implements ProviderInterface
     public function setRequestUrl($url)
     {
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-            throw new MalformedURLException();
+            throw new MalformedURLException($url);
         }
 
         $this->requestUrl = $url;
