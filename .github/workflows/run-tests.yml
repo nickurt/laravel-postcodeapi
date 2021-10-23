@@ -37,6 +37,10 @@ jobs:
                     extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                     coverage: none
 
+            -   name: Require dependencies
+                run: |
+                    composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+
             -   name: Set Minimum PHP 8.1 Versions
                 uses: nick-invision/retry@v1
                 with:
@@ -47,7 +51,6 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
                     composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
             -   name: Execute tests
