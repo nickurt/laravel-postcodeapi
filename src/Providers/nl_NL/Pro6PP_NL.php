@@ -15,11 +15,7 @@ class Pro6PP_NL extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode));
 
@@ -32,21 +28,12 @@ class Pro6PP_NL extends Provider
         return $this->toAddress($response);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode) . '&streetnumber=' . $houseNumber);
 
@@ -60,11 +47,7 @@ class Pro6PP_NL extends Provider
             ->setHouseNo($houseNumber);
     }
 
-    /**
-     * @param  array  $response
-     * @return Address
-     */
-    protected function toAddress(array $response)
+    protected function toAddress(array $response): Address
     {
         $address = new Address();
         $address
@@ -73,7 +56,7 @@ class Pro6PP_NL extends Provider
             ->setMunicipality($response['results'][0]['municipality'])
             ->setProvince($response['results'][0]['province']);
 
-        if (! empty($latitude = $response['results'][0]['lat']) && ! empty($longitude = $response['results'][0]['lng'])) {
+        if (!empty($latitude = $response['results'][0]['lat']) && !empty($longitude = $response['results'][0]['lng'])) {
             $address->setLatitude($latitude)
                 ->setLongitude($longitude);
         }

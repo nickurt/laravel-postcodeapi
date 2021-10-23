@@ -8,71 +8,46 @@ use nickurt\PostcodeApi\Exception\MalformedURLException;
 
 abstract class Provider implements ProviderInterface
 {
-    /** @var string */
-    protected $apiKey;
+    protected string|null $apiKey = null;
 
-    /** @var string */
-    protected $apiSecret;
+    protected string|null $apiSecret = null;
 
-    /** @var string */
-    protected $requestUrl;
+    protected string $requestUrl = '';
 
-    /** @var array */
-    protected $options = [];
+    protected array $options = [];
 
-    /** @var Client */
-    protected $httpClient;
+    protected Client $httpClient;
 
-    /**
-     * @return string
-     */
-    public function getApiKey()
+    public function getApiKey(): string|null
     {
         return $this->apiKey;
     }
 
-    /**
-     * @param array $options
-     * @return $this
-     */
-    public function setOptions(array $options)
+    public function setOptions(array $options): Provider
     {
         $this->options = array_merge($this->getOptions(), $options);
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    /**
-     * @param $apiKey
-     * @return $this
-     */
-    public function setApiKey($apiKey)
+    public function setApiKey(string $apiKey): Provider
     {
         $this->apiKey = $apiKey;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getApiSecret()
+    public function getApiSecret(): string|null
     {
         return $this->apiSecret;
     }
 
-    /**
-     * @return Client
-     */
-    public function getHttpClient()
+    public function getHttpClient(): Client
     {
         if (!isset($this->httpClient)) {
             $this->httpClient = new Client();
@@ -83,31 +58,19 @@ abstract class Provider implements ProviderInterface
         return $this->httpClient;
     }
 
-    /**
-     * @param Client $client
-     * @return $this
-     */
-    public function setHttpClient(Client $client)
+    public function setHttpClient(Client $client): Provider
     {
         $this->httpClient = $client;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRequestUrl()
+    public function getRequestUrl(): string
     {
         return $this->requestUrl;
     }
 
-    /**
-     * @param string $url
-     * @return $this
-     * @throws MalformedURLException
-     */
-    public function setRequestUrl($url)
+    public function setRequestUrl($url): Provider
     {
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new MalformedURLException($url);
@@ -118,35 +81,18 @@ abstract class Provider implements ProviderInterface
         return $this;
     }
 
-    /**
-     * @param string $apiSecret
-     * @return $this
-     */
-    public function setApiSecret($apiSecret)
+    public function setApiSecret(string $apiSecret): Provider
     {
         $this->apiSecret = $apiSecret;
 
         return $this;
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    abstract public function find($postCode);
+    abstract public function find(string $postCode): Address;
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    abstract public function findByPostcode($postCode);
+    abstract public function findByPostcode(string $postCode): Address;
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     * @return Address
-     */
-    abstract public function findByPostcodeAndHouseNumber($postCode, $houseNumber);
+    abstract public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address;
 
     /**
      * @return mixed

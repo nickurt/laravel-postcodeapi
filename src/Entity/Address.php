@@ -6,164 +6,105 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class Address implements Arrayable
 {
-    /** @var null|string */
-    protected $street;
+    protected ?string $street = null;
 
-    /** @var null|string */
-    protected $houseNo;
+    protected ?string $houseNo = null;
 
-    /** @var null|string */
-    protected $town;
+    protected ?string $town = null;
 
-    /** @var null|string */
-    protected $municipality;
+    protected ?string $municipality = null;
 
-    /** @var null|string */
-    protected $province;
+    protected ?string $province = null;
 
-    /** @var null|float */
-    protected $latitude;
+    protected ?float $latitude = null;
 
-    /** @var null|float */
-    protected $longitude;
+    protected ?float $longitude = null;
 
-    /**
-     * @param string $houseNo
-     * @return $this
-     */
-    public function setHouseNo($houseNo)
+    public function setHouseNo(string $houseNo): Address
     {
         $this->houseNo = $houseNo;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getHouseNo()
+    public function getHouseNo(): string|null
     {
         return $this->houseNo;
     }
 
-    /**
-     * @param string $street
-     * @return $this
-     */
-    public function setStreet($street)
+    public function setStreet(string $street): Address
     {
         $this->street = $street;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStreet()
+    public function getStreet(): string|null
     {
         return $this->street;
     }
 
-    /**
-     * @param string $municipality
-     * @return $this
-     */
-    public function setMunicipality($municipality)
+    public function setMunicipality(string $municipality): Address
     {
         $this->municipality = $municipality;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getMunicipality()
+    public function getMunicipality(): string|null
     {
         return $this->municipality;
     }
 
-    /**
-     * @param string $town
-     * @return $this
-     */
-    public function setTown($town)
+    public function setTown(string $town): Address
     {
         $this->town = $town;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTown()
+    public function getTown(): string|null
     {
         return $this->town;
     }
 
-    /**
-     * @param string $province
-     * @return $this
-     */
-    public function setProvince($province)
+    public function setProvince(string $province): Address
     {
         $this->province = $province;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getProvince()
+    public function getProvince(): string|null
     {
         return $this->province;
     }
 
-    /**
-     * @param float|null $latitude
-     * @return $this
-     */
-    public function setLatitude(?float $latitude = null)
+    public function setLatitude(?float $latitude = null): Address
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getLatitude()
+    public function getLatitude(): float|null
     {
         return $this->latitude;
     }
 
-    /**
-     * @param float|null $longitude
-     * @return $this
-     */
-    public function setLongitude(?float $longitude = null)
+    public function setLongitude(?float $longitude = null): Address
     {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getLongitude()
+    public function getLongitude(): float|null
     {
         return $this->longitude;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'street' => $this->getStreet(),

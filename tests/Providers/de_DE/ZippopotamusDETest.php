@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\PostcodeApi\Tests\Providers\de_DE;
+namespace nickurt\PostcodeApi\tests\Providers\de_DE;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -8,11 +8,11 @@ use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
 use nickurt\PostcodeApi\Providers\de_DE\ZippopotamusDE;
-use nickurt\PostcodeApi\Tests\Providers\BaseProviderTest;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
 class ZippopotamusDETest extends BaseProviderTest
 {
-    /** @var zippo */
+    /** @var ZippopotamusDE */
     protected $zippo;
 
     public function setUp(): void

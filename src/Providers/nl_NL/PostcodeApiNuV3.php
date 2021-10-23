@@ -9,11 +9,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class PostcodeApiNuV3 extends Provider
 {
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         throw new NotSupportedException('Cannot search with postcode only');
     }
@@ -29,21 +25,12 @@ class PostcodeApiNuV3 extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         // Format postcode into 1234AB format
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
@@ -66,7 +53,7 @@ class PostcodeApiNuV3 extends Provider
         // Found it :)
         return (new Address())
             ->setStreet(Arr::get($response, 'street'))
-            ->setHouseNo((string) Arr::get($response, 'number'))
+            ->setHouseNo((string)Arr::get($response, 'number'))
             ->setTown(Arr::get($response, 'city'))
             ->setMunicipality(Arr::get($response, 'municipality'))
             ->setProvince(Arr::get($response, 'province'))

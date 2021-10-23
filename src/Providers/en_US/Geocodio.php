@@ -7,11 +7,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class Geocodio extends Provider
 {
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $this->getApiKey()));
 
@@ -24,10 +20,13 @@ class Geocodio extends Provider
         $address = new Address();
         $address
             ->setMunicipality($response['results'][0]['address_components']['state'])
-            ->setStreet($response['results'][0]['address_components']['formatted_street'] ?? null)
             ->setTown($response['results'][0]['address_components']['city'])
             ->setLatitude($response['results'][0]['location']['lat'])
             ->setLongitude($response['results'][0]['location']['lng']);
+
+        if ($street = $response['results'][0]['address_components']['formatted_street'] ?? null) {
+            $address->setMunicipality($street);
+        }
 
         return $address;
     }
@@ -39,20 +38,12 @@ class Geocodio extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }

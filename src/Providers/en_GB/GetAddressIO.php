@@ -7,11 +7,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class GetAddressIO extends Provider
 {
-    /**
-     * @param $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '?expand=true');
 
@@ -47,21 +43,12 @@ class GetAddressIO extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber . '?expand=true');
 

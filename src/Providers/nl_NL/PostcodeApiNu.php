@@ -7,11 +7,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class PostcodeApiNu extends Provider
 {
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
@@ -49,21 +45,12 @@ class PostcodeApiNu extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 

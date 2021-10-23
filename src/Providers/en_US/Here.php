@@ -7,11 +7,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class Here extends Provider
 {
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
@@ -25,13 +21,22 @@ class Here extends Provider
 
         $address = new Address();
         $address
-            ->setStreet($response['Response']['View'][0]['Result'][0]['Location']['Address']['Street'] ?? null)
-            ->setHouseNo($response['Response']['View'][0]['Result'][0]['Location']['Address']['HouseNumber'] ?? null)
             ->setTown($response['Response']['View'][0]['Result'][0]['Location']['Address']['City'])
-            ->setMunicipality($response['Response']['View'][0]['Result'][0]['Location']['Address']['County'] ?? null)
             ->setProvince($response['Response']['View'][0]['Result'][0]['Location']['Address']['State'])
             ->setLatitude($response['Response']['View'][0]['Result'][0]['Location']['DisplayPosition']['Latitude'])
             ->setLongitude($response['Response']['View'][0]['Result'][0]['Location']['DisplayPosition']['Longitude']);
+
+        if ($street = $response['Response']['View'][0]['Result'][0]['Location']['Address']['Street'] ?? null) {
+            $address->setStreet($street);
+        }
+
+        if ($houseNo = $response['Response']['View'][0]['Result'][0]['Location']['Address']['HouseNumber'] ?? null) {
+            $address->setHouseNo($houseNo);
+        }
+
+        if ($municipality = $response['Response']['View'][0]['Result'][0]['Location']['Address']['County'] ?? null) {
+            $address->setMunicipality($municipality);
+        }
 
         return $address;
     }
@@ -43,20 +48,12 @@ class Here extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }

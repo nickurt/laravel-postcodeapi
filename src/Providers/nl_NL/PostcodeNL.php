@@ -7,15 +7,10 @@ use \nickurt\PostcodeApi\Entity\Address;
 
 class PostcodeNL extends Provider
 {
-    protected $apiKey;
-    protected $requestUrl;
-
-    /**
-     * @return mixed
-     */
     protected function request()
     {
         $client = $this->getHttpClient();
+
         $response = $client->request('GET', $this->getRequestUrl(), [
             'auth' => [
                 $this->getApiKey(), $this->getApiSecret()
@@ -25,20 +20,17 @@ class PostcodeNL extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
+        throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }
 
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
+        throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }
 
-    /**
-     * @param $postCode
-     * @param $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber));
         $response = $this->request();

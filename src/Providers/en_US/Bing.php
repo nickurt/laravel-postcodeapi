@@ -7,11 +7,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class Bing extends Provider
 {
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
@@ -26,10 +22,16 @@ class Bing extends Provider
         $address = new Address();
         $address
             ->setTown($response['resourceSets'][0]['resources'][0]['address']['locality'])
-            ->setMunicipality($response['resourceSets'][0]['resources'][0]['address']['adminDistrict2'] ?? null)
-            ->setProvince($response['resourceSets'][0]['resources'][0]['address']['adminDistrict'] ?? null)
             ->setLatitude($response['resourceSets'][0]['resources'][0]['point']['coordinates'][0])
             ->setLongitude($response['resourceSets'][0]['resources'][0]['point']['coordinates'][1]);
+
+        if ($municipality = $response['resourceSets'][0]['resources'][0]['address']['adminDistrict2'] ?? null) {
+            $address->setMunicipality($municipality);
+        }
+
+        if ($province = $response['resourceSets'][0]['resources'][0]['address']['adminDistrict'] ?? null) {
+            $address->setProvince($province);
+        }
 
         return $address;
     }
@@ -41,20 +43,12 @@ class Bing extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }

@@ -7,11 +7,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class PostcodesNL extends Provider
 {
-    /**
-     * @param $postCode
-     * @return mixed|Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $this->setRequestUrl($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode);
 
@@ -33,9 +29,6 @@ class PostcodesNL extends Provider
         return $address;
     }
 
-    /**
-     * @return mixed
-     */
     protected function request()
     {
         $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
@@ -43,16 +36,12 @@ class PostcodesNL extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
+        throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }
 
-    /**
-     * @param $postCode
-     * @param $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         $this->setRequestUrl($this->getRequestUrl() . '?apikey=' . $this->getApiKey() . '&nlzip6=' . $postCode . '&streetnumber=' . $houseNumber);
 

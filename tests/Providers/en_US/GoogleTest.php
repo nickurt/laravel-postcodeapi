@@ -1,13 +1,13 @@
 <?php
 
-namespace nickurt\PostcodeApi\Tests\Providers\en_US;
+namespace nickurt\PostcodeApi\tests\Providers\en_US;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\en_US\Google;
-use nickurt\PostcodeApi\Tests\Providers\BaseProviderTest;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
 class GoogleTest extends BaseProviderTest
 {

@@ -7,20 +7,12 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class Algolia extends Provider
 {
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $this->setOptions(array_merge($this->getOptions(), [
             'query' => $postCode,
@@ -36,10 +28,13 @@ class Algolia extends Provider
         $address = new Address();
         $address
             ->setTown($response['hits'][0]['locale_names']['default'][0])
-            ->setMunicipality($response['hits'][0]['county']['default'][0] ?? $response['hits'][0]['city']['default'][0] ?? null)
             ->setProvince($response['hits'][0]['administrative'][0])
             ->setLatitude($response['hits'][0]['_geoloc']['lat'])
             ->setLongitude($response['hits'][0]['_geoloc']['lng']);
+
+        if ($municipality = $response['hits'][0]['county']['default'][0] ?? $response['hits'][0]['city']['default'][0] ?? null) {
+            $address->setMunicipality($municipality);
+        }
 
         return $address;
     }
@@ -57,12 +52,7 @@ class Algolia extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         $this->setOptions(array_merge($this->getOptions(), [
             'query' => $postCode . '+' . $houseNumber,
@@ -78,10 +68,13 @@ class Algolia extends Provider
         $address = new Address();
         $address
             ->setTown($response['hits'][0]['city']['default'][0])
-            ->setMunicipality($response['hits'][0]['county']['default'][0] ?? $response['hits'][0]['city']['default'][0] ?? null)
             ->setProvince($response['hits'][0]['administrative'][0])
             ->setLatitude($response['hits'][0]['_geoloc']['lat'])
             ->setLongitude($response['hits'][0]['_geoloc']['lng']);
+
+        if ($municipality = $response['hits'][0]['county']['default'][0] ?? $response['hits'][0]['city']['default'][0] ?? null) {
+            $address->setMunicipality($municipality);
+        }
 
         return $address;
     }

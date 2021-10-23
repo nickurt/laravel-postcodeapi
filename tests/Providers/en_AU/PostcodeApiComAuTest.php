@@ -1,6 +1,6 @@
 <?php
 
-namespace nickurt\PostcodeApi\Tests\Providers\en_AU;
+namespace nickurt\PostcodeApi\tests\Providers\en_AU;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -8,7 +8,7 @@ use GuzzleHttp\Psr7\Response;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
 use nickurt\PostcodeApi\Providers\en_AU\PostcodeApiComAu;
-use nickurt\PostcodeApi\Tests\Providers\BaseProviderTest;
+use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
 
 class PostcodeApiComAuTest extends BaseProviderTest
 {

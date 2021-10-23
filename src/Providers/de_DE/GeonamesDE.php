@@ -7,11 +7,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class GeonamesDE extends Provider
 {
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, ''));
 
@@ -39,23 +35,14 @@ class GeonamesDE extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
-        $this->setRequestUrl( sprintf( $this->getRequestUrl(), $postCode . '&placename=' . $houseNumber, '') );
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode . '&placename=' . $houseNumber, ''));
 
         $response = $this->request();
 
@@ -73,5 +60,4 @@ class GeonamesDE extends Provider
 
         return $address;
     }
-
 }

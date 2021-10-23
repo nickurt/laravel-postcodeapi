@@ -7,20 +7,12 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class Google extends Provider
 {
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $this->setRequestUrl($this->getRequestUrl() . '?address=' . $postCode . '&key=' . $this->getApiKey());
 
@@ -36,13 +28,25 @@ class Google extends Provider
 
         $address = new Address();
         $address
-            ->setStreet($components['route']['long_name'] ?? null)
-            ->setHouseNo($components['street_number']['long_name'] ?? null)
             ->setTown($components['locality']['long_name'] ?? $components['postal_town']['long_name'])
-            ->setMunicipality($components['administrative_area_level_2']['long_name'] ?? null)
-            ->setProvince($components['administrative_area_level_1']['long_name'] ?? null)
             ->setLatitude($response['results'][0]['geometry']['location']['lat'])
             ->setLongitude($response['results'][0]['geometry']['location']['lng']);
+
+        if ($street = $components['route']['long_name'] ?? null) {
+            $address->setStreet($street);
+        }
+
+        if ($houseNo = $components['street_number']['long_name'] ?? null) {
+            $address->setHouseNo($houseNo);
+        }
+
+        if ($municipality = $components['administrative_area_level_2']['long_name'] ?? null) {
+            $address->setMunicipality($municipality);
+        }
+
+        if ($province = $components['administrative_area_level_1']['long_name'] ?? null) {
+            $address->setProvince($province);
+        }
 
         return $address;
     }
@@ -54,12 +58,7 @@ class Google extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         $this->setRequestUrl($this->getRequestUrl() . '?address=' . $postCode . '+' . $houseNumber . '&key=' . $this->getApiKey());
 
@@ -75,13 +74,25 @@ class Google extends Provider
 
         $address = new Address();
         $address
-            ->setStreet($components['route']['long_name'] ?? null)
-            ->setHouseNo($components['street_number']['long_name'] ?? null)
             ->setTown($components['locality']['long_name'] ?? $components['postal_town']['long_name'])
-            ->setMunicipality($components['administrative_area_level_2']['long_name'] ?? null)
-            ->setProvince($components['administrative_area_level_1']['long_name'] ?? null)
             ->setLatitude($response['results'][0]['geometry']['location']['lat'])
             ->setLongitude($response['results'][0]['geometry']['location']['lng']);
+
+        if ($street = $components['route']['long_name'] ?? null) {
+            $address->setStreet($street);
+        }
+
+        if ($houseNo = $components['street_number']['long_name'] ?? null) {
+            $address->setHouseNo($houseNo);
+        }
+
+        if ($municipality = $components['administrative_area_level_2']['long_name'] ?? null) {
+            $address->setMunicipality($municipality);
+        }
+
+        if ($province = $components['administrative_area_level_1']['long_name'] ?? null) {
+            $address->setProvince($province);
+        }
 
         return $address;
     }

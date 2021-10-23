@@ -7,28 +7,17 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class PostcodeData extends Provider
 {
-    /**
-     * @param string $postCode
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }
 
-    /**
-     * @param string $postCode
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     * @return Address
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode, $houseNumber, $_SERVER['HTTP_HOST']));
 

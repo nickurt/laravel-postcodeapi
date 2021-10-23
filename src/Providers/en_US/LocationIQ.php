@@ -7,11 +7,7 @@ use nickurt\PostcodeApi\Providers\Provider;
 
 class LocationIQ extends Provider
 {
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function find($postCode)
+    public function find(string $postCode): Address
     {
         $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
 
@@ -26,10 +22,16 @@ class LocationIQ extends Provider
         $address = new Address();
         $address
             ->setTown($response[0]['address']['city'] ?? $response[0]['address']['town'])
-            ->setMunicipality($response[0]['address']['county'] ?? $response[0]['address']['state'] ?? null)
-            ->setProvince($response[0]['address']['state'] ?? null)
             ->setLatitude($response[0]['lat'])
             ->setLongitude($response[0]['lon']);
+
+        if ($municipality = $response[0]['address']['county'] ?? $response[0]['address']['state'] ?? null) {
+            $address->setMunicipality($municipality);
+        }
+
+        if ($province = $response[0]['address']['state'] ?? null) {
+            $address->setProvince($province);
+        }
 
         return $address;
     }
@@ -45,20 +47,12 @@ class LocationIQ extends Provider
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param string $postCode
-     * @return Address
-     */
-    public function findByPostcode($postCode)
+    public function findByPostcode(string $postCode): Address
     {
         return $this->find($postCode);
     }
 
-    /**
-     * @param string $postCode
-     * @param string $houseNumber
-     */
-    public function findByPostcodeAndHouseNumber($postCode, $houseNumber)
+    public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
         throw new \nickurt\PostcodeApi\Exception\NotSupportedException();
     }
