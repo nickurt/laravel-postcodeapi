@@ -53,7 +53,7 @@ jobs:
                     timeout_minutes: 5
                     max_attempts: 5
                     command: composer require symfony/symfony:5.4.x-dev laravel/framework:^8.67.0 --no-interaction --no-update
-                if: matrix.php >= 8.1
+                if: matrix.php >= 8.1 && matrix.laravel == '8.*'
 
             -   name: Install dependencies
                 run: |
