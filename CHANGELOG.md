@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
+## 1.17.0 - 2022-02-10
+
+- Adding support for Laravel 9 ([#30](https://github.com/nickurt/laravel-postcodeapi/pull/30))
+
 ## 1.16.1 - 2021-09-07
 
 - Add url variable to MalformedURLException for debugging ([#29](https://github.com/nickurt/laravel-postcodeapi/pull/29))
