@@ -1,51 +1,51 @@
 {
-  "name": "nickurt/laravel-postcodeapi",
-  "description": "Universal PostcodeApi for Laravel 8.x & 9.x",
-  "keywords": [
-    "postcodeapi",
-    "postcode",
-    "api",
-    "universal",
-    "laravel"
-  ],
-  "license": "MIT",
-  "require": {
-    "php": "^8.0",
-    "laravel/framework": "^8.0|^9.0",
-    "guzzlehttp/guzzle": "^7.0.1",
-    "ext-json": "*"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^9.5.8",
-    "orchestra/testbench": "^6.6|^7.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "nickurt\\PostcodeApi\\": "src/"
+    "name": "nickurt/laravel-postcodeapi",
+    "description": "Universal PostcodeApi for Laravel 8.x & 9.x",
+    "keywords": [
+        "postcodeapi",
+        "postcode",
+        "api",
+        "universal",
+        "laravel"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "^8.0|^9.0|^10.0",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "ext-json": "*"
     },
-    "files": [
-      "src/helpers.php"
-    ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "nickurt\\PostcodeApi\\Tests\\": "tests"
+    "require-dev": {
+        "phpunit/phpunit": "^9.5.8",
+        "orchestra/testbench": "^6.6|^7.0|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "nickurt\\PostcodeApi\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "nickurt\\PostcodeApi\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "nickurt\\PostcodeApi\\ServiceProvider"
+            ],
+            "aliases": {
+                "PostcodeApi": "nickurt\\PostcodeApi\\Facade"
+            }
+        }
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "nickurt\\PostcodeApi\\ServiceProvider"
-      ],
-      "aliases": {
-        "PostcodeApi": "nickurt\\PostcodeApi\\Facade"
-      }
-    }
-  }
 }
