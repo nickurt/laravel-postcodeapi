@@ -50,7 +50,7 @@ class PostcodeApiTest extends TestCase
         $this->assertSame(['foo' => 'bar'], $nationaalGeoRegister->getOptions());
         $this->assertSame('key', $nationaalGeoRegister->getApiKey());
         $this->assertSame('secret', $nationaalGeoRegister->getApiSecret());
-        $this->assertSame('http://geodata.nationaalgeoregister.nl/locatieserver/v3/free', $nationaalGeoRegister->getRequestUrl());
+        $this->assertSame('https://api.pdok.nl/bzk/locatieserver/search/v3_1/free', $nationaalGeoRegister->getRequestUrl());
     }
 
     /** @test */

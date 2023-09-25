@@ -20,7 +20,7 @@ class TestCase extends Orchestra
                 'code' => 'nl_NL'
             ],
             'NationaalGeoRegister' => [
-                'url' => 'http://geodata.nationaalgeoregister.nl/locatieserver/v3/free',
+                'url' => 'https://api.pdok.nl/bzk/locatieserver/search/v3_1/free',
                 'key' => 'key',
                 'secret' => 'secret',
                 'options' => [

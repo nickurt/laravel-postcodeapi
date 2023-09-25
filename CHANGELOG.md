@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
+## 1.19.0 - 2023-09-25
+
+- wrong url for NationaalGeoRegister ([#46](https://github.com/nickurt/laravel-postcodeapi/issues/46))
+
 ## 1.18.0 - 2023-02-10
 
 - Adding support for Laravel 10 ([#31](https://github.com/nickurt/laravel-postcodeapi/pull/31))
