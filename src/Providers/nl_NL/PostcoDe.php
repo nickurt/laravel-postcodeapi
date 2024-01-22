@@ -49,7 +49,7 @@ class PostcoDe extends Provider
             ->setMunicipality($response['municipality'])
             ->setProvince($response['province'])
             ->setLatitude($response['lat'])
-            ->setLongitude($response['lon']);
+            ->setLongitude($response['lng']);
 
         return $address;
     }
