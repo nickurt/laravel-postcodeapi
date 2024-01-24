@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
+## 1.20.0 - 2024-01-24
+
+- Fix/postco.de response keys longitude ([#47](https://github.com/nickurt/laravel-postcodeapi/issues/47))
+
 ## 1.19.0 - 2023-09-25
 
 - wrong url for NationaalGeoRegister ([#46](https://github.com/nickurt/laravel-postcodeapi/issues/46))
