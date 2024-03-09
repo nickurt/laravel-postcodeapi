@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
+## 1.21.0 - 2024-03-09
+
+- Adding support for Laravel 11, dropping Laravel 9 and PHP8.1 ([#48](https://github.com/nickurt/laravel-postcodeapi/pull/48))
+
 ## 1.20.0 - 2024-01-24
 
 - Fix/postco.de response keys longitude ([#47](https://github.com/nickurt/laravel-postcodeapi/issues/47))

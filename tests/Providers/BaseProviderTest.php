@@ -4,7 +4,10 @@ namespace nickurt\PostcodeApi\tests\Providers;
 
 use PHPUnit\Framework\TestCase;
 
-abstract class BaseProviderTest extends TestCase
+class BaseProviderTest extends TestCase
 {
-    //
+    public function test()
+    {
+        $this->assertTrue(true);
+    }
 }
