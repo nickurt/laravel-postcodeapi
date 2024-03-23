@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\en_GB;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -10,12 +11,10 @@ class IdealPostcodes extends Provider
     protected function request()
     {
         try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
+            return Http::get($this->getRequestUrl())->json();
+        } catch (\Exception $e) {
+            return json_decode($e->getMessage(), true);
         }
-
-        return json_decode($response->getBody(), true);
     }
 
     public function find(string $postCode): Address
@@ -24,7 +23,7 @@ class IdealPostcodes extends Provider
 
         $response = $this->request();
 
-        if (isset($response['message']) && $response['message'] != "Success") {
+        if (isset($response['message']) && $response['message'] != 'Success') {
             return new Address();
         }
 

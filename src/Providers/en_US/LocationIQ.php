@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\en_US;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -9,9 +10,9 @@ class LocationIQ extends Provider
 {
     public function find(string $postCode): Address
     {
-        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
+        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&'.$options : '';
 
-        $this->setRequestUrl($this->getRequestUrl() . '?q=' . $postCode . '&statecode=1&addressdetails=1&format=json&key=' . $this->getApiKey() . $options);
+        $this->setRequestUrl($this->getRequestUrl().'?q='.$postCode.'&statecode=1&addressdetails=1&format=json&key='.$this->getApiKey().$options);
 
         $response = $this->request();
 
@@ -39,12 +40,10 @@ class LocationIQ extends Provider
     protected function request()
     {
         try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
+            return Http::get($this->getRequestUrl())->json();
+        } catch (\Exception $e) {
+            return json_decode($e->getMessage(), true);
         }
-
-        return json_decode($response->getBody(), true);
     }
 
     public function findByPostcode(string $postCode): Address

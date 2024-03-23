@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\de_DE;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -29,9 +30,7 @@ class ZippopotamusDE extends Provider
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
+        return Http::get($this->getRequestUrl())->json();
     }
 
     public function findByPostcode(string $postCode): Address

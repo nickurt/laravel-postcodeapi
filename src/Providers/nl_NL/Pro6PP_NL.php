@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -9,10 +10,7 @@ class Pro6PP_NL extends Provider
 {
     protected function request()
     {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
+        return Http::get($this->getRequestUrl())->json();
     }
 
     public function find(string $postCode): Address
@@ -35,7 +33,7 @@ class Pro6PP_NL extends Provider
 
     public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode) . '&streetnumber=' . $houseNumber);
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $this->getApiKey(), $postCode).'&streetnumber='.$houseNumber);
 
         $response = $this->request();
 
@@ -56,7 +54,7 @@ class Pro6PP_NL extends Provider
             ->setMunicipality($response['results'][0]['municipality'])
             ->setProvince($response['results'][0]['province']);
 
-        if (!empty($latitude = $response['results'][0]['lat']) && !empty($longitude = $response['results'][0]['lng'])) {
+        if (! empty($latitude = $response['results'][0]['lat']) && ! empty($longitude = $response['results'][0]['lng'])) {
             $address->setLatitude($latitude)
                 ->setLongitude($longitude);
         }

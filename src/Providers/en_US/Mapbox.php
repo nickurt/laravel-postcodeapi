@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\en_US;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
 use nickurt\PostcodeApi\Providers\Provider;
@@ -15,9 +16,9 @@ class Mapbox extends Provider
 
     public function find(string $postCode): Address
     {
-        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
+        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&'.$options : '';
 
-        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode) . '?access_token=' . $this->getApiKey() . $options);
+        $this->setRequestUrl(sprintf($this->getRequestUrl(), $postCode).'?access_token='.$this->getApiKey().$options);
 
         $response = $this->request();
 
@@ -44,9 +45,7 @@ class Mapbox extends Provider
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
+        return Http::get($this->getRequestUrl())->json();
     }
 
     public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address

@@ -3,6 +3,7 @@
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
 use nickurt\PostcodeApi\Providers\Provider;
@@ -16,13 +17,9 @@ class PostcodeApiNuV3 extends Provider
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
-            'headers' => [
-                'X-Api-Key' => $this->getApiKey()
-            ]
-        ]);
-
-        return json_decode($response->getBody(), true);
+        return Http::withHeaders([
+            'X-Api-Key' => $this->getApiKey(),
+        ])->get($this->getRequestUrl())->json();
     }
 
     public function findByPostcode(string $postCode): Address
@@ -45,7 +42,7 @@ class PostcodeApiNuV3 extends Provider
         $response = $this->request();
 
         // Check for a street
-        if (!Arr::has($response, 'street')) {
+        if (! Arr::has($response, 'street')) {
             // Postcode / housenumber combination not found
             return new Address();
         }
@@ -53,7 +50,7 @@ class PostcodeApiNuV3 extends Provider
         // Found it :)
         return (new Address())
             ->setStreet(Arr::get($response, 'street'))
-            ->setHouseNo((string)Arr::get($response, 'number'))
+            ->setHouseNo((string) Arr::get($response, 'number'))
             ->setTown(Arr::get($response, 'city'))
             ->setMunicipality(Arr::get($response, 'municipality'))
             ->setProvince(Arr::get($response, 'province'))

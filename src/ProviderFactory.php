@@ -8,13 +8,14 @@ use nickurt\PostcodeApi\Providers\Provider;
 class ProviderFactory
 {
     /**
-     * @param string $provider
+     * @param  string  $provider
      * @return Provider $class
+     *
      * @throws InvalidArgumentException
      */
     public static function create($provider)
     {
-        if (!$config = config()->get('postcodeapi.' . $provider)) {
+        if (! $config = config()->get('postcodeapi.'.$provider)) {
             throw new InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
         }
 
@@ -23,7 +24,7 @@ class ProviderFactory
             ? $config['alias']
             : "nickurt\\PostcodeApi\\Providers\\{$config['code']}\\{$provider}";
 
-        if (!class_exists($providerClass)) {
+        if (! class_exists($providerClass)) {
             throw new InvalidArgumentException(sprintf('Unable to use the provider "%s"', $provider));
         }
 

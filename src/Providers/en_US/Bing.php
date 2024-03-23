@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\en_US;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -9,9 +10,9 @@ class Bing extends Provider
 {
     public function find(string $postCode): Address
     {
-        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&' . $options : '';
+        $options = strlen($options = http_build_query($this->getOptions())) > 1 ? '&'.$options : '';
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postalCode=' . $postCode . '&key=' . $this->getApiKey() . $options);
+        $this->setRequestUrl($this->getRequestUrl().'?postalCode='.$postCode.'&key='.$this->getApiKey().$options);
 
         $response = $this->request();
 
@@ -38,9 +39,7 @@ class Bing extends Provider
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
+        return Http::get($this->getRequestUrl())->json();
     }
 
     public function findByPostcode(string $postCode): Address

@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -15,7 +16,7 @@ class PostcodeApiNu extends Provider
 
         $response = $this->request();
 
-        if (!isset($response['_embedded']['addresses'][0])) {
+        if (! isset($response['_embedded']['addresses'][0])) {
             /**
              * Postcode / housenumber combination not found
              */
@@ -36,13 +37,13 @@ class PostcodeApiNu extends Provider
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
-            'headers' => [
-                'X-Api-Key' => $this->getApiKey()
-            ]
-        ]);
-
-        return json_decode($response->getBody(), true);
+        try {
+            return Http::withHeaders([
+                'X-Api-Key' => $this->getApiKey(),
+            ])->get($this->getRequestUrl())->json();
+        } catch (\Exception $e) {
+            return json_decode($e->getMessage(), true);
+        }
     }
 
     public function findByPostcode(string $postCode): Address
@@ -58,7 +59,7 @@ class PostcodeApiNu extends Provider
 
         $response = $this->request();
 
-        if (!isset($response['_embedded']['addresses'][0])) {
+        if (! isset($response['_embedded']['addresses'][0])) {
             /**
              * Postcode / housenumber combination not found
              */
@@ -67,7 +68,7 @@ class PostcodeApiNu extends Provider
 
         $address = new Address();
         $address
-            ->setHouseNo($response['_embedded']['addresses'][0]['number'] . $response['_embedded']['addresses'][0]['addition'])
+            ->setHouseNo($response['_embedded']['addresses'][0]['number'].$response['_embedded']['addresses'][0]['addition'])
             ->setStreet($response['_embedded']['addresses'][0]['street'])
             ->setTown($response['_embedded']['addresses'][0]['city']['label'])
             ->setMunicipality($response['_embedded']['addresses'][0]['municipality']['label'])

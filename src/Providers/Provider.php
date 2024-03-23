@@ -8,9 +8,9 @@ use nickurt\PostcodeApi\Exception\MalformedURLException;
 
 abstract class Provider implements ProviderInterface
 {
-    protected string|null $apiKey = null;
+    protected ?string $apiKey = null;
 
-    protected string|null $apiSecret = null;
+    protected ?string $apiSecret = null;
 
     protected string $requestUrl = '';
 
@@ -18,7 +18,7 @@ abstract class Provider implements ProviderInterface
 
     protected Client $httpClient;
 
-    public function getApiKey(): string|null
+    public function getApiKey(): ?string
     {
         return $this->apiKey;
     }
@@ -42,27 +42,9 @@ abstract class Provider implements ProviderInterface
         return $this;
     }
 
-    public function getApiSecret(): string|null
+    public function getApiSecret(): ?string
     {
         return $this->apiSecret;
-    }
-
-    public function getHttpClient(): Client
-    {
-        if (!isset($this->httpClient)) {
-            $this->httpClient = new Client();
-
-            return $this->httpClient;
-        }
-
-        return $this->httpClient;
-    }
-
-    public function setHttpClient(Client $client): Provider
-    {
-        $this->httpClient = $client;
-
-        return $this;
     }
 
     public function getRequestUrl(): string

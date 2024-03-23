@@ -12,11 +12,10 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^10.0|^11.0",
-        "guzzlehttp/guzzle": "^7.8.1",
         "ext-json": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.5.12",
+        "phpunit/phpunit": "^10.5.12|^11.0.8",
         "orchestra/testbench": "^8.0|^9.0"
     },
     "autoload": {
@@ -29,7 +28,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "nickurt\\PostcodeApi\\Tests\\": "tests"
+            "nickurt\\PostcodeApi\\tests\\": "tests"
         }
     },
     "minimum-stability": "dev",

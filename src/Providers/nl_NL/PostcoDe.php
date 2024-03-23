@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
 use nickurt\PostcodeApi\Providers\Provider;
@@ -16,12 +17,10 @@ class PostcoDe extends Provider
     protected function request()
     {
         try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
+            return Http::get($this->getRequestUrl())->json();
+        } catch (\Exception $e) {
+            return json_decode($e->getMessage(), true);
         }
-
-        return json_decode($response->getBody(), true);
     }
 
     public function findByPostcode(string $postCode): Address

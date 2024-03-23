@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\en_GB;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -9,10 +10,7 @@ class PostcodesIO extends Provider
 {
     protected function request()
     {
-        $client = $this->getHttpClient();
-        $response = $client->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
+        return Http::get($this->getRequestUrl())->json();
     }
 
     public function find(string $postCode): Address
@@ -21,7 +19,7 @@ class PostcodesIO extends Provider
 
         $response = $this->request();
 
-        if (!is_array($response['result'])) {
+        if (! is_array($response['result'])) {
             return new Address();
         }
 

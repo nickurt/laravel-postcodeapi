@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\en_US;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -14,7 +15,7 @@ class Google extends Provider
 
     public function find(string $postCode): Address
     {
-        $this->setRequestUrl($this->getRequestUrl() . '?address=' . $postCode . '&key=' . $this->getApiKey());
+        $this->setRequestUrl($this->getRequestUrl().'?address='.$postCode.'&key='.$this->getApiKey());
 
         $response = $this->request();
 
@@ -53,14 +54,12 @@ class Google extends Provider
 
     protected function request()
     {
-        $response = $this->getHttpClient()->request('GET', $this->getRequestUrl());
-
-        return json_decode($response->getBody(), true);
+        return Http::get($this->getRequestUrl())->json();
     }
 
     public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
-        $this->setRequestUrl($this->getRequestUrl() . '?address=' . $postCode . '+' . $houseNumber . '&key=' . $this->getApiKey());
+        $this->setRequestUrl($this->getRequestUrl().'?address='.$postCode.'+'.$houseNumber.'&key='.$this->getApiKey());
 
         $response = $this->request();
 

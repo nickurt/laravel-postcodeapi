@@ -27,7 +27,7 @@ class Address implements Arrayable
         return $this;
     }
 
-    public function getHouseNo(): string|null
+    public function getHouseNo(): ?string
     {
         return $this->houseNo;
     }
@@ -39,7 +39,7 @@ class Address implements Arrayable
         return $this;
     }
 
-    public function getStreet(): string|null
+    public function getStreet(): ?string
     {
         return $this->street;
     }
@@ -51,7 +51,7 @@ class Address implements Arrayable
         return $this;
     }
 
-    public function getMunicipality(): string|null
+    public function getMunicipality(): ?string
     {
         return $this->municipality;
     }
@@ -63,7 +63,7 @@ class Address implements Arrayable
         return $this;
     }
 
-    public function getTown(): string|null
+    public function getTown(): ?string
     {
         return $this->town;
     }
@@ -75,7 +75,7 @@ class Address implements Arrayable
         return $this;
     }
 
-    public function getProvince(): string|null
+    public function getProvince(): ?string
     {
         return $this->province;
     }
@@ -87,7 +87,7 @@ class Address implements Arrayable
         return $this;
     }
 
-    public function getLatitude(): float|null
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
@@ -99,7 +99,7 @@ class Address implements Arrayable
         return $this;
     }
 
-    public function getLongitude(): float|null
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
@@ -113,7 +113,7 @@ class Address implements Arrayable
             'municipality' => $this->getMunicipality(),
             'province' => $this->getProvince(),
             'latitude' => $this->getLatitude(),
-            'longitude' => $this->getLongitude()
+            'longitude' => $this->getLongitude(),
         ];
     }
 }

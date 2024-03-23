@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\nl_NL;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -11,7 +12,7 @@ class ApiPostcode extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postcode=' . $postCode);
+        $this->setRequestUrl($this->getRequestUrl().'?postcode='.$postCode);
 
         $response = $this->request();
 
@@ -39,7 +40,7 @@ class ApiPostcode extends Provider
     {
         $postCode = strtoupper(preg_replace('/\s+/', '', $postCode));
 
-        $this->setRequestUrl($this->getRequestUrl() . '?postcode=' . $postCode . '&number=' . $houseNumber);
+        $this->setRequestUrl($this->getRequestUrl().'?postcode='.$postCode.'&number='.$houseNumber);
 
         $response = $this->request();
 
@@ -62,15 +63,11 @@ class ApiPostcode extends Provider
     protected function request()
     {
         try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
-                'headers' => [
-                    'Token' => $this->getApiKey()
-                ]
-            ]);
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
+            return Http::withHeaders([
+                'Token' => $this->getApiKey(),
+            ])->get($this->getRequestUrl())->json();
+        } catch (\Exception $e) {
+            return json_decode($e->getMessage(), true);
         }
-
-        return json_decode($response->getBody(), true);
     }
 }

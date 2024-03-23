@@ -2,17 +2,16 @@
 
 namespace nickurt\PostcodeApi\tests\Providers\nl_NL;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Exception\NotSupportedException;
 use nickurt\PostcodeApi\Providers\nl_NL\PostcodeApiNuV3;
-use nickurt\PostcodeApi\tests\Providers\BaseProviderTest;
+use nickurt\PostcodeApi\tests\TestCase;
 
-class PostcodeApiNuV3Test extends BaseProviderTest
+class PostcodeApiNuV3Test extends TestCase
 {
     const TEST_URL = 'https://sandbox.postcodeapi.nu/v3/lookup/%s/%s';
+
     const TEST_APIKEY = '00e97e79-63a8-4497-a5de-47ca2cbba64f';
 
     /** @var PostcodeApiNu */
@@ -25,29 +24,23 @@ class PostcodeApiNuV3Test extends BaseProviderTest
             ->setApiKey(self::TEST_APIKEY);
     }
 
-    /** @test */
-    public function it_can_get_the_default_config_values_for_this_provider()
+    public function test_it_can_get_the_default_config_values_for_this_provider()
     {
         $this->assertSame(self::TEST_URL, $this->postcodeApiNu->getRequestUrl());
         $this->assertSame(self::TEST_APIKEY, $this->postcodeApiNu->getApiKey());
     }
 
-    /** @test */
-    public function it_throws_exception_for_find_postal_code()
+    public function test_it_throws_exception_for_find_postal_code()
     {
         $this->expectException(NotSupportedException::class);
         $this->postcodeApiNu->find('6545CA');
     }
 
-
-    /** @test */
-    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
+    public function test_it_can_get_the_correct_values_for_find_by_postcode_and_house_number_a_valid_postal_code()
     {
-        $address = $this->postcodeApiNu->setHttpClient(new Client([
-            'handler' => new MockHandler([
-                new Response(200, [], '{"postcode":"6545CA","number":29,"street":"Waldeck Pyrmontsingel","city":"Nijmegen","municipality":"Nijmegen","province":"Gelderland","location":{"type":"Point","coordinates":[5.8696099,51.841554]}}')
-            ]),
-        ]))->findByPostcodeAndHouseNumber('6545CA', '29');
+        Http::fake(['https://sandbox.postcodeapi.nu/v3/lookup/6545CA/29' => Http::response('{"postcode":"6545CA","number":29,"street":"Waldeck Pyrmontsingel","city":"Nijmegen","municipality":"Nijmegen","province":"Gelderland","location":{"type":"Point","coordinates":[5.8696099,51.841554]}}')]);
+
+        $address = $this->postcodeApiNu->findByPostcodeAndHouseNumber('6545CA', '29');
 
         $this->assertSame(self::TEST_APIKEY, $this->postcodeApiNu->getApiKey());
         $this->assertSame(sprintf(self::TEST_URL, '6545CA', '29'), $this->postcodeApiNu->getRequestUrl());
@@ -65,14 +58,11 @@ class PostcodeApiNuV3Test extends BaseProviderTest
         ], $address->toArray());
     }
 
-    /** @test */
-    public function it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code()
+    public function test_it_can_get_the_correct_values_for_find_by_postcode_and_house_number_an_invalid_postal_code()
     {
-        $address = $this->postcodeApiNu->setHttpClient(new Client([
-            'handler' => new MockHandler([
-                new Response(404, [], '{"title":"Resource not found"}')
-            ]),
-        ]))->findByPostcodeAndHouseNumber('6545CA', '299');
+        Http::fake(['https://sandbox.postcodeapi.nu/v3/lookup/6545CA/299' => Http::response('{"title":"Resource not found"}', 404)]);
+
+        $address = $this->postcodeApiNu->findByPostcodeAndHouseNumber('6545CA', '299');
 
         $this->assertInstanceOf(Address::class, $address);
 
@@ -83,7 +73,7 @@ class PostcodeApiNuV3Test extends BaseProviderTest
             'municipality' => null,
             'province' => null,
             'latitude' => null,
-            'longitude' => null
+            'longitude' => null,
         ], $address->toArray());
     }
 }

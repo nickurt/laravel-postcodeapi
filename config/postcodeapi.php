@@ -2,7 +2,7 @@
 
 return [
     'ApiPostcode' => [
-        'url' => 'http://json.api-postcode.nl',
+        'url' => 'https://json.api-postcode.nl/',
         'key' => '',
         'code' => 'nl_NL'
     ],
@@ -14,12 +14,6 @@ return [
     'PostcoDe' => [
         'url' => 'https://api.postco.de/v1/postcode/%s/%s',
         'key' => '',
-        'code' => 'nl_NL'
-    ],
-    'PostcodeNL' => [
-        'url' => 'https://api.postcode.nl/rest/addresses/%s/%s',
-        'key' => '',
-        'secret' => '',
         'code' => 'nl_NL'
     ],
     'PostcodeApiNu' => [
@@ -38,25 +32,10 @@ return [
         'key' => '',
         'code' => 'nl_NL'
     ],
-    'PostcodeData' => [
-        'url' => 'http://api.postcodedata.nl/v1/postcode/?postcode=%s&streetnumber=%s&ref=%s',
-        'key' => '',
-        'code' => 'nl_NL',
-    ],
-    'PostcodesNL' => [
-        'url' => 'http://api.postcodes.nl/1.0/address',
-        'key' => '',
-        'code' => 'nl_NL',
-    ],
     'Pro6PP_NL' => [
         'url' => 'https://api.pro6pp.nl/v1/autocomplete?auth_key=%s&nl_sixpp=%s',
         'key' => '',
         'code' => 'nl_NL',
-    ],
-    'Pstcd' => [
-        'url' => 'http://api.pstcd.nl/%s/?auth_key=%s&sixpp=%s&streetnumber=%s',
-        'key' => '',
-        'code' => 'nl_NL'
     ],
 
     'Pro6PP_BE' => [
@@ -65,12 +44,6 @@ return [
         'code' => 'nl_BE',
     ],
 
-    'Algolia' => [
-        'url' => 'https://places-dsn.algolia.net/1/places/query',
-        'key' => '',
-        'secret' => '',
-        'code' => 'en_US'
-    ],
     'Bing' => [
         'url' => 'https://dev.virtualearth.net/REST/v1/Locations',
         'key' => '',
@@ -128,19 +101,9 @@ return [
         'key' => '',
         'code' => 'en_GB',
     ],
-    'UkPostcodes' => [
-        'url' => 'http://uk-postcodes.com/postcode/%s.json',
-        'key' => '',
-        'code' => 'en_GB',
-    ],
-    'GeoPostcodeOrgUk' => [
-        'url' => 'http://www.geopostcode.org.uk/api/%s.json',
-        'key' => '',
-        'code' => 'en_GB',
-    ],
 
     'PostcodeApiComAu' => [
-        'url' => 'http://v0.postcodeapi.com.au/suburbs/%s.json',
+        'url' => 'https://v0.postcodeapi.com.au/suburbs/%s.json',
         'key' => '',
         'code' => 'en_AU'
     ],
@@ -150,13 +113,8 @@ return [
         'key' => '',
         'code' => 'fr_FR'
     ],
-   'GeonamesDE' => [
-        'url' => 'http://api.geonames.org/postalCodeLookupJSON?postalcode=%s&country=DE&username=demo',
-        'key' => '',
-        'code' => 'de_DE'
-    ],
    'ZippopotamusDE' => [
-        'url' => 'http://api.zippopotam.us/DE/%s',
+        'url' => 'https://api.zippopotam.us/DE/%s',
         'key' => '',
         'code' => 'de_DE'
     ]

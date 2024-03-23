@@ -2,6 +2,7 @@
 
 namespace nickurt\PostcodeApi\Providers\en_GB;
 
+use Illuminate\Support\Facades\Http;
 use nickurt\PostcodeApi\Entity\Address;
 use nickurt\PostcodeApi\Providers\Provider;
 
@@ -9,7 +10,7 @@ class GetAddressIO extends Provider
 {
     public function find(string $postCode): Address
     {
-        $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '?expand=true');
+        $this->setRequestUrl($this->getRequestUrl().'/'.$postCode.'?expand=true');
 
         $response = $this->request();
 
@@ -31,16 +32,10 @@ class GetAddressIO extends Provider
     protected function request()
     {
         try {
-            $response = $this->getHttpClient()->request('GET', $this->getRequestUrl(), [
-                'headers' => [
-                    'api-key' => $this->getApiKey()
-                ]
-            ]);
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            return json_decode($e->getResponse()->getBody(), true);
+            return Http::withHeaders(['api-key' => $this->getApiKey()])->get($this->getRequestUrl())->json();
+        } catch (\Exception $e) {
+            return json_decode($e->getMessage(), true);
         }
-
-        return json_decode($response->getBody(), true);
     }
 
     public function findByPostcode(string $postCode): Address
@@ -50,7 +45,7 @@ class GetAddressIO extends Provider
 
     public function findByPostcodeAndHouseNumber(string $postCode, string $houseNumber): Address
     {
-        $this->setRequestUrl($this->getRequestUrl() . '/' . $postCode . '/' . $houseNumber . '?expand=true');
+        $this->setRequestUrl($this->getRequestUrl().'/'.$postCode.'/'.$houseNumber.'?expand=true');
 
         $response = $this->request();
 
