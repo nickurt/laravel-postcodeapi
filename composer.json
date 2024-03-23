@@ -12,6 +12,7 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^10.0|^11.0",
+        "guzzlehttp/guzzle": "^7.8.1",
         "ext-json": "*"
     },
     "require-dev": {
