@@ -2,10 +2,11 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
-## 2.0.0 - 2024-xx-xx
+## 2.0.0 - 2025-xx-xx
 
 - Removed outdated Providers (Algolia, GeonamesDE, GeoPostcodeOrgUk, PostcodeData, PostcodeNL, PostcodesNL, Pstcd and UkPostcodes)
 - Refactor'd Guzzle HttpClient to Laravel's native Http Client
+- Adding support for Laravel 12 ([#52](https://github.com/nickurt/laravel-postcodeapi/issues/52))
 
 ## 1.21.0 - 2024-03-09
 
