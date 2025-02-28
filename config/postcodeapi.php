@@ -16,6 +16,12 @@ return [
         'key' => '',
         'code' => 'nl_NL'
     ],
+    'PostcodeNL' => [
+        'url' => 'https://api.postcode.nl/rest/addresses/%s/%s',
+        'key' => '',
+        'secret' => '',
+        'code' => 'nl_NL'
+    ],
     'PostcodeApiNu' => [
         'url' => 'https://postcode-api.apiwise.nl/v2/addresses/?postcode=%s&number=%s',
         'key' => '',

@@ -60,12 +60,13 @@ $postCode30 = PostcodeApi::create('PostcodeApiNu')->find('1118CP');
 $postCode31 = PostcodeApi::create('PostcodeApiNu')->findByPostcodeAndHouseNumber('1118CP', '202');
 $postCode32 = PostcodeApi::create('PostcodeApiNuV3')->find('1118CP');
 $postCode33 = PostcodeApi::create('PostcodeApiNuV3')->findByPostcodeAndHouseNumber('1118CP', '202');
-$postCode34 = PostcodeApi::create('Pro6PP_NL')->find('1118CP');
+$postCode34 = PostcodeApi::create('PostcodeNL')->findByPostcodeAndHouseNumber('1118CP', '202');
+$postCode35 = PostcodeApi::create('Pro6PP_NL')->find('1118CP');
 ```
 #### Route
 ```php
 Route::get('/{postCode}', function($postCode) {
-    $postCode35 = PostcodeApi::create('PostcodeApiNu')->find($postCode);
+    $postCode36 = PostcodeApi::create('PostcodeApiNu')->find($postCode);
     
     return Response::json($postCode35->toArray(), 200, [], JSON_PRETTY_PRINT);
 });
