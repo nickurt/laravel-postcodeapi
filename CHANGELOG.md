@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-postcodeapi` will be documented in this file
 
+## 2.1.0 - 2026-03-19
+
+- Adding support for Laravel 13 ([#53](https://github.com/nickurt/laravel-postcodeapi/pull/53))
+
 ## 2.0.0 - 2025-02-28
 
 - Removed outdated Providers (Algolia, GeonamesDE, GeoPostcodeOrgUk, PostcodeData, PostcodesNL, Pstcd and UkPostcodes)
